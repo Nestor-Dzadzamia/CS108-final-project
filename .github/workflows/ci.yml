@@ -2,6 +2,7 @@ name: CI - Build and Test
 
 on:
   pull_request:
+  push:
 
 jobs:
   build:
@@ -9,8 +10,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: List files in demo directory
+        run: ls -la
+        working-directory: ./demo
+
       - name: Build Java
         run: mvn clean install -DskipTests
+        working-directory: ./demo
 
   unit-tests:
     needs: build
@@ -25,3 +31,4 @@ jobs:
 
       - name: Run unit tests
         run: mvn test
+        working-directory: ./demo
