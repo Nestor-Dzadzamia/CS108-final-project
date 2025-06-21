@@ -14,12 +14,23 @@ public abstract class Question {
 
     /**
      * Constructs a Question with the specified id, type, and text.
+     * Validates that the ID and question type ID are positive integers,
+     * and that the question text is not null or empty.
      *
      * @param id unique identifier for the question
      * @param question_type_id identifier for the type of question
      * @param question the text content of the question
      */
     public Question(int id, int question_type_id, String question) {
+        if (question == null || question.trim().isEmpty()) {
+            throw new IllegalArgumentException("Question text must not be null or empty.");
+        }
+        if (id <= 0) {
+            throw new IllegalArgumentException("ID must be a positive integer.");
+        }
+        if (question_type_id <= 0) {
+            throw new IllegalArgumentException("Question type ID must be a positive integer.");
+        }
         this.question = question;
         this.id = id;
         this.question_type_id = question_type_id;
