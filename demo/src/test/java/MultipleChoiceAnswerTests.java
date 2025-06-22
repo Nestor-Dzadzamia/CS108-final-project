@@ -41,7 +41,7 @@ public class MultipleChoiceAnswerTests extends TestCase {
     public void testCallingIncorrectGetCorrectAnswersFunction() {
         try {
             mulChoiceQuestion.getCorrectAnswers();
-            fail("Expected IllegalArgumentException due to too many answers");
+            fail("Incorrect function calling, use getCorrectAnswer(), not getCorrectAnswers()");
         } catch (IllegalCallerException e) {
             // Test passes because exception was thrown
         }
@@ -51,7 +51,7 @@ public class MultipleChoiceAnswerTests extends TestCase {
     public void testIncorrectParemeterInGetScore() {
         try {
             mulChoiceQuestion.getScore("A");
-            fail("Expected IllegalArgumentException due to too many answers");
+            fail("Parameter must be an integer");
         } catch (IllegalArgumentException e) {
             // Test passes because exception was thrown
         }
