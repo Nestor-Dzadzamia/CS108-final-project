@@ -57,4 +57,9 @@ public class MultipleChoiceAnswerTests extends TestCase {
         }
     }
 
+    // This test checks if correct answer is returned right
+    public void testCorrectAnswerReturned() {
+        assertEquals("A", mulChoiceQuestion.getCorrectAnswer());
+    }
+
 }
