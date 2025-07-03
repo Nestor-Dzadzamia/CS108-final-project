@@ -160,6 +160,13 @@ CREATE TABLE messages (
                           FOREIGN KEY (friend_request_id) REFERENCES friend_requests(request_id) ON DELETE SET NULL
 );
 
+CREATE TABLE possible_answers (
+                                  possible_answer_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                  question_id BIGINT NOT NULL,
+                                  possible_answer_text TEXT NOT NULL,
+                                  FOREIGN KEY (question_id) REFERENCES questions(question_id) ON DELETE CASCADE
+);
+
 -- VIEWS --
 
 --Top 10 most popular quizzes
