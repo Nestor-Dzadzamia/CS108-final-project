@@ -62,7 +62,7 @@ CREATE TABLE correct_answers (
                                  FOREIGN KEY (question_id) REFERENCES questions(question_id) ON DELETE CASCADE
 );
 
--- SUBMISSIONS
+--  SUBMISSIONS
 CREATE TABLE submissions (
                              submission_id BIGINT AUTO_INCREMENT PRIMARY KEY,
                              user_id BIGINT,

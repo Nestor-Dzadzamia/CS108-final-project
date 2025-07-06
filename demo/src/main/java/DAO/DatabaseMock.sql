@@ -478,9 +478,7 @@ INSERT INTO achievements (achievement_name, achievement_description, icon_url) V
     ('Amateur Author', 'Created your first quiz!', 'icons/amateur_author.png'),
     ('Prolific Author', 'Created 5 quizzes!', 'icons/prolific_author.png'),
     ('Quiz Machine', 'Taken 10 quizzes!', 'icons/quiz_machine.png'),
-    ('Practice Makes Perfect', 'Completed 3 practice quizzes!', 'icons/practice.png'),
-    ('Friend Maker', 'Sent your first friend request!', 'icons/friend_maker.png'),
-    ('Streak Starter', 'Logged in 5 days in a row!', 'icons/streak_starter.png');
+    ('Practice Makes Perfect', 'Completed 3 practice quizzes!', 'icons/practice.png');
 
 -- Nestor (user_id=1)
 INSERT INTO user_achievements (user_id, achievement_id) VALUES
@@ -489,8 +487,7 @@ INSERT INTO user_achievements (user_id, achievement_id) VALUES
 
 -- Sandro (user_id=2)
 INSERT INTO user_achievements (user_id, achievement_id) VALUES
-    (2, 1), -- Amateur Author
-    (2, 5); -- Friend Maker
+    (2, 1); -- Amateur Author
 
 -- Saba (user_id=3)
 INSERT INTO user_achievements (user_id, achievement_id) VALUES
