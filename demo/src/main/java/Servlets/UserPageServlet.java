@@ -1,6 +1,5 @@
 package Servlets;
 
-import DAO.QuizDao;
 import Models.Quiz;
 import Models.User;
 

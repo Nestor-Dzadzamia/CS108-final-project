@@ -1,5 +1,6 @@
-import Questions.FillInTheBlank;
-import Questions.QuestionResponse;
+import Models.Questions.Question;
+import Models.Questions.FillInTheBlank;
+import Models.Questions.QuestionResponse;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -8,13 +9,13 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 /**
- * Unit tests for the {@link Questions.FillInTheBlank} class.
+ * Unit tests for the {@link FillInTheBlank} class.
  * <p>
  * Covers full functionality and validation logic, including:
  * <ul>
  *   <li>Basic scoring and correct answer matching</li>
  *   <li>Validation of question formatting (presence of underscore)</li>
- *   <li>Exception handling from parent {@link Questions.QuestionResponse} and {@link Questions.Question}</li>
+ *   <li>Exception handling from parent {@link QuestionResponse} and {@link Question}</li>
  *   <li>Multiple question instances with varying inputs</li>
  * </ul>
  */
