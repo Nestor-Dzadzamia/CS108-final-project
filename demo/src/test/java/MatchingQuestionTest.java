@@ -1,4 +1,4 @@
-import Questions.MatchingQuestion;
+import Models.Questions.MatchingQuestion;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;

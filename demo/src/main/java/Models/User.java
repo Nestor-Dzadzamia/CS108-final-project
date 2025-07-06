@@ -1,4 +1,4 @@
-package Users;
+package Models;
 
 import java.sql.Timestamp;
 
