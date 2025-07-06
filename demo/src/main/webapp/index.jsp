@@ -1,5 +1,5 @@
 <%@ page import="java.sql.*" %>
-<%@ page import="DAO.DBConnection" %>
+<%@ page import="DB.DBConnection" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   Connection connection = null;
