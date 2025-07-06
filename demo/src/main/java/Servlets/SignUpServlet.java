@@ -1,5 +1,6 @@
 package Servlets;
 
+import DAO.UserDao;
 import Models.User;
 import util.PasswordUtil;
 
