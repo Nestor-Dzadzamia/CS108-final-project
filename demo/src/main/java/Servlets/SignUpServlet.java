@@ -1,7 +1,7 @@
 package Servlets;
 
 import DAO.UserDao;
-import Users.User;
+import Models.User;
 import util.PasswordUtil;
 
 import javax.servlet.ServletException;

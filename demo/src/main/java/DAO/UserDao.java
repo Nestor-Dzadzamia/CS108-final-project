@@ -1,6 +1,7 @@
 package DAO;
 
-import Users.User;
+import DB.DBConnection;
+import Models.User;
 import java.sql.*;
 
 public class UserDao {
