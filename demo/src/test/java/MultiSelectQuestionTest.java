@@ -1,4 +1,4 @@
-import Questions.MultiSelectQuestion;
+import Models.Questions.MultiSelectQuestion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

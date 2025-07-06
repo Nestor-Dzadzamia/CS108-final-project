@@ -1,4 +1,4 @@
-import Questions.PictureResponse;
+import Models.Questions.PictureResponse;
 import junit.framework.TestCase;
 import java.util.Set;
 

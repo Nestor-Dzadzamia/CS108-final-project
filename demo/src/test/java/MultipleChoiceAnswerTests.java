@@ -1,4 +1,4 @@
-import Questions.MultipleChoiceAnswer;
+import Models.Questions.MultipleChoiceAnswer;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
