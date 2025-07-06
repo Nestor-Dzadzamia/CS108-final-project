@@ -9,6 +9,7 @@ import java.util.List;
 
 public class AchievementDao {
 
+    // Create a new achievement (without awardedAt)
     public Achievement createAchievement(Achievement achievement) throws SQLException {
         String sql = "INSERT INTO achievements (achievement_name, achievement_description, icon_url) VALUES (?, ?, ?)";
 
@@ -32,10 +33,10 @@ public class AchievementDao {
                 }
             }
         }
-
         return achievement;
     }
 
+    // Get achievement by ID (without awardedAt)
     public Achievement getAchievementById(long achievementId) throws SQLException {
         String sql = "SELECT * FROM achievements WHERE achievement_id = ?";
         Achievement achievement = null;
@@ -56,10 +57,10 @@ public class AchievementDao {
                 }
             }
         }
-
         return achievement;
     }
 
+    // Get all achievements (without awardedAt)
     public List<Achievement> getAllAchievements() throws SQLException {
         String sql = "SELECT * FROM achievements";
         List<Achievement> achievements = new ArrayList<>();
@@ -77,10 +78,10 @@ public class AchievementDao {
                 ));
             }
         }
-
         return achievements;
     }
 
+    // Delete achievement by ID
     public boolean deleteAchievement(long achievementId) throws SQLException {
         String sql = "DELETE FROM achievements WHERE achievement_id = ?";
 
