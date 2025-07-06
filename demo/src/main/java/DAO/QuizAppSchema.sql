@@ -169,7 +169,7 @@ CREATE TABLE possible_answers (
 
 -- VIEWS --
 
---Top 10 most popular quizzes
+--  Top 10 most popular quizzes
 CREATE VIEW view_popular_quizzes AS
 SELECT
     q.quiz_id,
@@ -182,7 +182,7 @@ FROM quizzes q
 ORDER BY q.submissions_number DESC
     LIMIT 10;
 
---Top 10 recently created quizzes
+--  Top 10 recently created quizzes
 CREATE VIEW view_recent_quizzes AS
 SELECT
     q.quiz_id,
@@ -195,7 +195,7 @@ FROM quizzes q
 ORDER BY q.created_at DESC
     LIMIT 10;
 
---Shows quizzes the user has recently taken or created
+--  Shows quizzes the user has recently taken or created
 CREATE VIEW view_user_recent_activity AS
 SELECT
     u.user_id,
@@ -218,7 +218,7 @@ SELECT
 FROM quizzes q
          JOIN users u ON q.created_by = u.user_id;
 
---Shows achievements earned by a user
+--  Shows achievements earned by a user
 CREATE VIEW view_user_achievements AS
 SELECT
     ua.user_id,
@@ -230,7 +230,7 @@ FROM user_achievements ua
          JOIN users u ON ua.user_id = u.user_id
          JOIN achievements a ON ua.achievement_id = a.achievement_id;
 
---Recent unread messages with type info
+--  Recent unread messages with type info
 CREATE VIEW view_unread_messages_summary AS
 SELECT
     m.message_id,
@@ -244,7 +244,7 @@ FROM messages m
 WHERE m.is_read = FALSE
 ORDER BY m.sent_at DESC;
 
---Friends’ recent quiz or achievement activity
+--  Friends’ recent quiz or achievement activity
 CREATE VIEW view_friends_recent_activity AS
 SELECT
     f.user_id1 AS viewer_id,
@@ -283,7 +283,7 @@ FROM friendships f
          JOIN users u ON f.user_id2 = u.user_id
          JOIN user_achievements ua ON ua.user_id = u.user_id;
 
---Top 10 scores on a specific quiz
+--  Top 10 scores on a specific quiz
 CREATE VIEW view_quiz_leaderboard AS
 SELECT
     s.quiz_id,
@@ -297,7 +297,7 @@ GROUP BY s.quiz_id, s.user_id
 ORDER BY top_score DESC, best_time ASC
     LIMIT 10;
 
---Shows a user’s history on one quiz, sortable by time, score, or accuracy
+--  Shows a user’s history on one quiz, sortable by time, score, or accuracy
 CREATE VIEW view_user_quiz_performance AS
 SELECT
     s.user_id,
