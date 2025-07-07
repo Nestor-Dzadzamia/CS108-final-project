@@ -1,29 +1,75 @@
 package Models;
 
+import java.sql.Timestamp;
+
 public class Quiz {
-    private long id;
-    private String title;
+    private long quizId;
+    private String quizTitle;
     private String description;
-    private String creator;
-    private long submissions;
-    private String createdAt;
+    private Long createdBy;
+    private boolean randomized;
+    private boolean isMultiplePage;
+    private boolean immediateCorrection;
+    private boolean allowPractice;
+    private Timestamp createdAt;
+    private Long quizCategory;
+    private Long totalTimeLimit;
+    private long submissionsNumber;
 
-    // Getters and setters
-    public long getId() { return id; }
-    public void setId(long id) { this.id = id; }
+    public Quiz() { } // no-arg
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public Quiz(long quizId, String quizTitle, String description, Long createdBy,
+                boolean randomized, boolean isMultiplePage, boolean immediateCorrection,
+                boolean allowPractice, Timestamp createdAt, Long quizCategory,
+                Long totalTimeLimit, long submissionsNumber) {
+        this.quizId = quizId;
+        this.quizTitle = quizTitle;
+        this.description = description;
+        this.createdBy = createdBy;
+        this.randomized = randomized;
+        this.isMultiplePage = isMultiplePage;
+        this.immediateCorrection = immediateCorrection;
+        this.allowPractice = allowPractice;
+        this.createdAt = createdAt;
+        this.quizCategory = quizCategory;
+        this.totalTimeLimit = totalTimeLimit;
+        this.submissionsNumber = submissionsNumber;
+    }
+
+
+    public long getQuizId() { return quizId; }
+    public void setQuizId(long quizId) { this.quizId = quizId; }
+
+    public String getQuizTitle() { return quizTitle; }
+    public void setQuizTitle(String quizTitle) { this.quizTitle = quizTitle; }
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public String getCreator() { return creator; }
-    public void setCreator(String creator) { this.creator = creator; }
+    public Long getCreatedBy() { return createdBy; }
+    public void setCreatedBy(Long createdBy) { this.createdBy = createdBy; }
 
-    public long getSubmissions() { return submissions; }
-    public void setSubmissions(long submissions) { this.submissions = submissions; }
+    public boolean isRandomized() { return randomized; }
+    public void setRandomized(boolean randomized) { this.randomized = randomized; }
 
-    public String getCreatedAt() { return createdAt; }
-    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
+    public boolean isMultiplePage() { return isMultiplePage; }
+    public void setMultiplePage(boolean multiplePage) { isMultiplePage = multiplePage; }
+
+    public boolean isImmediateCorrection() { return immediateCorrection; }
+    public void setImmediateCorrection(boolean immediateCorrection) { this.immediateCorrection = immediateCorrection; }
+
+    public boolean isAllowPractice() { return allowPractice; }
+    public void setAllowPractice(boolean allowPractice) { this.allowPractice = allowPractice; }
+
+    public Timestamp getCreatedAt() { return createdAt; }
+    public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }
+
+    public Long getQuizCategory() { return quizCategory; }
+    public void setQuizCategory(Long quizCategory) { this.quizCategory = quizCategory; }
+
+    public Long getTotalTimeLimit() { return totalTimeLimit; }
+    public void setTotalTimeLimit(Long totalTimeLimit) { this.totalTimeLimit = totalTimeLimit; }
+
+    public long getSubmissionsNumber() { return submissionsNumber; }
+    public void setSubmissionsNumber(long submissionsNumber) { this.submissionsNumber = submissionsNumber; }
 }

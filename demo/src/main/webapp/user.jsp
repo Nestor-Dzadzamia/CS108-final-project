@@ -157,7 +157,7 @@
     %>
     <ul>
       <% for (Quiz q : myQuizzes) { %>
-      <li><strong><%= q.getTitle() %></strong> (Created on: <%= q.getCreatedAt() != null ? q.getCreatedAt().toString().substring(0,10) : "N/A" %>)</li>
+      <li><strong><%= q.getQuizTitle() %></strong> (Created on: <%= q.getCreatedAt() != null ? q.getCreatedAt().toString().substring(0,10) : "N/A" %>)</li>
       <% } %>
     </ul>
     <% } else { %>

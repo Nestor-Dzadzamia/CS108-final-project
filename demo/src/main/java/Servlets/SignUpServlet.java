@@ -34,6 +34,7 @@ public class SignUpServlet extends HttpServlet {
             boolean success = userDao.insertUser(user);
 
             if (success) {
+                // request.getSession().setAttribute("user", user);
                 response.sendRedirect("homepage.jsp");
             } else {
                 // fallback error message
