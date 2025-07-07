@@ -1,7 +1,11 @@
+<%@ page import="DAO.QuizDao" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.List" %>
 <%@ page import="Models.Quiz" %>
 <%@ page import="DB.DBConnection" %>
+<%
+    QuizDao quizDao = new QuizDao();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,14 +86,20 @@
             List<Quiz> recent = (List<Quiz>) request.getAttribute("recentQuizzes");
             if (recent != null && !recent.isEmpty()) {
                 for (Quiz quiz : recent) {
+                    String creatorUsername = "Unknown";
+                    try {
+                        creatorUsername = quizDao.getCreatorUsernameByQuizId(quiz.getQuizId());
+                    } catch (Exception e) {
+                        // You may want to log this in production
+                    }
         %>
         <div class="col-md-4">
             <div class="card quiz-card shadow-sm h-100">
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title"><%= quiz.getTitle() %></h5>
+                    <h5 class="card-title"><%= quiz.getQuizTitle() %></h5>
                     <p class="card-text flex-grow-1"><%= quiz.getDescription() == null ? "No description available." : quiz.getDescription() %></p>
-                    <small class="text-muted">Created by <%= quiz.getCreator() %></small>
-                    <a href="takeQuiz?id=<%= quiz.getId() %>" class="btn btn-outline-primary mt-3">Take Quiz</a>
+                    <small class="text-muted">Created by <%= creatorUsername %></small>
+                    <a href="takeQuiz?id=<%= quiz.getQuizId() %>" class="btn btn-outline-primary mt-3">Take Quiz</a>
                 </div>
             </div>
         </div>
