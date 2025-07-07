@@ -9,7 +9,7 @@ public class AppSessionListener implements HttpSessionListener {
 
     @Override
     public void sessionCreated(HttpSessionEvent se) {
-        System.out.println("Session created: " + se.getSession().getId());
+        se.getSession().setAttribute("user", null); // default value of user (guest)
     }
 
     @Override
