@@ -163,7 +163,7 @@
     <% } else { %>
     <p>You haven’t created any quizzes yet.</p>
     <% } %>
-    <form action="createQuiz" method="get" style="margin-top: 1rem;">
+    <form action="create-quiz-setup" method="get" style="margin-top: 1rem;">
       <button class="button" type="submit">Create New Quiz</button>
     </form>
   </div>

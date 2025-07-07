@@ -1,47 +1,47 @@
 -- USERS
 INSERT INTO users (username, email, hashed_password, salt_password, num_quizzes_created) VALUES
-    ('Nestor_Dzadzamia', 'Nestor@gmail.com', '452928968d7f7fdc3ccadcb7219bf4c8ccfbd12c', '', 2),
-    ('Sandro_Mamamtavrishvili', 'Sandro@gmail.com', '64bc56ddc1b256138a1e36319a3da09ebbb31f70', '', 2),
-    ('Saba_Delibashvili', 'Saba@gmail.com', '3402f1109751882581c2b3a68a0af205e0d49e46', '', 1),
-    ('Giorgi_Urtmelidze', 'Giorgi@gmail.com', '1d65c13a970a22a4cceb4ffc82fac7abb8e73194', '', 1);
+                                                                                             ('Nestor_Dzadzamia', 'Nestor@gmail.com', '452928968d7f7fdc3ccadcb7219bf4c8ccfbd12c', '', 2),
+                                                                                             ('Sandro_Mamamtavrishvili', 'Sandro@gmail.com', '64bc56ddc1b256138a1e36319a3da09ebbb31f70', '', 2),
+                                                                                             ('Saba_Delibashvili', 'Saba@gmail.com', '3402f1109751882581c2b3a68a0af205e0d49e46', '', 1),
+                                                                                             ('Giorgi_Urtmelidze', 'Giorgi@gmail.com', '1d65c13a970a22a4cceb4ffc82fac7abb8e73194', '', 1);
 
 
 -- CATEGORIES
-INSERT INTO categories (category_name) VALUES 
-	('Sports'), 
-    ('History'),
-    ('Math'),
-    ('Biology'),
-    ('Music'),
-    ('Movies');
+INSERT INTO categories (category_name) VALUES
+                                           ('Sports'),
+                                           ('History'),
+                                           ('Math'),
+                                           ('Biology'),
+                                           ('Music'),
+                                           ('Movies');
 
 
 -- QUIZZES
-INSERT INTO quizzes (quiz_title, description, created_by, randomized, is_multiple_page, immediate_correction, allow_practice, quiz_category, total_time_limit) VALUES 
-	('Guess Georgian athletes', 'Show how well you know Georgian sportsmans', 1, FALSE, FALSE, FALSE, FALSE, 1, 20),
-	('History of Georgia', 'Show your knowledge of Georgian history', 2, TRUE, TRUE, TRUE, TRUE, 2, 20),
-    ('Math Genius', 'Test your skills with challenging math problems!', 3, TRUE, FALSE, TRUE, TRUE, 3, 25),
-    ('Biology Facts', 'Explore the wonders of life science with this quiz.', 4, FALSE, TRUE, FALSE, TRUE, 4, 15),
-    ('Music Legends', 'See how much you know about world-famous musicians and bands.', 1, TRUE, FALSE, FALSE, TRUE, 5, 20),
-    ('Famous Movies', 'Guess the movie from its plot and quotes!', 2, TRUE, TRUE, FALSE, FALSE, 6, 20);
-    
-    
+INSERT INTO quizzes (quiz_title, description, created_by, randomized, is_multiple_page, immediate_correction, allow_practice, quiz_category, total_time_limit) VALUES
+                                                                                                                                                                   ('Guess Georgian athletes', 'Show how well you know Georgian sportsmans', 1, FALSE, FALSE, FALSE, FALSE, 1, 20),
+                                                                                                                                                                   ('History of Georgia', 'Show your knowledge of Georgian history', 2, TRUE, TRUE, TRUE, TRUE, 2, 20),
+                                                                                                                                                                   ('Math Genius', 'Test your skills with challenging math problems!', 3, TRUE, FALSE, TRUE, TRUE, 3, 25),
+                                                                                                                                                                   ('Biology Facts', 'Explore the wonders of life science with this quiz.', 4, FALSE, TRUE, FALSE, TRUE, 4, 15),
+                                                                                                                                                                   ('Music Legends', 'See how much you know about world-famous musicians and bands.', 1, TRUE, FALSE, FALSE, TRUE, 5, 20),
+                                                                                                                                                                   ('Famous Movies', 'Guess the movie from its plot and quotes!', 2, TRUE, TRUE, FALSE, FALSE, 6, 20);
+
+
 -- QUESTIONS
-    
+
 -- Guess Georgian athletes (quiz_id = 1)
 INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_limit, question_order) VALUES
-    (1, 'MatchingQuestion', 'Match each athlete to their sport.', NULL, 120, 1),
-    (1, 'MultiAnswer', 'List all current Georgian Olympic gold medalists.', NULL, 120, 2),
-    (1, 'MultipleChoiceAnswer', 'Who is the most decorated Georgian judo champion?', NULL, 120, 3),
-    (1, 'MultiSelectQeustion', 'Select all Georgian athletes who have competed at the Olympics.', NULL, 120, 4),
-    (1, 'PictureResponse', 'Name the athlete shown in this picture.', 'georgian_athlete.jpg', 120, 5),
-    (1, 'QuestionResponse', 'Who was the first Georgian to win an Olympic gold medal?', NULL, 120, 6);
+                                                                                                         (1, 'MatchingQuestion', 'Match each athlete to their sport.', NULL, 120, 1),
+                                                                                                         (1, 'MultiAnswer', 'List all current Georgian Olympic gold medalists.', NULL, 120, 2),
+                                                                                                         (1, 'MultipleChoiceAnswer', 'Who is the most decorated Georgian judo champion?', NULL, 120, 3),
+                                                                                                         (1, 'MultiSelectQeustion', 'Select all Georgian athletes who have competed at the Olympics.', NULL, 120, 4),
+                                                                                                         (1, 'PictureResponse', 'Name the athlete shown in this picture.', 'georgian_athlete.jpg', 120, 5),
+                                                                                                         (1, 'QuestionResponse', 'Who was the first Georgian to win an Olympic gold medal?', NULL, 120, 6);
 
 -- History of Georgia (quiz_id = 2)
 INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_limit, question_order) VALUES
-    (2, 'MatchingQuestion', 'Match each king to their reign period.', NULL, 120, 1),
-    (2, 'MultiAnswer', 'Name all capitals Georgia has had throughout history.', NULL, 120, 2),
-    (2, 'MultipleChoiceAnswer', 'Who was Georgia\'s first president?', NULL, 120, 3),
+                                                                                                         (2, 'MatchingQuestion', 'Match each king to their reign period.', NULL, 120, 1),
+                                                                                                         (2, 'MultiAnswer', 'Name all capitals Georgia has had throughout history.', NULL, 120, 2),
+                                                                                                         (2, 'MultipleChoiceAnswer', 'Who was Georgia\'s first president?', NULL, 120, 3),
     (2, 'MultiSelectQeustion', 'Select all correct statements about the Georgian Golden Age.', NULL, 120, 4),
     (2, 'PictureResponse', 'Name the historic monument in the image.', 'georgia_monument.jpg', 120, 5),
     (2, 'QuestionResponse', 'When did Georgia declare independence from the Soviet Union?', NULL, 120, 6);
@@ -511,4 +511,3 @@ VALUES
     (2, 3),
     (3, 4),
     (1, 3);
-
