@@ -94,23 +94,25 @@ public class QuizDao {
 
         return quizzes;
     }
+
+
     public Quiz getQuizById(long quizId) throws SQLException {
         String sql = """
-    SELECT q.id AS quiz_id,
-           q.quiz_title,
-           q.description,
-           u.username AS creator,
-           q.created_at,
-           COALESCE(s.submissions_count, 0) AS submissions
-    FROM quizzes q
-    JOIN users u ON q.created_by = u.id
-    LEFT JOIN (
-        SELECT quiz_id, COUNT(*) AS submissions_count
-        FROM submissions
-        GROUP BY quiz_id
-    ) s ON q.id = s.quiz_id
-    WHERE q.id = ?
-    """;
+SELECT q.quiz_id,
+       q.quiz_title,
+       q.description,
+       u.username AS creator,
+       q.created_at,
+       COALESCE(s.submissions_count, 0) AS submissions
+FROM quizzes q
+JOIN users u ON q.created_by = u.user_id
+LEFT JOIN (
+    SELECT quiz_id, COUNT(*) AS submissions_count
+    FROM submissions
+    GROUP BY quiz_id
+) s ON q.quiz_id = s.quiz_id
+WHERE q.quiz_id = ?
+""";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -132,6 +134,7 @@ public class QuizDao {
         }
         return null;
     }
+
 
 
 
