@@ -94,6 +94,64 @@ public class QuizDao {
 
         return quizzes;
     }
+    public Quiz getQuizById(long quizId) throws SQLException {
+        String sql = """
+    SELECT q.id AS quiz_id,
+           q.quiz_title,
+           q.description,
+           u.username AS creator,
+           q.created_at,
+           COALESCE(s.submissions_count, 0) AS submissions
+    FROM quizzes q
+    JOIN users u ON q.created_by = u.id
+    LEFT JOIN (
+        SELECT quiz_id, COUNT(*) AS submissions_count
+        FROM submissions
+        GROUP BY quiz_id
+    ) s ON q.id = s.quiz_id
+    WHERE q.id = ?
+    """;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, quizId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Quiz quiz = new Quiz();
+                    quiz.setId(rs.getLong("quiz_id"));
+                    quiz.setTitle(rs.getString("quiz_title"));
+                    quiz.setDescription(rs.getString("description"));
+                    quiz.setCreator(rs.getString("creator"));
+                    quiz.setCreatedAt(rs.getString("created_at"));
+                    quiz.setSubmissions(rs.getLong("submissions"));
+                    return quiz;
+                }
+            }
+        }
+        return null;
+    }
+
+
+
+    public int getQuestionsCount(long quizId) throws SQLException {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM questions WHERE quiz_id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, quizId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt(1);
+                }
+            }
+        }
+
+        return count;
+    }
+
 
 
 }
