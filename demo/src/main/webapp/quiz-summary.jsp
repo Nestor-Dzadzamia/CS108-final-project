@@ -55,10 +55,10 @@
         }
     }
 
-    // CATEGORY BACKGROUND LOGIC
+    // CATEGORY BACKGROUND LOGIC - FIXED!
     String backgroundStyle = "";
     if (categoryName != null && !categoryName.isEmpty()) {
-        backgroundStyle = "background: url('images/Backgrounds/" + categoryName + ".png') center/cover no-repeat fixed;";
+        backgroundStyle = "background: url('" + request.getContextPath() + "/images/Backgrounds/" + categoryName + ".png') center/cover no-repeat fixed;";
     }
 %>
 <body <%= !backgroundStyle.isEmpty() ? "style=\"" + backgroundStyle + "\"" : "" %>>
@@ -83,7 +83,7 @@
         <ul class="list-unstyled mb-3">
             <li><strong>Created by:</strong> <%= creatorUsername %></li>
             <li><strong>Total Time Limit:</strong>
-                <%= (quiz.getTotalTimeLimit() == 0) ? "No limit" : quiz.getTotalTimeLimit() + " minutes" %>
+                <%= (quiz.getTotalTimeLimit() == 0 || quiz.getTotalTimeLimit() == 0) ? "No limit" : quiz.getTotalTimeLimit() + " minutes" %>
             </li>
             <li><strong>Questions:</strong> <%= numQuestions %></li>
             <li><strong>Taken:</strong> <%= quiz.getSubmissionsNumber() %> Times </li>
