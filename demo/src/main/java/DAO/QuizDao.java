@@ -243,4 +243,14 @@ public class QuizDao {
         }
     }
 
+    public boolean deleteQuiz(long quizId) throws SQLException {
+        String sql = "DELETE FROM quizzes WHERE quiz_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, quizId);
+            int affected = stmt.executeUpdate();
+            return affected > 0;
+        }
+    }
+
 }

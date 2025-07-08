@@ -14,6 +14,7 @@ CREATE TABLE users (
                        num_quizzes_taken BIGINT DEFAULT 0,
                        was_top1 BOOLEAN DEFAULT FALSE,
                        taken_practice BOOLEAN DEFAULT FALSE,
+                       role ENUM('user', 'admin') NOT NULL DEFAULT 'user',
                        CHECK (email LIKE '%@gmail.com')
 );
 
@@ -165,6 +166,16 @@ CREATE TABLE possible_answers (
                                   question_id BIGINT NOT NULL,
                                   possible_answer_text TEXT NOT NULL,
                                   FOREIGN KEY (question_id) REFERENCES questions(question_id) ON DELETE CASCADE
+);
+
+CREATE TABLE announcements (
+                               announcement_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                               title VARCHAR(200) NOT NULL,
+                               message TEXT NOT NULL,
+                               created_by BIGINT,
+                               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                               is_active BOOLEAN DEFAULT TRUE,
+                               FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE SET NULL
 );
 
 -- VIEWS --

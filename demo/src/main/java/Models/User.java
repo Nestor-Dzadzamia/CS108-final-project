@@ -13,6 +13,7 @@ public class User {
     private Long numQuizzesTaken;
     private Boolean wasTop1;
     private Boolean takenPractice;
+    private String role;
 
     // Default constructor
     public User() {}
@@ -20,7 +21,7 @@ public class User {
     // Full parameterized constructor
     public User(Long id, String username, String email, String hashedPassword, String salt,
                 Timestamp timeCreated, Long numQuizzesCreated, Long numQuizzesTaken,
-                Boolean wasTop1, Boolean takenPractice) {
+                Boolean wasTop1, Boolean takenPractice, String role) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -31,6 +32,7 @@ public class User {
         this.numQuizzesTaken = numQuizzesTaken;
         this.wasTop1 = wasTop1;
         this.takenPractice = takenPractice;
+        this.role = role;
     }
 
     // Getters and Setters
@@ -64,4 +66,8 @@ public class User {
 
     public Boolean getTakenPractice() { return takenPractice; }
     public void setTakenPractice(Boolean takenPractice) { this.takenPractice = takenPractice; }
+
+    public String getRole() { return role; }
+
+    public void setRole(String role) { this.role = role; }
 }
