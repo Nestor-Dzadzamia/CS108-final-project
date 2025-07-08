@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
-    Integer questionCount = (Integer) session.getAttribute("question_count");
+    Long questionCount = (Long) session.getAttribute("question_count");
     if (questionCount == null || questionCount <= 0) {
-        questionCount = 1;
+        questionCount = 1L;
     }
 %>
 <!DOCTYPE html>
@@ -34,7 +34,7 @@
             font-weight: bold;
         }
 
-        .total-answers-section {
+        .total-answers-section, .ordered-checkbox {
             display: none;
         }
     </style>
@@ -47,32 +47,42 @@
         function updateAnswerFields(index) {
             const type = document.getElementById('qtype-' + index).value;
             const totalAnswerBlock = document.getElementById('total-answers-' + index);
+            const orderedCheckboxBlock = document.getElementById('ordered-checkbox-' + index);
 
+            // Show total answers for these types
             if (type === 'multiple-choice' || type === 'multiple-multiple-choice') {
                 totalAnswerBlock.style.display = 'block';
             } else {
                 totalAnswerBlock.style.display = 'none';
+            }
+
+            // Show ordered checkbox ONLY for multi-answer
+            if (type === 'multi-answer') {
+                orderedCheckboxBlock.style.display = 'block';
+            } else {
+                orderedCheckboxBlock.style.display = 'none';
             }
         }
     </script>
 </head>
 <body class="bg-light">
 <div class="container mt-5">
-    <h2 class="text-center mb-4">
-        Step 1: Choose Question Types
-    </h2>
+    <h2 class="text-center mb-4">Step 1: Choose Question Types</h2>
 
-    <!-- Toggleable Instructions -->
+    <c:if test="${not empty error}">
+        <div class="alert alert-danger" role="alert">${error}</div>
+    </c:if>
+
     <div class="mb-3">
         <span class="toggle-icon" onclick="toggleInstructions()">&#x25B6; Show Instructions</span>
         <div id="instructions">
             <ul>
                 <li>Select a type for each question.</li>
-                <li>Select total number of correct answers(1-20) for each question.</li>
-                <li>For <strong>Multiple Choice questions</strong>, correct answer should be <strong>1</strong>.</li>
-                <li>For <strong>Multiple Choice With Multiple Answers questions</strong>, correct answers must be between <strong>2 to (total - 1)</strong>.</li>
-                <li>For <strong>Multiple Choice type questions</strong>, total answers must be between <strong>4 and 8</strong>.</li>
+                <li>Select total number of correct answers (1–20).</li>
+                <li>For <strong>Multiple Choice</strong>, correct answers = 1.</li>
+                <li>For <strong>Multiple Choice With Multiple Answers</strong>, max correct = total - 1.</li>
                 <li>Only those two types require both <strong>Correct Answers</strong> and <strong>Total Answers</strong>.</li>
+                <li>For <strong>Multi Answer</strong>, you can mark if answers must be in a specific order.</li>
             </ul>
         </div>
     </div>
@@ -100,7 +110,7 @@
 
             <!-- Number of Correct Answers -->
             <div class="mb-3">
-                <label class="form-label">Number of Correct Answers </label>
+                <label class="form-label">Number of Correct Answers</label>
                 <input
                         type="number"
                         min="1"
@@ -113,7 +123,7 @@
                 >
             </div>
 
-            <!-- Total Answers: Only for multiple-choice types -->
+            <!-- Total Answers (only for multiple-choice types) -->
             <div class="mb-3 total-answers-section" id="total-answers-<%= i %>">
                 <label class="form-label">Total Number of Answers</label>
                 <input
@@ -122,9 +132,21 @@
                         max="8"
                         name="question_<%= i %>_total_answers"
                         class="form-control"
-                        oninvalid="this.setCustomValidity('Please enter a valid total number of answers (4–8).')"
+                        oninvalid="this.setCustomValidity('Enter total answers (4–8).')"
                         oninput="this.setCustomValidity('')"
                 >
+            </div>
+
+            <!-- ✅ Ordered checkbox (only for multi-answer) -->
+            <div class="form-check ordered-checkbox" id="ordered-checkbox-<%= i %>">
+                <input class="form-check-input"
+                       type="checkbox"
+                       id="question-<%= i %>-ordered"
+                       name="question_<%= i %>_ordered"
+                       value="true">
+                <label class="form-check-label" for="question-<%= i %>-ordered">
+                    Is answer order important?
+                </label>
             </div>
         </div>
         <% } %>

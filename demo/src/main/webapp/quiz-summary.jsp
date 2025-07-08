@@ -83,7 +83,7 @@
         <ul class="list-unstyled mb-3">
             <li><strong>Created by:</strong> <%= creatorUsername %></li>
             <li><strong>Total Time Limit:</strong>
-                <%= (quiz.getTotalTimeLimit() == null || quiz.getTotalTimeLimit() == 0) ? "No limit" : quiz.getTotalTimeLimit() + " minutes" %>
+                <%= (quiz.getTotalTimeLimit() == 0) ? "No limit" : quiz.getTotalTimeLimit() + " minutes" %>
             </li>
             <li><strong>Questions:</strong> <%= numQuestions %></li>
             <li><strong>Taken:</strong> <%= quiz.getSubmissionsNumber() %> Times </li>

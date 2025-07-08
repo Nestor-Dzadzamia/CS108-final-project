@@ -32,7 +32,7 @@
 <body class="bg-light">
 <div class="container mt-5">
     <h2 class="text-center mb-4">Enter Quiz Questions</h2>
-    <form action="SaveQuizServlet" method="post">
+    <form action="save-quiz" method="post">
         <% for (Map.Entry<Integer, String> entry : questionTypes.entrySet()) {
             int index = entry.getKey();
             String type = entry.getValue();

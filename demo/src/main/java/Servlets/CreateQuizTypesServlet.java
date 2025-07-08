@@ -14,9 +14,9 @@ public class CreateQuizTypesServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        Integer questionCount = (Integer) session.getAttribute("question_count");
+        Long questionCount = (Long) session.getAttribute("question_count");
         if (questionCount == null || questionCount <= 0) {
-            questionCount = 1;
+            questionCount = 1L;
         }
 
         Map<Integer, String> questionTypes = new HashMap<>();

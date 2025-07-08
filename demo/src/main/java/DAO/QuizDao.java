@@ -9,6 +9,50 @@ import java.util.List;
 
 public class QuizDao {
 
+    public long insertQuiz(Quiz quiz) throws SQLException {
+        String sql = "INSERT INTO quizzes (quiz_title, description, created_by, randomized, is_multiple_page, " +
+                "immediate_correction, allow_practice, quiz_category, total_time_limit) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, quiz.getQuizTitle());
+            stmt.setString(2, quiz.getDescription());
+            if (quiz.getCreatedBy() != 0) {
+                stmt.setLong(3, quiz.getCreatedBy());
+            } else {
+                stmt.setNull(3, Types.BIGINT);
+            }
+            stmt.setBoolean(4, quiz.isRandomized());
+            stmt.setBoolean(5, quiz.isMultiplePage());
+            stmt.setBoolean(6, quiz.isImmediateCorrection());
+            stmt.setBoolean(7, quiz.isAllowPractice());
+
+            if (quiz.getQuizCategory() != 0) {
+                stmt.setLong(8, quiz.getQuizCategory());
+            } else {
+                stmt.setNull(8, Types.BIGINT);
+            }
+
+            if (quiz.getTotalTimeLimit() != 0) {
+                stmt.setLong(9, quiz.getTotalTimeLimit());
+            } else {
+                stmt.setNull(9, Types.BIGINT);
+            }
+
+            stmt.executeUpdate();
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getLong(1); // return generated quiz_id
+                }
+            }
+        }
+
+        throw new SQLException("Quiz insertion failed — no ID returned.");
+    }
+
     private Quiz mapRow(ResultSet rs) throws SQLException {
         Quiz quiz = new Quiz();
         quiz.setQuizId(rs.getLong("quiz_id"));
@@ -68,7 +112,7 @@ public class QuizDao {
     }
 
     public String getQuizCategory(Quiz quiz) {
-        if (quiz == null || quiz.getQuizCategory() == null) return null;
+        if (quiz == null || quiz.getQuizCategory() == 0) return null;
         String sql = "SELECT category_name FROM categories WHERE category_id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
