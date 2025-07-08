@@ -3,56 +3,117 @@ package Models;
 import java.sql.Timestamp;
 
 public class Message {
-    private long messageId;
-    private long senderId;
-    private long receiverId;
-    private String messageType; // friend_request, challenge, note
+    private Long messageId;
+    private Long senderId;
+    private Long receiverId;
+    private String messageType;
     private String content;
-    private Long quizId;          // nullable
-    private Long friendRequestId; // nullable
+    private Long quizId;
+    private Long friendRequestId;
     private Timestamp sentAt;
     private boolean isRead;
 
+    // Additional fields for display
+    private String senderName;
+    private String quizTitle;
+
+    // Constructors
     public Message() {}
 
-    public Message(long messageId, long senderId, long receiverId, String messageType, String content,
-                   Long quizId, Long friendRequestId, Timestamp sentAt, boolean isRead) {
-        this.messageId = messageId;
+    public Message(Long senderId, Long receiverId, String messageType, String content) {
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.messageType = messageType;
         this.content = content;
-        this.quizId = quizId;
-        this.friendRequestId = friendRequestId;
-        this.sentAt = sentAt;
-        this.isRead = isRead;
+        this.isRead = false;
     }
 
-    // Getters and setters
-    public long getMessageId() { return messageId; }
-    public void setMessageId(long messageId) { this.messageId = messageId; }
+    // Getters and Setters
+    public Long getMessageId() {
+        return messageId;
+    }
 
-    public long getSenderId() { return senderId; }
-    public void setSenderId(long senderId) { this.senderId = senderId; }
+    public void setMessageId(Long messageId) {
+        this.messageId = messageId;
+    }
 
-    public long getReceiverId() { return receiverId; }
-    public void setReceiverId(long receiverId) { this.receiverId = receiverId; }
+    public Long getSenderId() {
+        return senderId;
+    }
 
-    public String getMessageType() { return messageType; }
-    public void setMessageType(String messageType) { this.messageType = messageType; }
+    public void setSenderId(Long senderId) {
+        this.senderId = senderId;
+    }
 
-    public String getContent() { return content; }
-    public void setContent(String content) { this.content = content; }
+    public Long getReceiverId() {
+        return receiverId;
+    }
 
-    public Long getQuizId() { return quizId; }
-    public void setQuizId(Long quizId) { this.quizId = quizId; }
+    public void setReceiverId(Long receiverId) {
+        this.receiverId = receiverId;
+    }
 
-    public Long getFriendRequestId() { return friendRequestId; }
-    public void setFriendRequestId(Long friendRequestId) { this.friendRequestId = friendRequestId; }
+    public String getMessageType() {
+        return messageType;
+    }
 
-    public Timestamp getSentAt() { return sentAt; }
-    public void setSentAt(Timestamp sentAt) { this.sentAt = sentAt; }
+    public void setMessageType(String messageType) {
+        this.messageType = messageType;
+    }
 
-    public boolean isRead() { return isRead; }
-    public void setRead(boolean read) { isRead = read; }
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Long getQuizId() {
+        return quizId;
+    }
+
+    public void setQuizId(Long quizId) {
+        this.quizId = quizId;
+    }
+
+    public Long getFriendRequestId() {
+        return friendRequestId;
+    }
+
+    public void setFriendRequestId(Long friendRequestId) {
+        this.friendRequestId = friendRequestId;
+    }
+
+    public Timestamp getSentAt() {
+        return sentAt;
+    }
+
+    public void setSentAt(Timestamp sentAt) {
+        this.sentAt = sentAt;
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public String getQuizTitle() {
+        return quizTitle;
+    }
+
+    public void setQuizTitle(String quizTitle) {
+        this.quizTitle = quizTitle;
+    }
 }

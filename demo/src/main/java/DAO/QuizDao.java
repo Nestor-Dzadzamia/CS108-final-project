@@ -151,20 +151,6 @@ public class QuizDao {
         }
         return null;
     }
-
-    public List<Quiz> getAllQuizzes() throws SQLException {
-        List<Quiz> quizzes = new ArrayList<>();
-        String sql = "SELECT * FROM quizzes";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                quizzes.add(mapRow(rs));
-            }
-        }
-        return quizzes;
-    }
-
     public List<Quiz> getQuizzesByUser(long userId) throws SQLException {
         List<Quiz> quizzes = new ArrayList<>();
         String sql = "SELECT * FROM quizzes WHERE created_by = ?";
@@ -219,4 +205,42 @@ public class QuizDao {
         }
         return 0;
     }
+    public List<Quiz> getAllQuizzes() throws SQLException {
+        String sql = "SELECT quiz_id, quiz_title FROM quizzes ORDER BY quiz_title";
+        List<Quiz> quizzes = new ArrayList<>();
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Quiz quiz = new Quiz();
+                quiz.setQuizId(rs.getLong("quiz_id"));
+                quiz.setQuizTitle(rs.getString("quiz_title"));
+                quizzes.add(quiz);
+            }
+        }
+        return quizzes;
+    }
+
+    public long getBestScore(long userId, long quizId) throws SQLException {
+        String sql = "SELECT MAX(score) FROM submissions WHERE user_id = ? AND quiz_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, userId);
+            stmt.setLong(2, quizId);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next() ? rs.getLong(1) : 0;
+        }
+    }
+
+    public String getQuizTitle(long quizId) throws SQLException {
+        String sql = "SELECT quiz_title FROM quizzes WHERE quiz_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, quizId);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next() ? rs.getString("quiz_title") : "Unknown Quiz";
+        }
+    }
+
 }
