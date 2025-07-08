@@ -40,5 +40,12 @@
   <p>Thank you for using our platform!</p>
   <a href="login.jsp" class="button">Log In Again</a>
 </div>
+
+<script>
+  setTimeout(function() {
+    window.location.href = '<%= request.getContextPath() %>/index.jsp';
+  }, 3000);
+</script>
+
 </body>
 </html>
