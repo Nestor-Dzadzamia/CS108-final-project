@@ -151,6 +151,18 @@ public class SaveQuizServlet extends HttpServlet {
                     }
                 }
             }
+            // Cleaning up all quiz-related session attributes after saving
+            session.removeAttribute("quiz_title");
+            session.removeAttribute("description");
+            session.removeAttribute("total_time_limit");
+            session.removeAttribute("quiz_category");
+            session.removeAttribute("randomized");
+            session.removeAttribute("is_multiple_page");
+            session.removeAttribute("immediate_correction");
+            session.removeAttribute("allow_practice");
+            session.removeAttribute("question_types");
+            session.removeAttribute("correct_counts");
+            session.removeAttribute("total_answers");
 
             resp.sendRedirect("homepage.jsp");
 
