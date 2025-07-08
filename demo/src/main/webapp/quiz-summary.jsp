@@ -91,7 +91,7 @@
         </ul>
 
         <% if (loggedIn) { %>
-        <form action="takeQuiz" method="get" class="mt-3">
+        <form action="take-quiz-starter" method="get" class="mt-3">
             <input type="hidden" name="id" value="<%= quiz.getQuizId() %>">
             <button class="btn btn-primary btn-lg">Take this Quiz</button>
         </form>
