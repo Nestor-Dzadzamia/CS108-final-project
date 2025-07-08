@@ -94,11 +94,35 @@ public class MessagesServlet extends HttpServlet {
                     String content = "challenged you to take \"" + quizTitle + "\"! Their best score: " + bestScore;
 
                     messageDao.sendChallenge(currentUser.getId(), receiverId, content, quizId);
+
+                    // Send real-time notification via WebSocket
+                    String notification = MessageWebSocketEndpoint.createMessageNotification(
+                            "challenge",
+                            currentUser.getUsername(),
+                            content,
+                            quizTitle,
+                            quizId
+                    );
+                    MessageWebSocketEndpoint.sendMessageToUser(receiverId, notification);
+
+                    request.setAttribute("success", "Challenge sent successfully!");
                 }
             } else if ("sendNote".equals(action)) {
                 String content = request.getParameter("content");
                 if (content != null && !content.trim().isEmpty()) {
                     messageDao.sendNote(currentUser.getId(), receiverId, content.trim());
+
+                    // Send real-time notification via WebSocket
+                    String notification = MessageWebSocketEndpoint.createMessageNotification(
+                            "note",
+                            currentUser.getUsername(),
+                            content.trim(),
+                            null,
+                            null
+                    );
+                    MessageWebSocketEndpoint.sendMessageToUser(receiverId, notification);
+
+                    request.setAttribute("success", "Note sent successfully!");
                 }
             }
 
