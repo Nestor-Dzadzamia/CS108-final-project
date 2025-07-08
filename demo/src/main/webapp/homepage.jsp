@@ -78,6 +78,7 @@
             <button class="btn btn-primary btn-lg mt-3">Create New Quiz</button>
         </form>
         <a href="friends" class="btn btn-outline-light btn-lg mt-2">Find Friends</a>
+        <a href="message" class="btn btn-outline-light btn-lg mt-2">Chat with Friends</a>
     </div>
 
     <!-- RECENT QUIZZES -->
