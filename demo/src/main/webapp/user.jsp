@@ -51,6 +51,7 @@
     .stats div {
       display: inline-block;
       width: 150px;
+      height: 120px;
       background: #e6f0fa;
       border-radius: 8px;
       padding: 1rem;
