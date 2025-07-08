@@ -81,7 +81,7 @@
         <p class="lead"><%= (quiz.getDescription() == null || quiz.getDescription().isEmpty()) ? "No description." : quiz.getDescription() %></p>
         <hr>
         <ul class="list-unstyled mb-3">
-            <li><strong>Created by:</strong> <%= creatorUsername %></li>
+            <li><strong>Created by:</strong> <a href="friends?action=profile&userId=<%= quiz.getCreatedBy() %>"><%= creatorUsername %></a></li>
             <li><strong>Total Time Limit:</strong>
                 <%= (quiz.getTotalTimeLimit() == 0 || quiz.getTotalTimeLimit() == 0) ? "No limit" : quiz.getTotalTimeLimit() + " minutes" %>
             </li>
