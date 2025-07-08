@@ -19,27 +19,32 @@
       display: inline-block;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
-    .message {
-      font-size: 1.2em;
-      margin-bottom: 1rem;
+    a.button {
+      display: inline-block;
+      margin-top: 1rem;
+      background-color: #0078d7;
+      color: white;
+      padding: 0.7rem 1.2rem;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
     }
-    .redirect-info {
-      color: #666;
-      font-size: 0.9em;
+    a.button:hover {
+      background-color: #005fa3;
     }
   </style>
 </head>
 <body>
 <div class="logout-box">
   <h1>You have been logged out.</h1>
-  <p class="message">Thank you for using our platform!</p>
-  <p class="redirect-info">Redirecting to login page...</p>
+  <p>Thank you for using our platform!</p>
+  <a href="login.jsp" class="button">Log In Again</a>
 </div>
 
 <script>
   setTimeout(function() {
     window.location.href = '<%= request.getContextPath() %>/index.jsp';
-  }, 2000);
+  }, 3000);
 </script>
 
 </body>
