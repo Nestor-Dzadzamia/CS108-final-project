@@ -33,7 +33,7 @@ INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_li
                                                                                                          (1, 'MatchingQuestion', 'Match each athlete to their sport.', NULL, 120, 1),
                                                                                                          (1, 'MultiAnswer', 'List all current Georgian Olympic gold medalists.', NULL, 120, 2),
                                                                                                          (1, 'MultipleChoiceAnswer', 'Who is the most decorated Georgian judo champion?', NULL, 120, 3),
-                                                                                                         (1, 'MultiSelectQeustion', 'Select all Georgian athletes who have competed at the Olympics.', NULL, 120, 4),
+                                                                                                         (1, 'MultiSelectQuestion', 'Select all Georgian athletes who have competed at the Olympics.', NULL, 120, 4),
                                                                                                          (1, 'PictureResponse', 'Name the athlete shown in this picture.', 'georgian_athlete.jpg', 120, 5),
                                                                                                          (1, 'QuestionResponse', 'Who was the first Georgian to win an Olympic gold medal?', NULL, 120, 6);
 
@@ -42,7 +42,7 @@ INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_li
                                                                                                          (2, 'MatchingQuestion', 'Match each king to their reign period.', NULL, 120, 1),
                                                                                                          (2, 'MultiAnswer', 'Name all capitals Georgia has had throughout history.', NULL, 120, 2),
                                                                                                          (2, 'MultipleChoiceAnswer', 'Who was Georgia\'s first president?', NULL, 120, 3),
-    (2, 'MultiSelectQeustion', 'Select all correct statements about the Georgian Golden Age.', NULL, 120, 4),
+    (2, 'MultiSelectQuestion', 'Select all correct statements about the Georgian Golden Age.', NULL, 120, 4),
     (2, 'PictureResponse', 'Name the historic monument in the image.', 'georgia_monument.jpg', 120, 5),
     (2, 'QuestionResponse', 'When did Georgia declare independence from the Soviet Union?', NULL, 120, 6);
 
@@ -51,7 +51,7 @@ INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_li
     (3, 'MatchingQuestion', 'Match each formula to the correct name.', NULL, 120, 1),
     (3, 'MultiAnswer', 'List all prime numbers between 1 and 20.', NULL, 120, 2),
     (3, 'MultipleChoiceAnswer', 'What is the value of π (pi) up to two decimal places?', NULL, 120, 3),
-    (3, 'MultiSelectQeustion', 'Select all statements that are always true for even numbers.', NULL, 120, 4),
+    (3, 'MultiSelectQuestion', 'Select all statements that are always true for even numbers.', NULL, 120, 4),
     (3, 'PictureResponse', 'What geometric shape is shown?', 'triangle.png', 120, 5),
     (3, 'QuestionResponse', 'Solve for x: 2x + 3 = 11.', NULL, 120, 6);
 
@@ -60,7 +60,7 @@ INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_li
     (4, 'MatchingQuestion', 'Match each animal to its correct habitat.', NULL, 120, 1),
     (4, 'MultiAnswer', 'Name all parts of the plant cell.', NULL, 120, 2),
     (4, 'MultipleChoiceAnswer', 'What is the powerhouse of the cell?', NULL, 120, 3),
-    (4, 'MultiSelectQeustion', 'Select all mammals from the following list.', NULL, 120, 4),
+    (4, 'MultiSelectQuestion', 'Select all mammals from the following list.', NULL, 120, 4),
     (4, 'PictureResponse', 'Identify the organ shown in the picture.', 'heart.png', 120, 5),
     (4, 'QuestionResponse', 'What is the process by which plants make their own food?', NULL, 120, 6);
 
@@ -69,7 +69,7 @@ INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_li
     (5, 'MatchingQuestion', 'Match each musician to their band.', NULL, 120, 1),
     (5, 'MultiAnswer', 'List all instruments in a standard rock band.', NULL, 120, 2),
     (5, 'MultipleChoiceAnswer', 'Who is known as the "Queen of Soul"?', NULL, 120, 3),
-    (5, 'MultiSelectQeustion', 'Select all Grammy-winning artists from the list.', NULL, 120, 4),
+    (5, 'MultiSelectQuestion', 'Select all Grammy-winning artists from the list.', NULL, 120, 4),
     (5, 'PictureResponse', 'Name the artist in the image.', 'beatles.jpg', 120, 5),
     (5, 'QuestionResponse', 'Who composed the "Fur Elise"?', NULL, 120, 6);
 
@@ -78,7 +78,7 @@ INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_li
     (6, 'MatchingQuestion', 'Match each movie to its director.', NULL, 120, 1),
     (6, 'MultiAnswer', 'List all movies directed by Christopher Nolan.', NULL, 120, 2),
     (6, 'MultipleChoiceAnswer', 'Which movie won the Oscar for Best Picture in 1994?', NULL, 120, 3),
-    (6, 'MultiSelectQeustion', 'Select all animated movies from the list.', NULL, 120, 4),
+    (6, 'MultiSelectQuestion', 'Select all animated movies from the list.', NULL, 120, 4),
     (6, 'PictureResponse', 'Name the movie shown in this picture.', 'inception.jpg', 120, 5),
     (6, 'QuestionResponse', 'Who played the main character in "Forrest Gump"?', NULL, 120, 6);
 
@@ -97,7 +97,7 @@ INSERT INTO correct_answers (question_id, answer_text, match_order) VALUES
     (2, 'Zurab Datunashvili', 3),
     -- Q3: MultipleChoiceAnswer
     (3, 'Varlam Liparteliani', 1),
-    -- Q4: MultiSelectQeustion
+    -- Q4: MultiSelectQuestion
     (4, 'Lasha Talakhadze', 1),
     (4, 'Zurab Datunashvili', 2),
     (4, 'Nino Salukvadze', 3),
@@ -118,7 +118,7 @@ INSERT INTO correct_answers (question_id, answer_text, match_order) VALUES
     (8, 'Kutaisi', 3),
     -- Q9: MultipleChoiceAnswer
     (9, 'Zviad Gamsakhurdia', 1),
-    -- Q10: MultiSelectQeustion
+    -- Q10: MultiSelectQuestion
     (10, 'Queen Tamar reigned during the Golden Age.', 1),
     (10, 'Georgia expanded its borders in the 12th century.', 2),
     -- Q11: PictureResponse
@@ -143,7 +143,7 @@ INSERT INTO correct_answers (question_id, answer_text, match_order) VALUES
     (14, '19', 8),
     -- Q15: MultipleChoiceAnswer
     (15, '3.14', 1),
-    -- Q16: MultiSelectQeustion
+    -- Q16: MultiSelectQuestion
     (16, 'Even numbers are divisible by 2.', 1),
     (16, 'Sum of two even numbers is even.', 2),
     -- Q17: PictureResponse
@@ -164,7 +164,7 @@ INSERT INTO correct_answers (question_id, answer_text, match_order) VALUES
     (20, 'Mitochondria', 4),
     -- Q21: MultipleChoiceAnswer
     (21, 'Mitochondria', 1),
-    -- Q22: MultiSelectQeustion
+    -- Q22: MultiSelectQuestion
     (22, 'Elephant', 1),
     (22, 'Bat', 2),
     (22, 'Whale', 3),
@@ -186,7 +186,7 @@ INSERT INTO correct_answers (question_id, answer_text, match_order) VALUES
     (26, 'Keyboard', 4),
     -- Q27: MultipleChoiceAnswer
     (27, 'Aretha Franklin', 1),
-    -- Q28: MultiSelectQeustion
+    -- Q28: MultiSelectQuestion
     (28, 'Adele', 1),
     (28, 'Beyoncé', 2),
     (28, 'Elton John', 3),
@@ -207,7 +207,7 @@ INSERT INTO correct_answers (question_id, answer_text, match_order) VALUES
     (32, 'Interstellar', 3),
     -- Q33: MultipleChoiceAnswer
     (33, 'Forrest Gump', 1),
-    -- Q34: MultiSelectQeustion
+    -- Q34: MultiSelectQuestion
     (34, 'Toy Story', 1),
     (34, 'Shrek', 2),
     (34, 'Finding Nemo', 3),
