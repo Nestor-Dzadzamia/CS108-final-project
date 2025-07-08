@@ -9,6 +9,7 @@ import java.util.List;
 
 public class QuizDao {
 
+    // Your teammate's method (preserved)
     public long insertQuiz(Quiz quiz) throws SQLException {
         String sql = "INSERT INTO quizzes (quiz_title, description, created_by, randomized, is_multiple_page, " +
                 "immediate_correction, allow_practice, quiz_category, total_time_limit) " +
@@ -19,7 +20,7 @@ public class QuizDao {
 
             stmt.setString(1, quiz.getQuizTitle());
             stmt.setString(2, quiz.getDescription());
-            if (quiz.getCreatedBy() != 0) {
+            if (quiz.getCreatedBy() != 0 && quiz.getCreatedBy() != 0) {
                 stmt.setLong(3, quiz.getCreatedBy());
             } else {
                 stmt.setNull(3, Types.BIGINT);
@@ -29,13 +30,13 @@ public class QuizDao {
             stmt.setBoolean(6, quiz.isImmediateCorrection());
             stmt.setBoolean(7, quiz.isAllowPractice());
 
-            if (quiz.getQuizCategory() != 0) {
+            if (quiz.getQuizCategory() != 0 && quiz.getQuizCategory() != 0) {
                 stmt.setLong(8, quiz.getQuizCategory());
             } else {
                 stmt.setNull(8, Types.BIGINT);
             }
 
-            if (quiz.getTotalTimeLimit() != 0) {
+            if (quiz.getTotalTimeLimit() != 0 && quiz.getTotalTimeLimit() != 0) {
                 stmt.setLong(9, quiz.getTotalTimeLimit());
             } else {
                 stmt.setNull(9, Types.BIGINT);
@@ -49,33 +50,46 @@ public class QuizDao {
                 }
             }
         }
-
         throw new SQLException("Quiz insertion failed — no ID returned.");
     }
 
+    // The robust, merged mapRow
     private Quiz mapRow(ResultSet rs) throws SQLException {
         Quiz quiz = new Quiz();
+
+        // Always present:
         quiz.setQuizId(rs.getLong("quiz_id"));
         quiz.setQuizTitle(rs.getString("quiz_title"));
         quiz.setDescription(rs.getString("description"));
 
-        // Nullable long fields
-        long createdBy = rs.getLong("created_by");
-        quiz.setCreatedBy(rs.wasNull() ? null : createdBy);
-
-        quiz.setRandomized(rs.getBoolean("randomized"));
-        quiz.setMultiplePage(rs.getBoolean("is_multiple_page"));
-        quiz.setImmediateCorrection(rs.getBoolean("immediate_correction"));
-        quiz.setAllowPractice(rs.getBoolean("allow_practice"));
-        quiz.setCreatedAt(rs.getTimestamp("created_at"));
-
-        Long quizCategory = rs.getLong("quiz_category");
-        quiz.setQuizCategory(rs.wasNull() ? null : quizCategory);
-
-        Long totalTimeLimit = rs.getLong("total_time_limit");
-        quiz.setTotalTimeLimit(rs.wasNull() ? null : totalTimeLimit);
-
-        // For views or summary tables: try both names
+        // Only set if column exists:
+        if (hasColumn(rs, "created_by")) {
+            long createdBy = rs.getLong("created_by");
+            quiz.setCreatedBy(rs.wasNull() ? null : createdBy);
+        }
+        if (hasColumn(rs, "randomized")) {
+            quiz.setRandomized(rs.getBoolean("randomized"));
+        }
+        if (hasColumn(rs, "is_multiple_page")) {
+            quiz.setMultiplePage(rs.getBoolean("is_multiple_page"));
+        }
+        if (hasColumn(rs, "immediate_correction")) {
+            quiz.setImmediateCorrection(rs.getBoolean("immediate_correction"));
+        }
+        if (hasColumn(rs, "allow_practice")) {
+            quiz.setAllowPractice(rs.getBoolean("allow_practice"));
+        }
+        if (hasColumn(rs, "created_at")) {
+            quiz.setCreatedAt(rs.getTimestamp("created_at"));
+        }
+        if (hasColumn(rs, "quiz_category")) {
+            Long quizCategory = rs.getLong("quiz_category");
+            quiz.setQuizCategory(rs.wasNull() ? null : quizCategory);
+        }
+        if (hasColumn(rs, "total_time_limit")) {
+            Long totalTimeLimit = rs.getLong("total_time_limit");
+            quiz.setTotalTimeLimit(rs.wasNull() ? null : totalTimeLimit);
+        }
         if (hasColumn(rs, "submissions_number"))
             quiz.setSubmissionsNumber(rs.getLong("submissions_number"));
         else if (hasColumn(rs, "submissions"))
@@ -84,7 +98,6 @@ public class QuizDao {
         return quiz;
     }
 
-    // Helper to check if a column exists in the ResultSet
     private boolean hasColumn(ResultSet rs, String column) {
         try {
             rs.findColumn(column);
@@ -95,10 +108,7 @@ public class QuizDao {
     }
 
     public String getCreatorUsernameByQuizId(long quizId) throws SQLException {
-        String sql = "SELECT u.username " +
-                "FROM quizzes q " +
-                "JOIN users u ON q.created_by = u.user_id " +
-                "WHERE q.quiz_id = ?";
+        String sql = "SELECT u.username FROM quizzes q JOIN users u ON q.created_by = u.user_id WHERE q.quiz_id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, quizId);
@@ -127,7 +137,6 @@ public class QuizDao {
         }
         return null;
     }
-
 
     public Quiz getQuizById(long quizId) throws SQLException {
         String sql = "SELECT * FROM quizzes WHERE quiz_id = ?";

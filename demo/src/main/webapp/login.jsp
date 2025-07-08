@@ -52,6 +52,21 @@
     </style>
 </head>
 <body>
+<a href="<%= request.getContextPath() %>/"
+   style="position: absolute; top: 24px; left: 24px; z-index: 1000; text-decoration: none;">
+    <img src="<%= request.getContextPath() %>/images/quiz_icon.png"
+         alt="Quiz App Home"
+         class="logo-home"
+         style="height:70px; width:auto; border-radius: 16px; box-shadow: 0 4px 16px rgba(78,84,200,0.13); transition:0.18s;">
+</a>
+<style>
+    .logo-home:hover {
+        box-shadow: 0 8px 32px rgba(78,84,200,0.25);
+        transform: scale(1.10) rotate(-2deg);
+        transition: 0.18s;
+        cursor: pointer;
+    }
+</style>
 
 <div class="form-container">
     <h2>Login to QuizApp</h2>
