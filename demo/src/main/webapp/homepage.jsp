@@ -77,6 +77,7 @@
         <form action="create-quiz-setup" method="get">
             <button class="btn btn-primary btn-lg mt-3">Create New Quiz</button>
         </form>
+        <a href="friends" class="btn btn-outline-light btn-lg mt-2">Find Friends</a>
     </div>
 
     <!-- RECENT QUIZZES -->
@@ -115,7 +116,7 @@
 
     <!-- TOP 10 POPULAR QUIZZES -->
     <div class="popular-section">
-        <h2>🔥 Top 10 Popular Quizzes</h2>
+        <h2>Top 10 Popular Quizzes</h2>
         <div class="row g-4">
             <%
                 Connection conn = null;
