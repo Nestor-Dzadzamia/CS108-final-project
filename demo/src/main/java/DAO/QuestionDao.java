@@ -22,9 +22,12 @@ public class QuestionDao {
     private CorrectAnswerDao correctAnswerDao;
     private PossibleAnswerDao possibleAnswerDao;
 
-    public QuestionDao() {
+    private Connection conn;
+
+    public QuestionDao() throws SQLException {
         this.correctAnswerDao = new CorrectAnswerDao();
         this.possibleAnswerDao = new PossibleAnswerDao();
+        this.conn = DBConnection.getConnection();
     }
 
     public List<Question> getQuestionsByQuizId(long quizId) throws SQLException {
@@ -273,5 +276,33 @@ public class QuestionDao {
         }
 
         return new MultiAnswer(id, typeId, questionText, false, correctAnswersList); // sorted = false
+    }
+
+    public long insertQuestion(QuestionSaver question) throws SQLException {
+        String sql = "INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_limit, question_order) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setLong(1, question.getQuizId());
+            stmt.setString(2, question.getQuestionType());
+            stmt.setString(3, question.getQuestionText());
+            stmt.setString(4, question.getImageUrl());
+            stmt.setLong(5, question.getTimeLimit());
+            stmt.setInt(6, question.getQuestionOrder());
+
+            int rowsInserted = stmt.executeUpdate();
+
+            if (rowsInserted == 0) {
+                throw new SQLException("Inserting question failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getLong(1); // Return generated question ID
+                } else {
+                    throw new SQLException("Inserting question failed, no ID obtained.");
+                }
+            }
+        }
     }
 }

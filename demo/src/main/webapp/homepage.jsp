@@ -74,7 +74,7 @@
     <div class="hero">
         <h1>Welcome to the Quiz App</h1>
         <p class="lead">Challenge yourself, test your knowledge, and create amazing quizzes!</p>
-        <form action="createQuiz" method="get">
+        <form action="create-quiz-setup" method="get">
             <button class="btn btn-primary btn-lg mt-3">Create New Quiz</button>
         </form>
     </div>
