@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.Timestamp;
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserAnswerTest {
+class UserAnswerTests {
     private UserAnswer userAnswer;
     private Timestamp answeredAt;
 

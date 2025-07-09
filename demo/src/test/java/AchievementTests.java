@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.Timestamp;
 import static org.junit.jupiter.api.Assertions.*;
 
-class AchievementTest {
+class AchievementTests {
     private Achievement achievement;
     private Timestamp awardedAt;
 
