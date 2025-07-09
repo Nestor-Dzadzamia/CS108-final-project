@@ -147,7 +147,7 @@
     </div>
     <div>
       <h3><%= takenPractice %></h3>
-      <p>Taken Practice Quizzes</p>
+      <p>Practice Quizzes</p>
     </div>
   </div>
 
@@ -191,6 +191,7 @@
   <form action="logout" method="post" style="margin-top: 2rem;">
     <button class="button" type="submit">Log Out</button>
   </form>
+  <a href="friends" class="button">Manage Friends</a>
 </div>
 </body>
 </html>

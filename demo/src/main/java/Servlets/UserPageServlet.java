@@ -19,7 +19,6 @@ public class UserPageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Get logged-in user from session
         User user = (User) request.getSession().getAttribute("user");
 
         if (user == null) {
@@ -34,8 +33,7 @@ public class UserPageServlet extends HttpServlet {
             List<Quiz> myQuizzes = quizDao.getQuizzesByUser(user.getId());
             request.setAttribute("myQuizzes", myQuizzes);
 
-            // Assuming you want to show user's earned achievements (with awardedAt)
-            // You need a DAO method to get user achievements with awardedAt; here a simplified version:
+
             List<Achievement> userAchievements = getUserAchievements(user.getId());
             request.setAttribute("userAchievements", userAchievements);
 
@@ -46,9 +44,7 @@ public class UserPageServlet extends HttpServlet {
         request.getRequestDispatcher("user.jsp").forward(request, response);
     }
 
-    // Helper method to get user achievements with awardedAt timestamp
     private List<Achievement> getUserAchievements(long userId) throws SQLException {
-        // For simplicity, query user_achievements JOIN achievements here:
 
         List<Achievement> achievements = new java.util.ArrayList<>();
 

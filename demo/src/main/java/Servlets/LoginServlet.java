@@ -26,7 +26,12 @@ public class LoginServlet extends HttpServlet {
                 if (hashedInputPassword.equals(user.getHashedPassword())) {
                     HttpSession session = request.getSession();
                     session.setAttribute("user", user);
-                    response.sendRedirect("homepage.jsp");
+                    if (user.getRole().equals("admin")) {
+                        response.sendRedirect("admin");
+
+                    } else {
+                        response.sendRedirect("homepage.jsp");
+                    }
                     return;
                 }
             }

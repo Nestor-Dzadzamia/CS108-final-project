@@ -186,6 +186,7 @@
        class="logo-img">
 </a>
 
+
 <div class="header-bar">
   <a href="login.jsp" class="nav-btn outline">Login</a>
   <a href="signup.jsp" class="nav-btn">Sign Up</a>
@@ -208,7 +209,7 @@
     <a href="quiz-summary.jsp?quizId=<%= quiz.getQuizId() %>" class="quiz-title-link"><%= quiz.getQuizTitle() %></a>
     <span class="popular-badge">Popular</span><br>
     <span class="quiz-meta">
-          By <%= quizDao.getCreatorUsernameByQuizId(quiz.getQuizId()) != null ? quizDao.getCreatorUsernameByQuizId(quiz.getQuizId()) : "Unknown" %>
+       By <a href="friends?action=profile&userId=<%= quiz.getCreatedBy() %>"><%= quizDao.getCreatorUsernameByQuizId(quiz.getQuizId()) != null ? quizDao.getCreatorUsernameByQuizId(quiz.getQuizId()) : "Unknown" %></a>
           &bull; Taken <%= quiz.getSubmissionsNumber() %> times
         </span><br>
     <span class="quiz-desc"><%= quiz.getDescription() == null ? "No description available." : quiz.getDescription() %></span>
