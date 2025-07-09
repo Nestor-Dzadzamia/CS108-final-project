@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserTest {
+class UserTests {
 
     private User user;
 
