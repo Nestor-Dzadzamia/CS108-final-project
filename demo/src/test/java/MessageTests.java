@@ -5,6 +5,18 @@ import java.sql.Timestamp;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MessageTests {
+    /**
+     * Unit tests for the {@link Message} class.
+     * <p>
+     * Covers full functionality and validation logic, including:
+     * <ul>
+     *   <li>Message communication system between users</li>
+     *   <li>Different message types (note, challenge, friend_request)</li>
+     *   <li>Read status tracking and message metadata</li>
+     *   <li>Quiz challenge associations and friend request linking</li>
+     *   <li>Long content handling and optional field management</li>
+     * </ul>
+     */
     private Message message;
     private Timestamp sentAt;
 

@@ -4,6 +4,18 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CategoryTests {
+    /**
+     * Unit tests for the {@link Category} class.
+     * <p>
+     * Covers full functionality and validation logic, including:
+     * <ul>
+     *   <li>Category creation with ID and name</li>
+     *   <li>Constructor variations for different use cases</li>
+     *   <li>ToString method implementation and formatting</li>
+     *   <li>Various category name lengths and formats</li>
+     *   <li>Empty name handling and edge cases</li>
+     * </ul>
+     */
     private Category category;
 
     @BeforeEach

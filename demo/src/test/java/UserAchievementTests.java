@@ -5,6 +5,18 @@ import java.sql.Timestamp;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserAchievementTests {
+    /**
+     * Unit tests for the {@link UserAchievement} class.
+     * <p>
+     * Covers full functionality and validation logic, including:
+     * <ul>
+     *   <li>User-achievement association tracking</li>
+     *   <li>Award timestamp management and recording</li>
+     *   <li>Multiple achievements per user scenarios</li>
+     *   <li>Same achievement awarded to multiple users</li>
+     *   <li>Null timestamp handling and edge cases</li>
+     * </ul>
+     */
     private UserAchievement userAchievement;
     private Timestamp awardedAt;
 

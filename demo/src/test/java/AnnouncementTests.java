@@ -5,6 +5,18 @@ import java.sql.Timestamp;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AnnouncementTests {
+    /**
+     * Unit tests for the {@link Announcement} class.
+     * <p>
+     * Covers full functionality and validation logic, including:
+     * <ul>
+     *   <li>System announcement creation and management</li>
+     *   <li>Active status tracking for announcement visibility</li>
+     *   <li>Creator association and timestamp management</li>
+     *   <li>Long message content and title validation</li>
+     *   <li>Multiple announcement scenarios and null creator handling</li>
+     * </ul>
+     */
     private Announcement announcement;
     private Timestamp createdAt;
 

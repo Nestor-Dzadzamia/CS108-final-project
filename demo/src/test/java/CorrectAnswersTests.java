@@ -4,6 +4,18 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CorrectAnswersTests {
+    /**
+     * Unit tests for the {@link CorrectAnswer} class.
+     * <p>
+     * Covers full functionality and validation logic, including:
+     * <ul>
+     *   <li>Correct answer storage and question association</li>
+     *   <li>Match order handling for matching-type questions</li>
+     *   <li>Multiple correct answers for single question</li>
+     *   <li>ToString method implementation and formatting</li>
+     *   <li>Case sensitivity and numeric answer validation</li>
+     * </ul>
+     */
     private CorrectAnswer correctAnswer;
 
     @BeforeEach

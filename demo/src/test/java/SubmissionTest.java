@@ -5,6 +5,18 @@ import java.sql.Timestamp;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SubmissionTest {
+    /**
+     * Unit tests for the {@link Submission} class.
+     * <p>
+     * Covers full functionality and validation logic, including:
+     * <ul>
+     *   <li>Submission tracking with user and quiz associations</li>
+     *   <li>Scoring calculations and answer statistics</li>
+     *   <li>Time spent tracking and submission timestamps</li>
+     *   <li>Perfect score, zero score, and partial score scenarios</li>
+     *   <li>Constructor variations and data integrity</li>
+     * </ul>
+     */
     private Submission submission;
     private Timestamp submittedAt;
 

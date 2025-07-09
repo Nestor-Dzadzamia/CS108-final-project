@@ -7,7 +7,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class QuestionResponseTest {
+class QuestionResponseTest {
 
     @Test
     void testEmpty(){

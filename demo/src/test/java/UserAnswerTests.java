@@ -5,6 +5,18 @@ import java.sql.Timestamp;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserAnswerTests {
+    /**
+     * Unit tests for the {@link UserAnswer} class.
+     * <p>
+     * Covers full functionality and validation logic, including:
+     * <ul>
+     *   <li>Individual answer tracking for submissions</li>
+     *   <li>Correctness validation and answer text storage</li>
+     *   <li>Timestamp tracking for answer submission</li>
+     *   <li>Empty, null, and various text answer handling</li>
+     *   <li>Association with submission and question entities</li>
+     * </ul>
+     */
     private UserAnswer userAnswer;
     private Timestamp answeredAt;
 

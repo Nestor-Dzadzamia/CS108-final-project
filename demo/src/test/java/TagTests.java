@@ -4,6 +4,18 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TagTests {
+    /**
+     * Unit tests for the {@link Tag} class.
+     * <p>
+     * Covers full functionality and validation logic, including:
+     * <ul>
+     *   <li>Tag creation with ID and name properties</li>
+     *   <li>Common tag name patterns and variations</li>
+     *   <li>Multi-word tags and special character handling</li>
+     *   <li>Empty tag names and edge case validation</li>
+     *   <li>Tag labeling system for quiz organization</li>
+     * </ul>
+     */
     private Tag tag;
 
     @BeforeEach

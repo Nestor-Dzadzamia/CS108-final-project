@@ -4,6 +4,18 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PossibleAnswersTests {
+    /**
+     * Unit tests for the {@link PossibleAnswer} class.
+     * <p>
+     * Covers full functionality and validation logic, including:
+     * <ul>
+     *   <li>Multiple choice answer option management</li>
+     *   <li>Question association and answer text storage</li>
+     *   <li>ToString method implementation and formatting</li>
+     *   <li>Long answer text and special character handling</li>
+     *   <li>Empty and null answer text validation</li>
+     * </ul>
+     */
     private PossibleAnswer possibleAnswer;
 
     @BeforeEach

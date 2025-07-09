@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * and confirm data storage/retrieval via accessor methods.
  *
  */
-public class MultiSelectQuestionTest {
+class MultiSelectQuestionTest {
     private MultiSelectQuestion question;
 
     // Simple and Default initialization of instance before each test call

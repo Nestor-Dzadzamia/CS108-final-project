@@ -5,6 +5,18 @@ import java.sql.Timestamp;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FriendrequestTests {
+    /**
+     * Unit tests for the {@link FriendRequest} class.
+     * <p>
+     * Covers full functionality and validation logic, including:
+     * <ul>
+     *   <li>Friend request lifecycle and status management</li>
+     *   <li>Status validation with accepted values (pending, accepted, rejected)</li>
+     *   <li>Sender and receiver relationship tracking</li>
+     *   <li>Status transition workflows and business logic</li>
+     *   <li>Multiple request scenarios and timestamp handling</li>
+     * </ul>
+     */
     private FriendRequest friendRequest;
     private Timestamp sentAt;
 

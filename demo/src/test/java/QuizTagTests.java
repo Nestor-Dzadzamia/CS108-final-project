@@ -4,6 +4,18 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class QuizTagTests {
+    /**
+     * Unit tests for the {@link QuizTag} class.
+     * <p>
+     * Covers full functionality and validation logic, including:
+     * <ul>
+     *   <li>Many-to-many relationship between quizzes and tags</li>
+     *   <li>Quiz and tag ID association and mapping</li>
+     *   <li>Multiple tag assignments to single quiz</li>
+     *   <li>Single tag applied to multiple quizzes</li>
+     *   <li>ID validation and edge case handling</li>
+     * </ul>
+     */
     private QuizTag quizTag;
 
     @BeforeEach

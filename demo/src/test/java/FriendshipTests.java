@@ -5,6 +5,18 @@ import java.sql.Timestamp;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FriendshipTests {
+    /**
+     * Unit tests for the {@link Friendship} class.
+     * <p>
+     * Covers full functionality and validation logic, including:
+     * <ul>
+     *   <li>Bidirectional friendship relationship modeling</li>
+     *   <li>User ID pair management and association</li>
+     *   <li>Friendship establishment timestamp tracking</li>
+     *   <li>Different friendship timeframes and comparisons</li>
+     *   <li>Edge cases and null timestamp handling</li>
+     * </ul>
+     */
     private Friendship friendship;
     private Timestamp friendsSince;
 

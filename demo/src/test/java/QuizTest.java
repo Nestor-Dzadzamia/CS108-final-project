@@ -5,6 +5,18 @@ import java.sql.Timestamp;
 import static org.junit.jupiter.api.Assertions.*;
 
 class QuizTest {
+    /**
+     * Unit tests for the {@link Quiz} class.
+     * <p>
+     * Covers full functionality and validation logic, including:
+     * <ul>
+     *   <li>Quiz creation with title, description, and metadata</li>
+     *   <li>Boolean configuration flags (randomized, multiple page, etc.)</li>
+     *   <li>Time limits and category associations</li>
+     *   <li>Submission tracking and creator information</li>
+     *   <li>Default values and constructor variations</li>
+     * </ul>
+     */
     private Quiz quiz;
     private Timestamp createdAt;
 
