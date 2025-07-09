@@ -186,6 +186,7 @@
        class="logo-img">
 </a>
 
+
 <div class="header-bar">
   <a href="login.jsp" class="nav-btn outline">Login</a>
   <a href="signup.jsp" class="nav-btn">Sign Up</a>

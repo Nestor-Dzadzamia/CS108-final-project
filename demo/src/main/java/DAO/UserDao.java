@@ -47,6 +47,7 @@ public class UserDao {
         user.setNumQuizzesTaken(rs.getLong("num_quizzes_taken"));
         user.setWasTop1(rs.getBoolean("was_top1"));
         user.setTakenPractice(rs.getBoolean("taken_practice"));
+        user.setRole(rs.getString("role"));
         return user;
     }
 
@@ -64,6 +65,7 @@ public class UserDao {
                 user.setEmail(rs.getString("email"));
                 user.setHashedPassword(rs.getString("hashed_password"));
                 user.setSalt(rs.getString("salt_password"));
+                user.setRole(rs.getString("role"));
                 return user;
             }
         }
@@ -107,5 +109,15 @@ public class UserDao {
         }
 
         return friends;
+    }
+
+    public boolean removeUser(long userId) throws SQLException {
+        String sql = "DELETE FROM users WHERE user_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, userId);
+            int affected = stmt.executeUpdate();
+            return affected > 0;
+        }
     }
 }
