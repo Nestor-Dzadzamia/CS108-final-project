@@ -1,10 +1,15 @@
+-- Enhanced Mock Data for Quiz Application
 -- USERS
 INSERT INTO users (username, email, hashed_password, salt_password, num_quizzes_created) VALUES
                                                                                              ('Nestor_Dzadzamia', 'Nestor@gmail.com', '452928968d7f7fdc3ccadcb7219bf4c8ccfbd12c', '', 2),
                                                                                              ('Sandro_Mamamtavrishvili', 'Sandro@gmail.com', '64bc56ddc1b256138a1e36319a3da09ebbb31f70', '', 2),
                                                                                              ('Saba_Delibashvili', 'Saba@gmail.com', '3402f1109751882581c2b3a68a0af205e0d49e46', '', 1),
-                                                                                             ('Giorgi_Urtmelidze', 'Giorgi@gmail.com', '1d65c13a970a22a4cceb4ffc82fac7abb8e73194', '', 1);
-
+                                                                                             ('Giorgi_Urtmelidze', 'Giorgi@gmail.com', '1d65c13a970a22a4cceb4ffc82fac7abb8e73194', '', 1),
+                                                                                             ('TechGuru_Alex', 'alex.tech@gmail.com', 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0', 'salt123', 3),
+                                                                                             ('BookWorm_Maria', 'maria.books@gmail.com', 'b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0a1', 'salt456', 2),
+                                                                                             ('SpaceExplorer_John', 'john.space@gmail.com', 'c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0a1b2', 'salt789', 2),
+                                                                                             ('ChefMaster_Emma', 'emma.chef@gmail.com', 'd4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0a1b2c3', 'salt101', 1),
+                                                                                             ('admin', 'admin@gmail.com', 'e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0a1b2c3d4', 'adminsalt', 0);
 
 -- CATEGORIES
 INSERT INTO categories (category_name) VALUES
@@ -13,501 +18,378 @@ INSERT INTO categories (category_name) VALUES
                                            ('Math'),
                                            ('Biology'),
                                            ('Music'),
-                                           ('Movies');
-
+                                           ('Movies'),
+                                           ('Technology'),
+                                           ('Literature'),
+                                           ('Geography'),
+                                           ('Space & Astronomy'),
+                                           ('Gaming'),
+                                           ('Culinary Arts');
 
 -- QUIZZES
 INSERT INTO quizzes (quiz_title, description, created_by, randomized, is_multiple_page, immediate_correction, allow_practice, quiz_category, total_time_limit) VALUES
-                                                                                                                                                                   ('Guess Georgian athletes', 'Show how well you know Georgian sportsmans', 1, FALSE, FALSE, FALSE, FALSE, 1, 20),
+                                                                                                                                                                   ('Guess Georgian athletes', 'Show how well you know Georgian sportsmen', 1, FALSE, FALSE, FALSE, FALSE, 1, 20),
                                                                                                                                                                    ('History of Georgia', 'Show your knowledge of Georgian history', 2, TRUE, TRUE, TRUE, TRUE, 2, 20),
                                                                                                                                                                    ('Math Genius', 'Test your skills with challenging math problems!', 3, TRUE, FALSE, TRUE, TRUE, 3, 25),
                                                                                                                                                                    ('Biology Facts', 'Explore the wonders of life science with this quiz.', 4, FALSE, TRUE, FALSE, TRUE, 4, 15),
                                                                                                                                                                    ('Music Legends', 'See how much you know about world-famous musicians and bands.', 1, TRUE, FALSE, FALSE, TRUE, 5, 20),
-                                                                                                                                                                   ('Famous Movies', 'Guess the movie from its plot and quotes!', 2, TRUE, TRUE, FALSE, FALSE, 6, 20);
+                                                                                                                                                                   ('Famous Movies', 'Guess the movie from its plot and quotes!', 2, TRUE, TRUE, FALSE, FALSE, 6, 20),
+                                                                                                                                                                   ('Programming Fundamentals', 'Test your knowledge of programming languages, algorithms, and software development', 5, FALSE, FALSE, TRUE, TRUE, 7, 30),
+                                                                                                                                                                   ('Tech Giants & Innovation', 'Explore the world of technology companies and groundbreaking innovations', 5, TRUE, FALSE, FALSE, TRUE, 7, 25),
+                                                                                                                                                                   ('World Literature Classics', 'Journey through the greatest works of literature from around the globe', 6, FALSE, TRUE, TRUE, TRUE, 8, 35),
+                                                                                                                                                                   ('Modern Poetry & Authors', 'Discover contemporary literature and influential modern writers', 6, TRUE, FALSE, FALSE, TRUE, 8, 20),
+                                                                                                                                                                   -- Quiz 17: General Knowledge Mix (new quiz with unordered questions)
+                                                                                                                                                                   ('General Knowledge Mix', 'Test your knowledge across various topics - order doesn\'t matter!', 5, FALSE, FALSE, TRUE, TRUE, 1, 20);
 
+-- QUESTIONS(questions 37-60, 97-102)
+-- Question types: question-response, fill-blank, multiple-choice, picture-response, multi-answer, multiple-multiple-choice, matching
 
--- QUESTIONS
-
--- Guess Georgian athletes (quiz_id = 1)
+-- Programming Fundamentals (quiz_id = 7, questions 37-42)
 INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_limit, question_order) VALUES
-                                                                                                         (1, 'MatchingQuestion', 'Match each athlete to their sport.', NULL, 120, 1),
-                                                                                                         (1, 'MultiAnswer', 'List all current Georgian Olympic gold medalists.', NULL, 120, 2),
-                                                                                                         (1, 'MultipleChoiceAnswer', 'Who is the most decorated Georgian judo champion?', NULL, 120, 3),
-                                                                                                         (1, 'MultiSelectQuestion', 'Select all Georgian athletes who have competed at the Olympics.', NULL, 120, 4),
-                                                                                                         (1, 'PictureResponse', 'Name the athlete shown in this picture.', 'georgian_athlete.jpg', 120, 5),
-                                                                                                         (1, 'QuestionResponse', 'Who was the first Georgian to win an Olympic gold medal?', NULL, 120, 6);
+                                                                                                         (7, 'fill-blank', 'Python is a _ programming language known for its simplicity.', NULL, 60, 1),
+                                                                                                         (7, 'question-response', 'What does HTML stand for?', NULL, 60, 2),
+                                                                                                         (7, 'multiple-choice', 'Which of these is NOT a programming language?', NULL, 60, 3),
+                                                                                                         (7, 'picture-response', 'Identify the programming language logo shown in the image.', 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg', 60, 4),
+                                                                                                         (7, 'multi-answer', 'List three popular web development frameworks.', NULL, 60, 5),
+                                                                                                         (7, 'multiple-multiple-choice', 'Select all object-oriented programming languages.', NULL, 60, 6);
 
--- History of Georgia (quiz_id = 2)
+-- Tech Giants & Innovation (quiz_id = 8, questions 43-48)
 INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_limit, question_order) VALUES
-                                                                                                         (2, 'MatchingQuestion', 'Match each king to their reign period.', NULL, 120, 1),
-                                                                                                         (2, 'MultiAnswer', 'Name all capitals Georgia has had throughout history.', NULL, 120, 2),
-                                                                                                         (2, 'MultipleChoiceAnswer', 'Who was Georgia\'s first president?', NULL, 120, 3),
-    (2, 'MultiSelectQuestion', 'Select all correct statements about the Georgian Golden Age.', NULL, 120, 4),
-    (2, 'PictureResponse', 'Name the historic monument in the image.', 'georgia_monument.jpg', 120, 5),
-    (2, 'QuestionResponse', 'When did Georgia declare independence from the Soviet Union?', NULL, 120, 6);
+                                                                                                         (8, 'matching', 'Match each tech company to its founder.', NULL, 90, 1),
+                                                                                                         (8, 'multi-answer', 'Name the first three versions of the iPhone operating system.', NULL, 90, 2),
+                                                                                                         (8, 'multiple-choice', 'Which company developed the first commercial microprocessor?', NULL, 90, 3),
+                                                                                                         (8, 'picture-response', 'Which tech company logo is shown in this image?', 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg', 90, 4),
+                                                                                                         (8, 'question-response', 'What year was Google founded?', NULL, 90, 5),
+                                                                                                         (8, 'fill-blank', 'The World Wide Web was invented by _ at CERN.', NULL, 90, 6);
 
--- Math Genius (quiz_id = 3)
+-- World Literature Classics (quiz_id = 9, questions 49-54)
 INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_limit, question_order) VALUES
-    (3, 'MatchingQuestion', 'Match each formula to the correct name.', NULL, 120, 1),
-    (3, 'MultiAnswer', 'List all prime numbers between 1 and 20.', NULL, 120, 2),
-    (3, 'MultipleChoiceAnswer', 'What is the value of π (pi) up to two decimal places?', NULL, 120, 3),
-    (3, 'MultiSelectQuestion', 'Select all statements that are always true for even numbers.', NULL, 120, 4),
-    (3, 'PictureResponse', 'What geometric shape is shown?', 'triangle.png', 120, 5),
-    (3, 'QuestionResponse', 'Solve for x: 2x + 3 = 11.', NULL, 120, 6);
+                                                                                                         (9, 'matching', 'Match each classic novel to its author.', NULL, 120, 1),
+                                                                                                         (9, 'question-response', 'In which Shakespeare play does the character Hamlet appear?', NULL, 120, 2),
+                                                                                                         (9, 'multiple-choice', 'Which novel begins with "It was the best of times, it was the worst of times"?', NULL, 120, 3),
+                                                                                                         (9, 'picture-response', 'Who is the author shown in this portrait?', 'https://upload.wikimedia.org/wikipedia/commons/d/d4/Charles_Dickens_-_Project_Gutenberg_eText_13103.jpg', 120, 4),
+                                                                                                         (9, 'fill-blank', 'George Orwell wrote the dystopian novel "_" published in 1949.', NULL, 120, 5),
+                                                                                                         (9, 'multiple-multiple-choice', 'Select all novels written by Jane Austen.', NULL, 120, 6);
 
--- Biology Facts (quiz_id = 4)
+-- Modern Poetry & Authors (quiz_id = 10, questions 55-60)
 INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_limit, question_order) VALUES
-    (4, 'MatchingQuestion', 'Match each animal to its correct habitat.', NULL, 120, 1),
-    (4, 'MultiAnswer', 'Name all parts of the plant cell.', NULL, 120, 2),
-    (4, 'MultipleChoiceAnswer', 'What is the powerhouse of the cell?', NULL, 120, 3),
-    (4, 'MultiSelectQuestion', 'Select all mammals from the following list.', NULL, 120, 4),
-    (4, 'PictureResponse', 'Identify the organ shown in the picture.', 'heart.png', 120, 5),
-    (4, 'QuestionResponse', 'What is the process by which plants make their own food?', NULL, 120, 6);
+                                                                                                         (10, 'question-response', 'Who wrote the poem "The Road Not Taken"?', NULL, 90, 1),
+                                                                                                         (10, 'fill-blank', 'Maya Angelou is famous for her autobiography "I Know Why the _ Bird Sings".', NULL, 90, 2),
+                                                                                                         (10, 'multiple-choice', 'Which poet is known as the "Bard of Avon"?', NULL, 90, 3),
+                                                                                                         (10, 'matching', 'Match each poet to their most famous work.', NULL, 90, 4),
+                                                                                                         (10, 'multi-answer', 'Name three Beat Generation poets.', NULL, 90, 5),
+                                                                                                         (10, 'picture-response', 'Which famous poet is shown in this photograph?', 'https://upload.wikimedia.org/wikipedia/commons/0/05/Langston_Hughes_by_Carl_Van_Vechten_1936.jpg', 90, 6);
 
--- Music Legends (quiz_id = 5)
+-- Add unordered multi-answer questions to Quiz 17 (questions 97-102)
 INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_limit, question_order) VALUES
-    (5, 'MatchingQuestion', 'Match each musician to their band.', NULL, 120, 1),
-    (5, 'MultiAnswer', 'List all instruments in a standard rock band.', NULL, 120, 2),
-    (5, 'MultipleChoiceAnswer', 'Who is known as the "Queen of Soul"?', NULL, 120, 3),
-    (5, 'MultiSelectQuestion', 'Select all Grammy-winning artists from the list.', NULL, 120, 4),
-    (5, 'PictureResponse', 'Name the artist in the image.', 'beatles.jpg', 120, 5),
-    (5, 'QuestionResponse', 'Who composed the "Fur Elise"?', NULL, 120, 6);
-
--- Famous Movies (quiz_id = 6)
-INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_limit, question_order) VALUES
-    (6, 'MatchingQuestion', 'Match each movie to its director.', NULL, 120, 1),
-    (6, 'MultiAnswer', 'List all movies directed by Christopher Nolan.', NULL, 120, 2),
-    (6, 'MultipleChoiceAnswer', 'Which movie won the Oscar for Best Picture in 1994?', NULL, 120, 3),
-    (6, 'MultiSelectQuestion', 'Select all animated movies from the list.', NULL, 120, 4),
-    (6, 'PictureResponse', 'Name the movie shown in this picture.', 'inception.jpg', 120, 5),
-    (6, 'QuestionResponse', 'Who played the main character in "Forrest Gump"?', NULL, 120, 6);
+                                                                                                         (17, 'multi-answer', 'Name any 4 planets in our solar system.', NULL, 90, 1),
+                                                                                                         (17, 'multi-answer', 'List any 3 programming languages you know.', NULL, 90, 2),
+                                                                                                         (17, 'multi-answer', 'Name any 5 European countries.', NULL, 90, 3),
+                                                                                                         (17, 'multi-answer', 'List any 3 colors of the rainbow.', NULL, 90, 4),
+                                                                                                         (17, 'multi-answer', 'Name any 4 types of cuisine.', NULL, 90, 5),
+                                                                                                         (17, 'question-response', 'What is the capital of France?', NULL, 90, 6);
 
 
+-- CORRECT ANSWERS
 
--- Quiz 1: Guess Georgian athletes
+-- Programming Fundamentals (questions 37-42)
 INSERT INTO correct_answers (question_id, answer_text, match_order) VALUES
-    -- Q1: Matching (Athlete - Sport)
-    (1, 'Lasha Talakhadze - Weightlifting', 1),
-    (1, 'Varlam Liparteliani - Judo', 2),
-    (1, 'Zurab Datunashvili - Wrestling', 3),
-    (1, 'Nino Salukvadze - Shooting', 4),
-    -- Q2: MultiAnswer (Gold medalists)
-    (2, 'Lasha Talakhadze', 1),
-    (2, 'Varlam Liparteliani', 2),
-    (2, 'Zurab Datunashvili', 3),
-    -- Q3: MultipleChoiceAnswer
-    (3, 'Varlam Liparteliani', 1),
-    -- Q4: MultiSelectQuestion
-    (4, 'Lasha Talakhadze', 1),
-    (4, 'Zurab Datunashvili', 2),
-    (4, 'Nino Salukvadze', 3),
-    -- Q5: PictureResponse
-    (5, 'Lasha Talakhadze', 1),
-    -- Q6: QuestionResponse
-    (6, 'Kakhi Kakhiashvili', 1);
+                                                                        -- Q37: Fill in the blank
+                                                                        (37, 'high-level', -1),
+                                                                        (37, 'interpreted', -1),
+                                                                        (37, 'object-oriented', -1),
+                                                                        -- Q38: Question response
+                                                                        (38, 'HyperText Markup Language', -1),
+                                                                        (38, 'Hypertext Markup Language', -1),
+                                                                        -- Q39: Multiple choice
+                                                                        (39, 'Photoshop', -1),
+                                                                        -- Q40: Picture response
+                                                                        (40, 'Python', -1),
+                                                                        -- Q41: Multi-answer
+                                                                        (41, 'React', 1),
+                                                                        (41, 'Django', 2),
+                                                                        (41, 'Vue.js', 3),
+                                                                        (41, 'Angular', 4),
+                                                                        (41, 'Laravel', 5),
+                                                                        -- Q42: Multi-select
+                                                                        (42, 'Java', -1),
+                                                                        (42, 'Python', -1),
+                                                                        (42, 'C++', -1),
+                                                                        (42, 'C#', -1);
 
--- Quiz 2: History of Georgia
+-- Tech Giants & Innovation (questions 43-48)
 INSERT INTO correct_answers (question_id, answer_text, match_order) VALUES
-    -- Q7: Matching (King - Reign period)
-    (7, 'David IV - 1089-1125', 1),
-    (7, 'Queen Tamar - 1184-1213', 2),
-    (7, 'Vakhtang Gorgasali - 447-522', 3),
-    -- Q8: MultiAnswer (Capitals)
-    (8, 'Mtskheta', 1),
-    (8, 'Tbilisi', 2),
-    (8, 'Kutaisi', 3),
-    -- Q9: MultipleChoiceAnswer
-    (9, 'Zviad Gamsakhurdia', 1),
-    -- Q10: MultiSelectQuestion
-    (10, 'Queen Tamar reigned during the Golden Age.', 1),
-    (10, 'Georgia expanded its borders in the 12th century.', 2),
-    -- Q11: PictureResponse
-    (11, 'Svetitskhoveli Cathedral', 1),
-    -- Q12: QuestionResponse
-    (12, '1991', 1);
+                                                                        -- Q43: Matching
+                                                                        (43, 'Apple-Steve Jobs', -1),
+                                                                        (43, 'Microsoft-Bill Gates', -1),
+                                                                        (43, 'Facebook-Mark Zuckerberg', -1),
+                                                                        (43, 'Amazon-Jeff Bezos', -1),
+                                                                        -- Q44: Multi-answer
+                                                                        (44, 'iPhone OS 1.0', 1),
+                                                                        (44, 'iPhone OS 2.0', 2),
+                                                                        (44, 'iPhone OS 3.0', 3),
+                                                                        -- Q45: Multiple choice
+                                                                        (45, 'Intel', -1),
+                                                                        -- Q46: Picture response
+                                                                        (46, 'Apple', -1),
+                                                                        -- Q47: Question response
+                                                                        (47, '1998', -1),
+                                                                        -- Q48: Fill in the blank
+                                                                        (48, 'Tim Berners-Lee', -1);
 
--- Quiz 3: Math Genius
+-- World Literature Classics (questions 49-54)
 INSERT INTO correct_answers (question_id, answer_text, match_order) VALUES
-    -- Q13: Matching (Formula - Name)
-    (13, 'a^2 + b^2 = c^2 - Pythagorean theorem', 1),
-    (13, 'πr^2 - Area of a circle', 2),
-    (13, 'V = lwh - Volume of a rectangular prism', 3),
-    -- Q14: MultiAnswer (Primes)
-    (14, '2', 1),
-    (14, '3', 2),
-    (14, '5', 3),
-    (14, '7', 4),
-    (14, '11', 5),
-    (14, '13', 6),
-    (14, '17', 7),
-    (14, '19', 8),
-    -- Q15: MultipleChoiceAnswer
-    (15, '3.14', 1),
-    -- Q16: MultiSelectQuestion
-    (16, 'Even numbers are divisible by 2.', 1),
-    (16, 'Sum of two even numbers is even.', 2),
-    -- Q17: PictureResponse
-    (17, 'Triangle', 1),
-    -- Q18: QuestionResponse
-    (18, '4', 1);
+                                                                        -- Q49: Matching
+                                                                        (49, 'Pride and Prejudice-Jane Austen', -1),
+                                                                        (49, '1984-George Orwell', -1),
+                                                                        (49, 'To Kill a Mockingbird-Harper Lee', -1),
+                                                                        (49, 'The Great Gatsby-F. Scott Fitzgerald', -1),
+                                                                        -- Q50: Question response
+                                                                        (50, 'Hamlet', -1),
+                                                                        -- Q51: Multiple choice
+                                                                        (51, 'A Tale of Two Cities', -1),
+                                                                        -- Q52: Picture response
+                                                                        (52, 'Charles Dickens', -1),
+                                                                        -- Q53: Fill in the blank
+                                                                        (53, '1984', -1),
+                                                                        (53, 'Nineteen Eighty-Four', -1),
+                                                                        -- Q54: Multi-select
+                                                                        (54, 'Pride and Prejudice', -1),
+                                                                        (54, 'Emma', -1),
+                                                                        (54, 'Sense and Sensibility', -1);
 
--- Quiz 4: Biology Facts
+-- Modern Poetry & Authors (questions 55-60)
 INSERT INTO correct_answers (question_id, answer_text, match_order) VALUES
-    -- Q19: Matching (Animal - Habitat)
-    (19, 'Camel - Desert', 1),
-    (19, 'Polar Bear - Arctic', 2),
-    (19, 'Dolphin - Ocean', 3),
-    -- Q20: MultiAnswer (Plant cell parts)
-    (20, 'Nucleus', 1),
-    (20, 'Chloroplast', 2),
-    (20, 'Cell wall', 3),
-    (20, 'Mitochondria', 4),
-    -- Q21: MultipleChoiceAnswer
-    (21, 'Mitochondria', 1),
-    -- Q22: MultiSelectQuestion
-    (22, 'Elephant', 1),
-    (22, 'Bat', 2),
-    (22, 'Whale', 3),
-    -- Q23: PictureResponse
-    (23, 'Heart', 1),
-    -- Q24: QuestionResponse
-    (24, 'Photosynthesis', 1);
+                                                                        -- Q55: Question response
+                                                                        (55, 'Robert Frost', -1),
+                                                                        -- Q56: Fill in the blank
+                                                                        (56, 'Caged', -1),
+                                                                        -- Q57: Multiple choice
+                                                                        (57, 'William Shakespeare', -1),
+                                                                        -- Q58: Matching
+                                                                        (58, 'Robert Frost-The Road Not Taken', -1),
+                                                                        (58, 'Maya Angelou-I Know Why the Caged Bird Sings', -1),
+                                                                        (58, 'Langston Hughes-The Negro Speaks of Rivers', -1),
+                                                                        -- Q59: Multi-answer
+                                                                        (59, 'Jack Kerouac', 1),
+                                                                        (59, 'Allen Ginsberg', 2),
+                                                                        (59, 'William S. Burroughs', 3),
+                                                                        -- Q60: Picture response
+                                                                        (60, 'Langston Hughes', -1);
 
--- Quiz 5: Music Legends
+-- UNORDERED correct answers (match_order = -1 means any order is acceptable)
 INSERT INTO correct_answers (question_id, answer_text, match_order) VALUES
-    -- Q25: Matching (Musician - Band)
-    (25, 'Freddie Mercury - Queen', 1),
-    (25, 'John Lennon - The Beatles', 2),
-    (25, 'David Gilmour - Pink Floyd', 3),
-    -- Q26: MultiAnswer (Rock band instruments)
-    (26, 'Guitar', 1),
-    (26, 'Bass', 2),
-    (26, 'Drums', 3),
-    (26, 'Keyboard', 4),
-    -- Q27: MultipleChoiceAnswer
-    (27, 'Aretha Franklin', 1),
-    -- Q28: MultiSelectQuestion
-    (28, 'Adele', 1),
-    (28, 'Beyoncé', 2),
-    (28, 'Elton John', 3),
-    -- Q29: PictureResponse
-    (29, 'The Beatles', 1),
-    -- Q30: QuestionResponse
-    (30, 'Beethoven', 1);
+                                                                        -- Q97: Any 4 planets (order doesn't matter)
+                                                                        (97, 'Mercury', -1),
+                                                                        (97, 'Venus', -1),
+                                                                        (97, 'Earth', -1),
+                                                                        (97, 'Mars', -1),
+                                                                        (97, 'Jupiter', -1),
+                                                                        (97, 'Saturn', -1),
+                                                                        (97, 'Uranus', -1),
+                                                                        (97, 'Neptune', -1),
 
--- Quiz 6: Famous Movies
-INSERT INTO correct_answers (question_id, answer_text, match_order) VALUES
-    -- Q31: Matching (Movie - Director)
-    (31, 'Inception - Christopher Nolan', 1),
-    (31, 'Jurassic Park - Steven Spielberg', 2),
-    (31, 'Titanic - James Cameron', 3),
-    -- Q32: MultiAnswer (Nolan movies)
-    (32, 'Inception', 1),
-    (32, 'The Dark Knight', 2),
-    (32, 'Interstellar', 3),
-    -- Q33: MultipleChoiceAnswer
-    (33, 'Forrest Gump', 1),
-    -- Q34: MultiSelectQuestion
-    (34, 'Toy Story', 1),
-    (34, 'Shrek', 2),
-    (34, 'Finding Nemo', 3),
-    -- Q35: PictureResponse
-    (35, 'Inception', 1),
-    -- Q36: QuestionResponse
-    (36, 'Tom Hanks', 1);
+                                                                        -- Q98: Any 3 programming languages (order doesn't matter)
+                                                                        (98, 'JavaScript', -1),
+                                                                        (98, 'Python', -1),
+                                                                        (98, 'Java', -1),
+                                                                        (98, 'C++', -1),
+                                                                        (98, 'C#', -1),
+                                                                        (98, 'PHP', -1),
+                                                                        (98, 'Ruby', -1),
+                                                                        (98, 'Go', -1),
+                                                                        (98, 'Swift', -1),
+                                                                        (98, 'Kotlin', -1),
+
+                                                                        -- Q99: Any 5 European countries (order doesn't matter)
+                                                                        (99, 'France', -1),
+                                                                        (99, 'Germany', -1),
+                                                                        (99, 'Italy', -1),
+                                                                        (99, 'Spain', -1),
+                                                                        (99, 'United Kingdom', -1),
+                                                                        (99, 'Netherlands', -1),
+                                                                        (99, 'Belgium', -1),
+                                                                        (99, 'Switzerland', -1),
+                                                                        (99, 'Austria', -1),
+                                                                        (99, 'Poland', -1),
+                                                                        (99, 'Greece', -1),
+                                                                        (99, 'Portugal', -1),
+                                                                        (99, 'Sweden', -1),
+                                                                        (99, 'Norway', -1),
+                                                                        (99, 'Denmark', -1),
+
+                                                                        -- Q100: Any 3 colors of the rainbow (order doesn't matter)
+                                                                        (100, 'Red', -1),
+                                                                        (100, 'Orange', -1),
+                                                                        (100, 'Yellow', -1),
+                                                                        (100, 'Green', -1),
+                                                                        (100, 'Blue', -1),
+                                                                        (100, 'Indigo', -1),
+                                                                        (100, 'Violet', -1),
+                                                                        (100, 'Purple', -1),
+
+                                                                        -- Q101: Any 4 types of cuisine (order doesn't matter)
+                                                                        (101, 'Italian', -1),
+                                                                        (101, 'Chinese', -1),
+                                                                        (101, 'Mexican', -1),
+                                                                        (101, 'Indian', -1),
+                                                                        (101, 'French', -1),
+                                                                        (101, 'Japanese', -1),
+                                                                        (101, 'Thai', -1),
+                                                                        (101, 'Greek', -1),
+                                                                        (101, 'Spanish', -1),
+                                                                        (101, 'Korean', -1),
+                                                                        (101, 'Vietnamese', -1),
+                                                                        (101, 'Lebanese', -1),
+
+                                                                        -- Q102: Simple question-response
+                                                                        (102, 'Paris', -1);
 
 
--- Quiz 1: Guess Georgian athletes (question_id 1-6)
+-- POSSIBLE ANSWERS for multiple choice questions
+
+-- Programming Fundamentals Q39
 INSERT INTO possible_answers (question_id, possible_answer_text) VALUES
--- Q1 Matching: Athletes + Sports (left + right)
-(1, 'Lasha Talakhadze'),
-(1, 'Varlam Liparteliani'),
-(1, 'Zurab Datunashvili'),
-(1, 'Nino Salukvadze'),
-(1, 'Weightlifting'),
-(1, 'Judo'),
-(1, 'Wrestling'),
-(1, 'Shooting'),
--- Q2 MultiAnswer: gold medalists + distractor
-(2, 'Lasha Talakhadze'),
-(2, 'Varlam Liparteliani'),
-(2, 'Zurab Datunashvili'),
-(2, 'Nino Salukvadze'),
--- Q3 MultipleChoice: judo champion
-(3, 'Varlam Liparteliani'),
-(3, 'Avtandil Tchrikishvili'),
-(3, 'Shota Chochishvili'),
-(3, 'Lasha Shavdatuashvili'),
--- Q4 MultiSelect: olympians + one non-olympian
-(4, 'Lasha Talakhadze'),
-(4, 'Zurab Datunashvili'),
-(4, 'Nino Salukvadze'),
-(4, 'Cristiano Ronaldo'),
--- Q5 PictureResponse: athletes
-(5, 'Lasha Talakhadze'),
-(5, 'Irakli Turmanidze'),
-(5, 'Avtandil Chrikishvili'),
--- Q6 QuestionResponse: Olympic gold
-(6, 'Kakhi Kakhiashvili'),
-(6, 'Nino Salukvadze'),
-(6, 'Lasha Talakhadze');
+                                                                     (39, 'Java'),
+                                                                     (39, 'Python'),
+                                                                     (39, 'JavaScript'),
+                                                                     (39, 'Photoshop');
 
-
--- Quiz 2: History of Georgia (question_id 7-12)
+-- Tech Giants & Innovation Q45
 INSERT INTO possible_answers (question_id, possible_answer_text) VALUES
--- Q7 Matching: Kings + Reigns
-(7, 'David IV'),
-(7, 'Queen Tamar'),
-(7, 'Vakhtang Gorgasali'),
-(7, '1089-1125'),
-(7, '1184-1213'),
-(7, '447-522'),
--- Q8 MultiAnswer: capitals
-(8, 'Mtskheta'),
-(8, 'Tbilisi'),
-(8, 'Kutaisi'),
-(8, 'Batumi'),
--- Q9 MultipleChoice: president
-(9, 'Zviad Gamsakhurdia'),
-(9, 'Eduard Shevardnadze'),
-(9, 'Mikheil Saakashvili'),
-(9, 'Giorgi Margvelashvili'),
--- Q10 MultiSelect: golden age
-(10, 'Queen Tamar reigned during the Golden Age.'),
-(10, 'Georgia expanded its borders in the 12th century.'),
-(10, 'Georgia was under Russian rule.'),
-(10, 'David the Builder was a Georgian king.'),
--- Q11 PictureResponse: monuments
-(11, 'Svetitskhoveli Cathedral'),
-(11, 'Sameba Cathedral'),
-(11, 'Jvari Monastery'),
--- Q12 QuestionResponse: year
-(12, '1991'),
-(12, '1921'),
-(12, '2003');
+                                                                     (45, 'Intel'),
+                                                                     (45, 'AMD'),
+                                                                     (45, 'IBM'),
+                                                                     (45, 'Motorola');
 
-
--- Quiz 3: Math Genius (question_id 13-18)
+-- World Literature Q51
 INSERT INTO possible_answers (question_id, possible_answer_text) VALUES
--- Q13 Matching: formulas + names
-(13, 'a^2 + b^2 = c^2'),
-(13, 'πr^2'),
-(13, 'V = lwh'),
-(13, 'Pythagorean theorem'),
-(13, 'Area of a circle'),
-(13, 'Volume of a rectangular prism'),
--- Q14 MultiAnswer: primes (plus non-primes)
-(14, '2'),
-(14, '3'),
-(14, '5'),
-(14, '7'),
-(14, '11'),
-(14, '13'),
-(14, '17'),
-(14, '19'),
-(14, '6'),
-(14, '8'),
--- Q15 MultipleChoice: pi value
-(15, '3.14'),
-(15, '2.71'),
-(15, '1.41'),
-(15, '3.15'),
--- Q16 MultiSelect: even number properties
-(16, 'Even numbers are divisible by 2.'),
-(16, 'Sum of two even numbers is even.'),
-(16, 'Product of two even numbers is odd.'),
-(16, 'An even number plus an odd number is odd.'),
--- Q17 PictureResponse: shapes
-(17, 'Triangle'),
-(17, 'Square'),
-(17, 'Circle'),
--- Q18 QuestionResponse: solution for x
-(18, '4'),
-(18, '5'),
-(18, '3');
+                                                                     (51, 'A Tale of Two Cities'),
+                                                                     (51, 'Great Expectations'),
+                                                                     (51, 'Pride and Prejudice'),
+                                                                     (51, 'Jane Eyre');
 
-
--- Quiz 4: Biology Facts (question_id 19-24)
+-- Modern Poetry Q57
 INSERT INTO possible_answers (question_id, possible_answer_text) VALUES
--- Q19 Matching: animal + habitat
-(19, 'Camel'),
-(19, 'Polar Bear'),
-(19, 'Dolphin'),
-(19, 'Desert'),
-(19, 'Arctic'),
-(19, 'Ocean'),
--- Q20 MultiAnswer: plant cell parts + some animal cell parts
-(20, 'Nucleus'),
-(20, 'Chloroplast'),
-(20, 'Cell wall'),
-(20, 'Mitochondria'),
-(20, 'Ribosome'),
--- Q21 MultipleChoice: powerhouse
-(21, 'Mitochondria'),
-(21, 'Nucleus'),
-(21, 'Chloroplast'),
-(21, 'Ribosome'),
--- Q22 MultiSelect: mammals + non-mammal
-(22, 'Elephant'),
-(22, 'Bat'),
-(22, 'Whale'),
-(22, 'Crocodile'),
--- Q23 PictureResponse: organs
-(23, 'Heart'),
-(23, 'Liver'),
-(23, 'Lung'),
--- Q24 QuestionResponse: plant process
-(24, 'Photosynthesis'),
-(24, 'Respiration'),
-(24, 'Transpiration');
+                                                                     (57, 'William Shakespeare'),
+                                                                     (57, 'Robert Frost'),
+                                                                     (57, 'Emily Dickinson'),
+                                                                     (57, 'Walt Whitman');
 
-
--- Quiz 5: Music Legends (question_id 25-30)
-INSERT INTO possible_answers (question_id, possible_answer_text) VALUES
--- Q25 Matching: musician + band
-(25, 'Freddie Mercury'),
-(25, 'John Lennon'),
-(25, 'David Gilmour'),
-(25, 'Queen'),
-(25, 'The Beatles'),
-(25, 'Pink Floyd'),
--- Q26 MultiAnswer: band instruments + one not typical
-(26, 'Guitar'),
-(26, 'Bass'),
-(26, 'Drums'),
-(26, 'Keyboard'),
-(26, 'Violin'),
--- Q27 MultipleChoice: Queen of Soul
-(27, 'Aretha Franklin'),
-(27, 'Whitney Houston'),
-(27, 'Beyoncé'),
-(27, 'Adele'),
--- Q28 MultiSelect: Grammy winners
-(28, 'Adele'),
-(28, 'Beyoncé'),
-(28, 'Elton John'),
-(28, 'Elvis Presley'),
--- Q29 PictureResponse: bands
-(29, 'The Beatles'),
-(29, 'Rolling Stones'),
-(29, 'Pink Floyd'),
--- Q30 QuestionResponse: Fur Elise composer
-(30, 'Beethoven'),
-(30, 'Mozart'),
-(30, 'Chopin');
-
-
--- Quiz 6: Famous Movies (question_id 31-36)
-INSERT INTO possible_answers (question_id, possible_answer_text) VALUES
--- Q31 Matching: movie + director
-(31, 'Inception'),
-(31, 'Jurassic Park'),
-(31, 'Titanic'),
-(31, 'Christopher Nolan'),
-(31, 'Steven Spielberg'),
-(31, 'James Cameron'),
--- Q32 MultiAnswer: Nolan movies + others
-(32, 'Inception'),
-(32, 'The Dark Knight'),
-(32, 'Interstellar'),
-(32, 'Forrest Gump'),
--- Q33 MultipleChoice: Best Picture 1994
-(33, 'Forrest Gump'),
-(33, 'Pulp Fiction'),
-(33, 'The Shawshank Redemption'),
-(33, 'Four Weddings and a Funeral'),
--- Q34 MultiSelect: animated movies + non-animated
-(34, 'Toy Story'),
-(34, 'Shrek'),
-(34, 'Finding Nemo'),
-(34, 'Titanic'),
--- Q35 PictureResponse: movies
-(35, 'Inception'),
-(35, 'Interstellar'),
-(35, 'Memento'),
--- Q36 QuestionResponse: Forrest Gump actor
-(36, 'Tom Hanks'),
-(36, 'Robin Wright'),
-(36, 'Gary Sinise');
-
-
+-- TAGS
 INSERT INTO tags (tag_name) VALUES
-    ('Olympic'),
-    ('Modern History'),
-    ('Logic'),
-    ('Animals'),
-    ('Rock'),
-    ('Animated'),
-    ('Classic'),
-    ('Champions'),
-    ('Beginner'),
-    ('Advanced');
+                                ('Olympic'),
+                                ('Modern History'),
+                                ('Logic'),
+                                ('Animals'),
+                                ('Rock'),
+                                ('Animated'),
+                                ('Classic'),
+                                ('Champions'),
+                                ('Beginner'),
+                                ('Advanced'),
+                                ('Programming'),
+                                ('Web Development'),
+                                ('Innovation'),
+                                ('Contemporary'),
+                                ('Geography'),
+                                ('Space'),
+                                ('Retro Gaming'),
+                                ('International'),
+                                ('Educational'),
+                                ('Interactive');
 
-
--- Quiz 1: Guess Georgian athletes
+-- QUIZ TAGS
 INSERT INTO quiz_tags (quiz_id, tag_id) VALUES
-    (1, 1),  -- Olympic
-    (1, 8);  -- Champions
+                                            -- Programming Fundamentals
+                                            (7, 11), (7, 12), (7, 9),
+                                            -- Tech Giants & Innovation
+                                            (8, 13), (8, 10), (8, 19),
+                                            -- World Literature Classics
+                                            (9, 7), (9, 19), (9, 10),
+                                            -- Modern Poetry & Authors
+                                            (10, 14), (10, 19), (10, 9);
 
--- Quiz 2: History of Georgia
-INSERT INTO quiz_tags (quiz_id, tag_id) VALUES
-    (2, 2),  -- Modern History
-    (2, 7);  -- Classic
-
--- Quiz 3: Math Genius
-INSERT INTO quiz_tags (quiz_id, tag_id) VALUES
-    (3, 3),  -- Logic
-    (3, 10); -- Advanced
-
--- Quiz 4: Biology Facts
-INSERT INTO quiz_tags (quiz_id, tag_id) VALUES
-    (4, 4),  -- Animals
-    (4, 9);  -- Beginner
-
--- Quiz 5: Music Legends
-INSERT INTO quiz_tags (quiz_id, tag_id) VALUES
-    (5, 5),  -- Rock
-    (5, 7);  -- Classic
-
--- Quiz 6: Famous Movies
-INSERT INTO quiz_tags (quiz_id, tag_id) VALUES
-    (6, 6),  -- Animated
-    (6, 7);  -- Classic
-
+-- ACHIEVEMENTS
 INSERT INTO achievements (achievement_name, achievement_description, icon_url) VALUES
-    ('Amateur Author', 'Created your first quiz!', 'icons/amateur_author.png'),
-    ('Prolific Author', 'Created 5 quizzes!', 'icons/prolific_author.png'),
-    ('Quiz Machine', 'Taken 10 quizzes!', 'icons/quiz_machine.png'),
-    ('Practice Makes Perfect', 'Completed 3 practice quizzes!', 'icons/practice.png');
+                                                                                   ('Amateur Author', 'Created your first quiz!', 'icons/amateur_author.png'),
+                                                                                   ('Prolific Author', 'Created 5 quizzes!', 'icons/prolific_author.png'),
+                                                                                   ('Quiz Machine', 'Taken 10 quizzes!', 'icons/quiz_machine.png'),
+                                                                                   ('Practice Makes Perfect', 'Completed 3 practice quizzes!', 'icons/practice.png'),
+                                                                                   ('Perfect Score', 'Achieved 100% on any quiz!', 'icons/perfect_score.png'),
+                                                                                   ('Speed Demon', 'Completed a quiz in under 2 minutes!', 'icons/speed_demon.png'),
+                                                                                   ('Knowledge Seeker', 'Taken quizzes in 5 different categories!', 'icons/knowledge_seeker.png'),
+                                                                                   ('Social Butterfly', 'Added 10 friends!', 'icons/social_butterfly.png'),
+                                                                                   ('Challenge Master', 'Sent 5 quiz challenges to friends!', 'icons/challenge_master.png'),
+                                                                                   ('Consistent Learner', 'Taken a quiz every day for a week!', 'icons/consistent_learner.png');
 
--- Nestor (user_id=1)
+-- USER ACHIEVEMENTS
 INSERT INTO user_achievements (user_id, achievement_id) VALUES
-    (1, 1), -- Amateur Author
-    (1, 3); -- Quiz Machine
+                                                            -- Nestor
+                                                            (1, 1), (1, 3), (1, 5),
+                                                            -- Sandro
+                                                            (2, 1), (2, 7),
+                                                            -- Saba
+                                                            (3, 1), (3, 4), (3, 6),
+                                                            -- Giorgi
+                                                            (4, 1), (4, 8),
+                                                            -- Alex (tech guru)
+                                                            (5, 1), (5, 2), (5, 5), (5, 7),
+                                                            -- Maria (book worm)
+                                                            (6, 1), (6, 3), (6, 10),
+                                                            -- John (space explorer)
+                                                            (7, 1), (7, 6), (7, 9),
+                                                            -- Emma (chef)
+                                                            (8, 1), (8, 4);
 
--- Sandro (user_id=2)
-INSERT INTO user_achievements (user_id, achievement_id) VALUES
-    (2, 1); -- Amateur Author
+-- FRIEND REQUESTS
+INSERT INTO friend_requests (sender_id, receiver_id, status) VALUES
+                                                                 (1, 2, 'accepted'),
+                                                                 (3, 4, 'accepted'),
+                                                                 (5, 6, 'pending'),
+                                                                 (7, 8, 'accepted'),
+                                                                 (2, 5, 'pending'),
+                                                                 (6, 7, 'rejected'),
+                                                                 (1, 5, 'accepted'),
+                                                                 (3, 6, 'accepted');
 
--- Saba (user_id=3)
-INSERT INTO user_achievements (user_id, achievement_id) VALUES
-    (3, 1), -- Amateur Author
-    (3, 4); -- Practice Makes Perfect
+-- FRIENDSHIPS
+INSERT INTO friendships (user_id1, user_id2) VALUES
+                                                 (1, 2), -- Nestor & Sandro
+                                                 (3, 4), -- Saba & Giorgi
+                                                 (7, 8), -- John & Emma
+                                                 (1, 5), -- Nestor & Alex
+                                                 (3, 6), -- Saba & Maria
+                                                 (2, 3), -- Sandro & Saba
+                                                 (5, 7), -- Alex & John
+                                                 (6, 8); -- Maria & Emma
 
--- Giorgi (user_id=4)
-INSERT INTO user_achievements (user_id, achievement_id) VALUES
-    (4, 1); -- Amateur Author
+-- SAMPLE SUBMISSIONS
+INSERT INTO submissions (user_id, quiz_id, num_correct_answers, num_total_answers, score, time_spent) VALUES
+                                                                                                          -- Various users taking different quizzes with realistic scores
+                                                                                                          (1, 7, 5, 6, 83, 420),  -- Nestor: Programming quiz
+                                                                                                          (2, 9, 4, 6, 67, 680),  -- Sandro: Literature quiz
+                                                                                                          (5, 7, 6, 6, 100, 380),  -- Alex: Programming quiz (perfect score)
+                                                                                                          (5, 8, 5, 6, 83, 450),   -- Alex: Tech Giants quiz
+                                                                                                          (6, 9, 5, 6, 83, 720),   -- Maria: Literature quiz
+                                                                                                          (6, 10, 4, 6, 67, 610),  -- Maria: Poetry quiz
+                                                                                                          (1, 1, 5, 6, 83, 450),   -- Nestor: Georgian athletes
+                                                                                                          (2, 2, 4, 6, 67, 620);   -- Sandro: Georgian history
 
-INSERT INTO friend_requests (sender_id, receiver_id, status)
-VALUES
-    (1, 2, 'pending'),
-    (2, 3, 'accepted'),
-    (3, 4, 'rejected'),
-    (4, 1, 'pending');
+-- SAMPLE USER ANSWERS
+INSERT INTO user_answers (submission_id, question_id, answer_text, is_correct) VALUES
+                                                                                   -- Sample answers for some submissions
+                                                                                   (1, 37, 'high-level', TRUE),
+                                                                                   (1, 38, 'HyperText Markup Language', TRUE),
+                                                                                   (1, 39, 'Java', FALSE),
+                                                                                   (1, 40, 'Python', TRUE),
+                                                                                   (1, 41, 'React, Django, Vue.js', TRUE),
+                                                                                   (1, 42, 'Java,Python,C++', FALSE);
 
-INSERT INTO friendships (user_id1, user_id2)
-VALUES
-    (1, 2),
-    (2, 3),
-    (3, 4),
-    (1, 3);
+-- MESSAGES
+INSERT INTO messages (sender_id, receiver_id, message_type, content, quiz_id, is_read) VALUES
+                                                                                           (1, 2, 'challenge', 'challenged you to take "Programming Fundamentals"! My best score: 83', 7, FALSE),
+                                                                                           (5, 1, 'note', 'Great job on the programming quiz! You really know your stuff.', NULL, TRUE),
+                                                                                           (6, 3, 'challenge', 'challenged you to take "World Literature Classics"! My best score: 83', 9, FALSE),
+                                                                                           (7, 8, 'note', 'Hey Emma, hope you are doing well!', NULL, TRUE),
+                                                                                           (8, 7, 'note', 'Thanks for checking in! Hope to see you soon.', NULL, TRUE);
