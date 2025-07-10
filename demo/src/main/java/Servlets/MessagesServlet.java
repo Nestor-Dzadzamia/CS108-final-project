@@ -5,6 +5,9 @@ import DAO.QuizDao;
 import DAO.UserDao;
 import Models.*;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -18,12 +21,17 @@ public class MessagesServlet extends HttpServlet {
     private MessageDao messageDao;
     private UserDao userDao;
     private QuizDao quizDao;
+    private Gson gson;
 
     @Override
     public void init() {
         messageDao = new MessageDao();
         userDao = new UserDao();
         quizDao = new QuizDao();
+        gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .create();
     }
 
     @Override
@@ -95,15 +103,12 @@ public class MessagesServlet extends HttpServlet {
 
                     messageDao.sendChallenge(currentUser.getId(), receiverId, content, quizId);
 
-                    // Send real-time notification via WebSocket
-                    String notification = MessageWebSocketEndpoint.createMessageNotification(
-                            "challenge",
-                            currentUser.getUsername(),
-                            content,
-                            quizTitle,
-                            quizId
-                    );
-                    MessageWebSocketEndpoint.sendMessageToUser(receiverId, notification);
+                    Message latest = messageDao.getLatestMessageBySenderReceiver(currentUser.getId(), receiverId);
+                    if (isValidMessage(latest)) {
+                        String json = gson.toJson(latest);
+                        System.out.println("WS SENDING: " + json);
+                        MessageWebSocketEndpoint.sendMessageToUser(receiverId, json);
+                    }
 
                     request.setAttribute("success", "Challenge sent successfully!");
                 }
@@ -112,15 +117,12 @@ public class MessagesServlet extends HttpServlet {
                 if (content != null && !content.trim().isEmpty()) {
                     messageDao.sendNote(currentUser.getId(), receiverId, content.trim());
 
-                    // Send real-time notification via WebSocket
-                    String notification = MessageWebSocketEndpoint.createMessageNotification(
-                            "note",
-                            currentUser.getUsername(),
-                            content.trim(),
-                            null,
-                            null
-                    );
-                    MessageWebSocketEndpoint.sendMessageToUser(receiverId, notification);
+                    Message latest = messageDao.getLatestMessageBySenderReceiver(currentUser.getId(), receiverId);
+                    if (isValidMessage(latest)) {
+                        String json = gson.toJson(latest);
+                        System.out.println("WS SENDING: " + json);
+                        MessageWebSocketEndpoint.sendMessageToUser(receiverId, json);
+                    }
 
                     request.setAttribute("success", "Note sent successfully!");
                 }
@@ -133,5 +135,10 @@ public class MessagesServlet extends HttpServlet {
         }
 
         response.sendRedirect("message");
+    }
+
+    private boolean isValidMessage(Message m) {
+        return m != null && m.getContent() != null && !m.getContent().trim().isEmpty()
+                && m.getSenderName() != null && m.getMessageType() != null;
     }
 }

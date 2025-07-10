@@ -295,10 +295,53 @@
             color: #667eea;
             transform: translateY(-2px);
         }
+
+        .connection-status {
+            position: fixed;
+            bottom: 24px;
+            right: 32px;
+            background: rgba(255,255,255,0.85);
+            color: #333;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.09);
+            font-size: 1.1rem;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+        }
+        .connection-status.connected { background: #d4edda; color: #155724; }
+        .connection-status.disconnected { background: #f8d7da; color: #721c24; }
+
+        .notification {
+            position: fixed;
+            top: 16px;
+            right: 36px;
+            background: #fff;
+            color: #333;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.13);
+            padding: 16px 24px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 3000;
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: opacity 0.4s;
+        }
+        .notification.show { opacity: 1; pointer-events: auto; }
+        .new-message { animation: newmsg-pop 0.5s; }
+        @keyframes newmsg-pop {
+            0% { transform: scale(0.98) translateY(-10px); background: #f0e6ff; }
+            100% { transform: scale(1) translateY(0); }
+        }
     </style>
 </head>
 <body>
-
 <div class="container">
     <div class="header">
         <h1><i class="fas fa-comments"></i> Messages</h1>
@@ -310,23 +353,18 @@
             <h2 class="section-title">
                 <i class="fas fa-inbox"></i> Your Messages
             </h2>
-
-            <!-- Success/Error Messages -->
             <c:if test="${not empty success}">
                 <div class="alert alert-success">
                     <i class="fas fa-check-circle"></i>
                     <span>${success}</span>
                 </div>
             </c:if>
-
             <c:if test="${not empty error}">
                 <div class="alert alert-error">
                     <i class="fas fa-exclamation-circle"></i>
                     <span>${error}</span>
                 </div>
             </c:if>
-
-            <!-- Messages List -->
             <div class="messages-list">
                 <c:choose>
                     <c:when test="${empty messages}">
@@ -349,7 +387,6 @@
                                         <fmt:formatDate value="${message.sentAt}" pattern="MMM dd, yyyy HH:mm"/>
                                     </div>
                                 </div>
-
                                 <div class="message-content">
                                     <c:choose>
                                         <c:when test="${message.messageType eq 'challenge'}">
@@ -375,12 +412,10 @@
                 </c:choose>
             </div>
         </div>
-
         <div class="compose-panel">
             <h3 class="section-title">
                 <i class="fas fa-paper-plane"></i> Send New Message
             </h3>
-
             <c:choose>
                 <c:when test="${empty friends}">
                     <div class="empty-state">
@@ -404,7 +439,6 @@
                                 </c:forEach>
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label for="messageType" class="form-label">Message Type:</label>
                             <select name="messageType" id="messageType" class="form-select" required>
@@ -413,8 +447,6 @@
                                 <option value="challenge">🏆 Challenge</option>
                             </select>
                         </div>
-
-                        <!-- Note Form -->
                         <div id="noteForm" class="form-section">
                             <div class="form-group">
                                 <label for="content" class="form-label">Message:</label>
@@ -425,8 +457,6 @@
                                 Send Note
                             </button>
                         </div>
-
-                        <!-- Challenge Form -->
                         <div id="challengeForm" class="form-section">
                             <div class="form-group">
                                 <label for="quizId" class="form-label">Select Quiz:</label>
@@ -448,16 +478,12 @@
         </div>
     </div>
 </div>
-
 <a href="homepage.jsp" class="back-btn">
     <i class="fas fa-arrow-left"></i>
 </a>
-
-<!-- Connection Status Indicator -->
 <div id="connectionStatus" class="connection-status disconnected">
     <i class="fas fa-wifi"></i> Disconnected
 </div>
-
 <script>
     let socket;
     let currentUser = ${sessionScope.user.id};
@@ -465,39 +491,28 @@
     const maxReconnectAttempts = 5;
 
     function connectWebSocket() {
-        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const wsUrl = "ws://localhost:8080/demo_war_exploded/messageSocket";
-        console.log("Connecting to WebSocket:", wsUrl);
+        const wsUrl = window.location.protocol === 'https:' ?
+            'wss://' + window.location.host + '/demo_war_exploded/messageSocket' :
+            'ws://' + window.location.host + '/demo_war_exploded/messageSocket';
 
         socket = new WebSocket(wsUrl);
 
-        socket.onopen = function(event) {
-            console.log('WebSocket connected');
+        socket.onopen = function() {
             updateConnectionStatus(true);
             reconnectAttempts = 0;
-
-            // Send user ID to associate this connection
             socket.send(JSON.stringify({
                 type: 'connect',
                 userId: currentUser
             }));
         };
 
-        socket.onmessage = function(event) {
-            try {
-                const message = JSON.parse(event.data);
-                displayNewMessage(message);
-                showNotification(message.senderName + ' sent you a ' + message.type);
-            } catch (error) {
-                console.error('Error parsing WebSocket message:', error);
-            }
+        // Auto reload page on every new message (real-time bug-proof)
+        socket.onmessage = function() {
+            location.reload();
         };
 
-        socket.onclose = function(event) {
-            console.log('WebSocket disconnected');
+        socket.onclose = function() {
             updateConnectionStatus(false);
-
-            // Attempt to reconnect
             if (reconnectAttempts < maxReconnectAttempts) {
                 reconnectAttempts++;
                 setTimeout(connectWebSocket, 3000 * reconnectAttempts);
@@ -511,93 +526,14 @@
 
     function updateConnectionStatus(connected) {
         const statusElement = document.getElementById('connectionStatus');
-        if (connected) {
-            statusElement.className = 'connection-status connected';
-            statusElement.innerHTML = '<i class="fas fa-wifi"></i> Connected';
-        } else {
-            statusElement.className = 'connection-status disconnected';
-            statusElement.innerHTML = '<i class="fas fa-wifi"></i> Disconnected';
-        }
-    }
-
-    function displayNewMessage(message) {
-        const messagesList = document.querySelector('.messages-list');
-        const emptyState = document.querySelector('.empty-state');
-
-        // Remove empty state if it exists
-        if (emptyState) {
-            emptyState.remove();
-        }
-
-        const messageCard = createMessageCard(message);
-        messageCard.classList.add('new-message');
-
-        messagesList.insertBefore(messageCard, messagesList.firstChild);
-
-        // Remove the animation class after animation completes
-        setTimeout(() => {
-            messageCard.classList.remove('new-message');
-        }, 500);
-    }
-
-    function createMessageCard(message) {
-        const card = document.createElement('div');
-        card.className = 'message-card unread';
-
-        const content = message.type === 'challenge' ?
-            `<div class="challenge-info">
-            <p><strong>${message.senderName}</strong> ${message.content}</p>
-            <p><strong>Quiz:</strong> ${message.quizTitle}</p>
-            <a href="quiz?id=${message.quizId}" class="quiz-link">
-                <i class="fas fa-play"></i> Take Quiz
-            </a>
-        </div>` :
-            `<p>${message.content}</p>`;
-
-        card.innerHTML = `
-        <div class="message-header">
-            <div class="message-meta">
-                <span class="message-type ${message.type}">${message.type}</span>
-                <span class="sender-name">${message.senderName}</span>
-            </div>
-            <div class="message-date">
-                <i class="fas fa-clock"></i>
-                <span>${message.timestamp || 'Just now'}</span>
-            </div>
-        </div>
-        <div class="message-content">${content}</div>
-    `;
-
-        return card;
-    }
-
-    function showNotification(text) {
-        // Create notification element
-        const notification = document.createElement('div');
-        notification.className = 'notification';
-        notification.innerHTML = `<i class="fas fa-bell"></i> ${text}`;
-
-        document.body.appendChild(notification);
-
-        // Show notification
-        setTimeout(() => {
-            notification.classList.add('show');
-        }, 100);
-
-        // Hide and remove notification after 4 seconds
-        setTimeout(() => {
-            notification.classList.remove('show');
-            setTimeout(() => {
-                document.body.removeChild(notification);
-            }, 300);
-        }, 4000);
-
-        // Browser notification if permission granted
-        if (Notification.permission === 'granted') {
-            new Notification('New Message', {
-                body: text,
-                icon: '/path/to/icon.png' // Add your icon path
-            });
+        if (statusElement) {
+            if (connected) {
+                statusElement.className = 'connection-status connected';
+                statusElement.innerHTML = '<i class="fas fa-wifi"></i> Connected';
+            } else {
+                statusElement.className = 'connection-status disconnected';
+                statusElement.innerHTML = '<i class="fas fa-wifi"></i> Disconnected';
+            }
         }
     }
 
@@ -605,12 +541,8 @@
         const messageType = document.getElementById('messageType').value;
         const noteForm = document.getElementById('noteForm');
         const challengeForm = document.getElementById('challengeForm');
-
-        // Hide all forms
         noteForm.classList.remove('active');
         challengeForm.classList.remove('active');
-
-        // Show selected form
         if (messageType === 'note') {
             noteForm.classList.add('active');
             document.getElementById('content').required = true;
@@ -622,29 +554,22 @@
         }
     }
 
-    // Request notification permission
     if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
         Notification.requestPermission();
     }
 
-    // Event listeners
     document.getElementById('messageType').addEventListener('change', toggleMessageForm);
-
     document.getElementById('messageType').addEventListener('change', function() {
         document.getElementById('content').value = '';
         document.getElementById('quizId').value = '';
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-        // Connect WebSocket
         connectWebSocket();
-
-        // Existing animation code
         const cards = document.querySelectorAll('.message-card');
         cards.forEach((card, index) => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(20px)';
-
             setTimeout(() => {
                 card.style.transition = 'all 0.5s ease';
                 card.style.opacity = '1';
@@ -653,13 +578,11 @@
         });
     });
 
-    // Clean up on page unload
     window.addEventListener('beforeunload', function() {
         if (socket && socket.readyState === WebSocket.OPEN) {
             socket.close();
         }
     });
 </script>
-
 </body>
 </html>
