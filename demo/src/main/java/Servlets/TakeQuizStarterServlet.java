@@ -51,6 +51,8 @@ public class TakeQuizStarterServlet extends HttpServlet {
             PossibleAnswerDao possibleAnswerDao = new PossibleAnswerDao();
 
             List<Question> questions = questionDao.getQuestionsByQuizId(quizId);
+            if(quiz.isRandomized()) Collections.shuffle(questions); //for randomized quizzes
+
             Map<Long, List<Answer>> correctAnswers = new HashMap<>();
             Map<Long, List<PossibleAnswer>> possibleAnswers = new HashMap<>();
 
@@ -73,10 +75,10 @@ public class TakeQuizStarterServlet extends HttpServlet {
             session.setAttribute("correctAnswers", correctAnswers);
             session.setAttribute("possibleAnswers", possibleAnswers);
 
-            //if user starts but does not submit quiz this boolean
-            //tells us to renew timer
-            boolean quizInProcess = true;
-            session.setAttribute("quizInProcess", quizInProcess);
+            //if practice mode
+            String mode = req.getParameter("mode");
+            boolean isPracticeMode = "practice".equals(mode);
+            session.setAttribute("isPracticeMode", isPracticeMode);
 
             Question currentQuestion = questions.get(0); //very first question for single page
             session.setAttribute("currentQuestion", currentQuestion);
@@ -85,12 +87,11 @@ public class TakeQuizStarterServlet extends HttpServlet {
             //for simplier timer implementation
             Long quizStartTime = (Long) session.getAttribute("quizStartTime");
             Long remainingTime;
-            if (quizStartTime == null || quizInProcess) {
+            if (quizStartTime == null) {
                 // First time loading this quiz - start the timer
                 quizStartTime = System.currentTimeMillis();
                 session.setAttribute("quizStartTime", quizStartTime);
                 remainingTime = quiz.getTotalTimeLimit() * 60L;
-
             } else {
                 // Quiz was already started (page refresh) - calculate remaining time
                 long elapsedMillis = System.currentTimeMillis() - quizStartTime;

@@ -23,6 +23,9 @@
     String errorMsg = null;
     String categoryName = null;
 
+    Long quizStartTime = (Long) session.getAttribute("quizStartTime");
+    if(quizStartTime != null) session.removeAttribute("quizStartTime");
+
     if (quizIdStr == null) {
         errorMsg = "No quiz id provided.";
     } else {
@@ -93,8 +96,15 @@
         <% if (loggedIn) { %>
         <form action="take-quiz-starter" method="get" class="mt-3">
             <input type="hidden" name="id" value="<%= quiz.getQuizId() %>">
-            <button class="btn btn-primary btn-lg">Take this Quiz</button>
+            <button class="btn btn-primary btn-lg" name="startQuiz" value="true">Take this Quiz</button>
         </form>
+        <% if (quiz.isAllowPractice()) { %>
+        <form action="take-quiz-starter" method="get" class="mt-2">
+            <input type="hidden" name="id" value="<%= quiz.getQuizId() %>">
+            <input type="hidden" name="mode" value="practice">
+            <button class="btn btn-warning btn-lg">Practice Mode</button>
+        </form>
+        <% } %>
         <% } else { %>
         <button class="btn btn-primary btn-lg mt-3" disabled title="Login to take quizzes!">Take this Quiz</button>
         <div class="text-muted mt-2">Please <a href="login.jsp">login</a> to take quizzes.</div>

@@ -4,6 +4,9 @@
 <%
     QuizDao quizDao = new QuizDao();
 
+    Long quizStartTime = (Long) session.getAttribute("quizStartTime");
+    if(quizStartTime != null) session.removeAttribute("quizStartTime");
+
     String titleFilter = request.getParameter("title") != null ? request.getParameter("title").trim().toLowerCase() : "";
     String creatorFilter = request.getParameter("creator") != null ? request.getParameter("creator").trim().toLowerCase() : "";
     String categoryFilter = request.getParameter("category") != null ? request.getParameter("category").trim().toLowerCase() : "";

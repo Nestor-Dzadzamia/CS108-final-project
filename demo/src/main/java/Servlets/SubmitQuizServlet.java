@@ -71,13 +71,29 @@ public class SubmitQuizServlet extends HttpServlet {
             totalSecondsRem = 0;
         }
 
+        User user = (User) session.getAttribute("user");
+        //update all the info in database
+        UserDao userDao = new UserDao();
+        if(!(Boolean) session.getAttribute("isPracticeMode")) {
+            try {
+                boolean inserted = userDao.recordSubmissionAndCheckAchievements(user.getId(), quiz.getQuizId(), quizStats.get(1).longValue(), quizStats.get(0).longValue(), quizStats.get(3).longValue(), totalTimeSpent);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            try {
+                userDao.handlePracticeAchievement(user.getId());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         //clear session except for user info
         java.util.Enumeration<String> attributeNames = session.getAttributeNames();
         while (attributeNames.hasMoreElements()) {
             String attr = attributeNames.nextElement();
             System.out.println(attr + ": " + session.getAttribute(attr));
-            if(!attr.equals("user")) session.removeAttribute(attr);
+            if(!attr.equals("user") && !attr.equals("isPracticeMode")) session.removeAttribute(attr);
         }
 
         //set all needed attributes to the request
@@ -91,14 +107,7 @@ public class SubmitQuizServlet extends HttpServlet {
         req.setAttribute("quizStats", quizStats); // contains [totalCount, gotRightCount, markedIncorrectly, finalScore]
         req.setAttribute("finalScore", finalScore); // if you want it directly
 
-        User user = (User) session.getAttribute("user");
-        //update all the info in database
-        UserDao userDao = new UserDao();
-        try {
-            boolean inserted = userDao.recordSubmissionAndCheckAchievements(user.getId(), quiz.getQuizId(), quizStats.get(1).longValue(), quizStats.get(0).longValue(), quizStats.get(3).longValue(), totalTimeSpent);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
 
         req.getRequestDispatcher("takeQuizSummaryPage.jsp").forward(req, resp);
     }

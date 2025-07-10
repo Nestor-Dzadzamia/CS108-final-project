@@ -10,6 +10,27 @@
         .question-summary h4 { margin-bottom: 10px; }
         .label { font-weight: bold; color: #333; }
         .answer-block { margin-left: 20px; margin-top: 5px; white-space: pre-line; }
+
+         .practice-mode-banner {
+             background-color: #ffeb3b;
+             color: #000;
+             font-weight: bold;
+             padding: 10px 24px;
+             border-radius: 10px;
+             box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+             font-size: 20px;
+             text-align: center;
+             margin: 20px auto;
+             width: fit-content;
+         }
+
+        .practice-mode-banner small {
+            display: block;
+            font-size: 13px;
+            font-weight: normal;
+            margin-top: 4px;
+        }
+    </style>
     </style>
 </head>
 <body>
@@ -26,6 +47,18 @@
     double correctCount = stats.get(1);
     double markedIncorrect = stats.get(2);
     double finalScore = stats.get(3);
+%>
+
+<%
+    Boolean isPracticeMode = (Boolean) session.getAttribute("isPracticeMode");
+    if (Boolean.TRUE.equals(isPracticeMode)) {
+%>
+<div class="practice-mode-banner">
+    Practice Mode
+    <small>Submission data won't be saved</small>
+</div>
+<%
+    }
 %>
 
 <h1>Quiz Summary</h1>
