@@ -67,7 +67,7 @@ INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_li
      (9, 'matching', 'Match each classic novel to its author.', NULL, 120, 1),
      (9, 'question-response', 'In which Shakespeare play does the character Hamlet appear?', NULL, 120, 2),
      (9, 'multiple-choice', 'Which novel begins with "It was the best of times, it was the worst of times"?', NULL, 120, 3),
-     (9, 'picture-response', 'Who is the author shown in this portrait?', 'https://upload.wikimedia.org/wikipedia/commons/d/d4/Charles_Dickens_-_Project_Gutenberg_eText_13103.jpg', 120, 4),
+     (9, 'picture-response', 'Who is the author shown in this portrait?', 'https://upload.wikimedia.org/wikipedia/commons/a/aa/Dickens_Gurney_head.jpg', 120, 4),
      (9, 'fill-blank', 'George Orwell wrote the dystopian novel "_" published in 1949.', NULL, 120, 5),
      (9, 'multiple-multiple-choice', 'Select all novels written by Jane Austen.', NULL, 120, 6);
 
@@ -78,7 +78,7 @@ INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_li
      (10, 'multiple-choice', 'Which poet is known as the "Bard of Avon"?', NULL, 90, 3),
      (10, 'matching', 'Match each poet to their most famous work.', NULL, 90, 4),
      (10, 'multi-answer', 'Name three Beat Generation poets.', NULL, 90, 5),
-     (10, 'picture-response', 'Which famous poet is shown in this photograph?', 'https://upload.wikimedia.org/wikipedia/commons/0/05/Langston_Hughes_by_Carl_Van_Vechten_1936.jpg', 90, 6);
+     (10, 'picture-response', 'Which famous poet is shown in this photograph?', 'https://upload.wikimedia.org/wikipedia/commons/c/ca/Langston_Hughes_by_Carl_Van_Vechten_%28cropped%29.jpg', 90, 6);
 
 -- Add unordered multi-answer questions to Quiz 17 (questions 97-102)
 INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_limit, question_order) VALUES
