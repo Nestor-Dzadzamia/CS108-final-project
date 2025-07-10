@@ -14,6 +14,7 @@ CREATE TABLE users (
                        num_quizzes_taken BIGINT DEFAULT 0,
                        was_top1 BOOLEAN DEFAULT FALSE,
                        taken_practice BOOLEAN DEFAULT FALSE,
+                       role ENUM('user', 'admin') NOT NULL DEFAULT 'user',
                        CHECK (email LIKE '%@gmail.com')
 );
 
@@ -37,7 +38,7 @@ CREATE TABLE quizzes (
                          quiz_category BIGINT,
                          total_time_limit BIGINT,
                          submissions_number BIGINT DEFAULT 0,
-                         FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE SET NULL,
+                         FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE CASCADE ,
                          FOREIGN KEY (quiz_category) REFERENCES categories(category_id) ON DELETE SET NULL
 );
 
@@ -45,7 +46,7 @@ CREATE TABLE quizzes (
 CREATE TABLE questions (
                            question_id BIGINT AUTO_INCREMENT PRIMARY KEY,
                            quiz_id BIGINT,
-                           question_type VARCHAR(50) NOT NULL,
+                           question_type VARCHAR(50) NOT NULL CHECK(question_type IN('fill-blank', 'question-response', 'picture-response', 'multi-answer', 'multiple-choice', 'multiple-multiple-choice', 'matching')),
                            question_text TEXT,
                            image_url TEXT,
                            time_limit BIGINT,
@@ -156,8 +157,8 @@ CREATE TABLE messages (
                           is_read BOOLEAN DEFAULT FALSE,
                           FOREIGN KEY (sender_id) REFERENCES users(user_id) ON DELETE CASCADE,
                           FOREIGN KEY (receiver_id) REFERENCES users(user_id) ON DELETE CASCADE,
-                          FOREIGN KEY (quiz_id) REFERENCES quizzes(quiz_id) ON DELETE SET NULL,
-                          FOREIGN KEY (friend_request_id) REFERENCES friend_requests(request_id) ON DELETE SET NULL
+                          FOREIGN KEY (quiz_id) REFERENCES quizzes(quiz_id) ON DELETE CASCADE,
+                          FOREIGN KEY (friend_request_id) REFERENCES friend_requests(request_id) ON DELETE CASCADE
 );
 
 CREATE TABLE possible_answers (
@@ -165,6 +166,16 @@ CREATE TABLE possible_answers (
                                   question_id BIGINT NOT NULL,
                                   possible_answer_text TEXT NOT NULL,
                                   FOREIGN KEY (question_id) REFERENCES questions(question_id) ON DELETE CASCADE
+);
+
+CREATE TABLE announcements (
+                               announcement_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                               title VARCHAR(200) NOT NULL,
+                               message TEXT NOT NULL,
+                               created_by BIGINT,
+                               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                               is_active BOOLEAN DEFAULT TRUE,
+                               FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 -- VIEWS --

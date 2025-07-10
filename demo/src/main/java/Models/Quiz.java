@@ -72,4 +72,6 @@ public class Quiz {
 
     public long getSubmissionsNumber() { return submissionsNumber; }
     public void setSubmissionsNumber(long submissionsNumber) { this.submissionsNumber = submissionsNumber; }
+
+
 }

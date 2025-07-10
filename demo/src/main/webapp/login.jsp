@@ -54,7 +54,7 @@
 <body>
 <a href="<%= request.getContextPath() %>/"
    style="position: absolute; top: 24px; left: 24px; z-index: 1000; text-decoration: none;">
-    <img src="<%= request.getContextPath() %>/images/quiz_icon.png"
+    <img src="images/quiz_icon.png"
          alt="Quiz App Home"
          class="logo-home"
          style="height:70px; width:auto; border-radius: 16px; box-shadow: 0 4px 16px rgba(78,84,200,0.13); transition:0.18s;">

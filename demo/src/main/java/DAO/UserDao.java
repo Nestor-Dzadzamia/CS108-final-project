@@ -47,6 +47,7 @@ public class UserDao {
         user.setNumQuizzesTaken(rs.getLong("num_quizzes_taken"));
         user.setWasTop1(rs.getBoolean("was_top1"));
         user.setTakenPractice(rs.getBoolean("taken_practice"));
+        user.setRole(rs.getString("role"));
         return user;
     }
 
@@ -64,6 +65,7 @@ public class UserDao {
                 user.setEmail(rs.getString("email"));
                 user.setHashedPassword(rs.getString("hashed_password"));
                 user.setSalt(rs.getString("salt_password"));
+                user.setRole(rs.getString("role"));
                 return user;
             }
         }
@@ -108,4 +110,159 @@ public class UserDao {
 
         return friends;
     }
+
+    public boolean removeUser(long userId) throws SQLException {
+        String sql = "DELETE FROM users WHERE user_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, userId);
+            int affected = stmt.executeUpdate();
+            return affected > 0;
+        }
+    }
+
+    //for updating user stats and achievemnts after creating quiz
+    public List<String> incrementQuizzesCreatedAndCheckAchievements(long userId) throws SQLException {
+        List<String> awardedAchievements = new ArrayList<>();
+
+        String getSql = "SELECT num_quizzes_created FROM users WHERE user_id = ?";
+        String updateSql = "UPDATE users SET num_quizzes_created = num_quizzes_created + 1 WHERE user_id = ?";
+        String checkAchievementSql = "SELECT achievement_id FROM user_achievements WHERE user_id = ? AND achievement_id = ?";
+        String insertAchievementSql = "INSERT INTO user_achievements (user_id, achievement_id) VALUES (?, ?)";
+
+        try (Connection conn = DBConnection.getConnection()) {
+            conn.setAutoCommit(false);  // Start transaction
+
+            long currentCount;
+            try (PreparedStatement stmt = conn.prepareStatement(getSql)) {
+                stmt.setLong(1, userId);
+                ResultSet rs = stmt.executeQuery();
+                if (!rs.next()) return awardedAchievements;  // User not found
+                currentCount = rs.getLong("num_quizzes_created");
+            }
+
+            try (PreparedStatement stmt = conn.prepareStatement(updateSql)) {
+                stmt.setLong(1, userId);
+                stmt.executeUpdate();
+            }
+
+            long newCount = currentCount + 1;
+
+            // Check and insert achievements based on new count
+            if (currentCount < 1 && newCount >= 1) {
+                if (!hasAchievement(conn, userId, 1)) { // Amateur Author
+                    awardAchievement(conn, userId, 1);
+                    awardedAchievements.add("Amateur Author");
+                }
+            }
+
+            if (currentCount < 5 && newCount >= 5) {
+                if (!hasAchievement(conn, userId, 2)) { // Prolific Author
+                    awardAchievement(conn, userId, 2);
+                    awardedAchievements.add("Prolific Author");
+                }
+            }
+
+            conn.commit();  // All done
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;  // Let the caller handle rollback if needed
+        }
+
+        return awardedAchievements;
+    }
+
+    private boolean hasAchievement(Connection conn, long userId, long achievementId) throws SQLException {
+        String sql = "SELECT 1 FROM user_achievements WHERE user_id = ? AND achievement_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, userId);
+            stmt.setLong(2, achievementId);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        }
+    }
+
+    private void awardAchievement(Connection conn, long userId, long achievementId) throws SQLException {
+        String sql = "INSERT INTO user_achievements (user_id, achievement_id) VALUES (?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, userId);
+            stmt.setLong(2, achievementId);
+            stmt.executeUpdate();
+        }
+    }
+
+    public boolean recordSubmissionAndCheckAchievements(
+            long userId, long quizId, long numCorrect, long numTotal, long score, long timeSpent
+    ) throws SQLException {
+        List<String> awardedAchievements = new ArrayList<>();
+
+        String getUserStatsSql = "SELECT num_quizzes_taken FROM users WHERE user_id = ?";
+        String updateUserSql = "UPDATE users SET num_quizzes_taken = num_quizzes_taken + 1 WHERE user_id = ?";
+        String insertSubmissionSql = """
+        INSERT INTO submissions (user_id, quiz_id, num_correct_answers, num_total_answers, score, time_spent)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """;
+        String checkAchievementSql = "SELECT 1 FROM user_achievements WHERE user_id = ? AND achievement_id = ?";
+        String insertAchievementSql = "INSERT INTO user_achievements (user_id, achievement_id) VALUES (?, ?)";
+        String updateQuizSql = "UPDATE quizzes SET submissions_number = submissions_number + 1 WHERE quiz_id = ?";
+
+        try (Connection conn = DBConnection.getConnection()) {
+            conn.setAutoCommit(false); // Begin transaction
+
+            long currentTaken;
+            try (PreparedStatement stmt = conn.prepareStatement(getUserStatsSql)) {
+                stmt.setLong(1, userId);
+                ResultSet rs = stmt.executeQuery();
+                if (!rs.next()) return false; // user doesn't exist
+                currentTaken = rs.getLong("num_quizzes_taken");
+            }
+
+            try (PreparedStatement stmt = conn.prepareStatement(updateUserSql)) {
+                stmt.setLong(1, userId);
+                stmt.executeUpdate();
+            }
+
+            try (PreparedStatement stmt = conn.prepareStatement(insertSubmissionSql)) {
+                stmt.setLong(1, userId);
+                stmt.setLong(2, quizId);
+                stmt.setLong(3, numCorrect);
+                stmt.setLong(4, numTotal);
+                stmt.setLong(5, score);
+                stmt.setLong(6, timeSpent);
+                stmt.executeUpdate();
+            }
+
+            try (PreparedStatement stmt = conn.prepareStatement(updateQuizSql)) {
+                stmt.setLong(1, quizId);
+                stmt.executeUpdate();
+            }
+
+            long newTaken = currentTaken + 1;
+
+            if (currentTaken < 10 && newTaken >= 10) {
+                try (PreparedStatement checkStmt = conn.prepareStatement(checkAchievementSql)) {
+                    checkStmt.setLong(1, userId);
+                    checkStmt.setLong(2, 3); // "Quiz Machine" achievement
+                    ResultSet rs = checkStmt.executeQuery();
+
+                    if (!rs.next()) {
+                        try (PreparedStatement insertStmt = conn.prepareStatement(insertAchievementSql)) {
+                            insertStmt.setLong(1, userId);
+                            insertStmt.setLong(2, 3);
+                            insertStmt.executeUpdate();
+                            awardedAchievements.add("Quiz Machine");
+                        }
+                    }
+                }
+            }
+
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return true;
+    }
+
+
 }

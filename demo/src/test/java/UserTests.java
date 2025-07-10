@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserTest {
+class UserTests {
 
     private User user;
 
@@ -41,9 +41,10 @@ class UserTest {
         Long quizzesTaken = 10L;
         Boolean wasTop1 = true;
         Boolean tookPractice = false;
+        String role = "user";
 
         User newUser = new User(id, username, email, hash, salt, timeCreated,
-                quizzesCreated, quizzesTaken, wasTop1, tookPractice);
+                quizzesCreated, quizzesTaken, wasTop1, tookPractice, role);
 
         assertEquals(id, newUser.getId());
         assertEquals(username, newUser.getUsername());
