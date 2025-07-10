@@ -1,6 +1,9 @@
 <%@ page import="DAO.QuizDao" %>
+<%@ page import="DAO.AnnouncementDao" %>
 <%@ page import="Models.Quiz" %>
+<%@ page import="Models.Announcement" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   QuizDao quizDao = new QuizDao();
@@ -11,25 +14,76 @@
   } catch (Exception e) {
     quizError = e.getMessage();
   }
+
+  AnnouncementDao announcementDao = new AnnouncementDao();
+  List<Announcement> announcements = null;
+  String announcementError = null;
+  try {
+    announcements = announcementDao.getAllAnnouncements();
+  } catch (Exception e) {
+    announcementError = e.getMessage();
+  }
 %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>QuizApp - Welcome</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="images/quiz_icon_no_background.png">
   <style>
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: radial-gradient(circle at 70% 20%, #e9edfb 65%, #f4f7fd 100%);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #2e2349;
       margin: 0;
       padding: 0;
     }
+    .header-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0;
+      gap: 18px;
+      position: fixed;
+      top: 32px;
+      right: 44px;
+      z-index: 99;
+    }
+    .header-bar .nav-btn {
+      padding: 9px 28px;
+      border-radius: 14px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-decoration: none;
+      background: linear-gradient(100deg, #4e54c8 70%, #8f94fb 120%);
+      color: #fff !important;
+      border: none;
+      transition: all 0.16s cubic-bezier(.4,2,.5,.75);
+      margin-left: 0;
+    }
+    .header-bar .nav-btn.outline {
+      background: #fff;
+      color: #4e54c8 !important;
+      border: 2px solid #4e54c8;
+    }
+    .header-bar .nav-btn:hover {
+      transform: scale(1.07) translateY(-2px);
+      box-shadow: 0 6px 22px rgba(78,84,200,0.22);
+      color: #ffd600 !important;
+      background: linear-gradient(90deg, #4952c9 60%, #ffd600 140%);
+    }
+    .header-bar .nav-btn.outline:hover {
+      color: #4952c9 !important;
+      background: #fffdfa;
+      border-color: #ffd600;
+    }
     .logo-link {
       position: absolute;
-      top: 24px;
-      left: 24px;
+      top: 38px;
+      left: 44px;
       z-index: 1000;
       text-decoration: none;
     }
@@ -44,181 +98,290 @@
       transform: scale(1.08) rotate(-4deg);
       box-shadow: 0 8px 32px rgba(78,84,200,0.22);
     }
-    .header-bar {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 32px 48px 0 48px;
-      background: none;
-      z-index: 2;
-      position: relative;
-    }
-    .header-bar .nav-btn {
-      margin-left: 18px;
-      padding: 9px 28px;
-      border-radius: 12px;
-      font-size: 1.06rem;
-      font-weight: 600;
-      text-decoration: none;
-      background: linear-gradient(100deg, #4e54c8 70%, #8f94fb 120%);
-      color: #fff !important;
-      box-shadow: 0 2px 12px rgba(78,84,200,0.13);
-      border: none;
-      transition: all 0.16s cubic-bezier(.4,2,.5,.75);
-      display: inline-block;
-      position: relative;
-      top: 0;
-    }
-    .header-bar .nav-btn.outline {
-      background: #fff;
-      color: #4e54c8 !important;
-      border: 2px solid #4e54c8;
-      box-shadow: 0 2px 10px rgba(78,84,200,0.08);
-    }
-    .header-bar .nav-btn:hover {
-      transform: scale(1.07) translateY(-2px);
-      box-shadow: 0 6px 22px rgba(78,84,200,0.22);
-      color: #ffd600 !important;
-      text-decoration: none;
-      background: linear-gradient(90deg, #4952c9 60%, #ffd600 140%);
-    }
-    .header-bar .nav-btn.outline:hover {
-      color: #4952c9 !important;
-      background: #fffdfa;
-      border-color: #ffd600;
-    }
-    .page-title-outer {
-      width: 100%;
-      margin-top: 38px;
-      margin-bottom: 18px;
+
+    .page-content {
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
+      margin-top: 90px;
+      min-height: 100vh;
+      width: 100%;
+      gap: 38px;
     }
-    .page-title {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: #343a60;
-      text-shadow: 0 2px 14px #fff;
-      margin: 0 auto 0 auto;
-      letter-spacing: .7px;
-    }
-    .main-content {
-      max-width: 790px;
-      margin: 0 auto 0 auto;
-      background: #fff;
+    .main-center {
+      background: rgba(255,255,255,0.17);
       border-radius: 30px;
-      box-shadow: 0 8px 32px rgba(78,84,200,0.08), 0 1.5px 0 #f9e79f;
-      padding: 42px 42px 28px 42px;
+      box-shadow: 0 12px 50px rgba(70, 66, 124, 0.10);
+      padding: 36px 56px 44px 56px;
+      flex: 1 1 900px;
+      max-width: 980px;
+      min-width: 370px;
+      margin-bottom: 40px;
+      margin-right: 0;
     }
-    .section-title {
+    .header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .header h1 {
+      color: #fff;
+      font-size: 2.7rem;
       font-weight: 800;
-      font-size: 1.4rem;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 24px #4e54c8;
+      margin-bottom: 0.45em;
+    }
+    .header .subtitle {
+      color: #fff;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: .4px;
+      margin-bottom: 1.3em;
+      margin-top: -8px;
+      text-shadow: 0 1.5px 10px #564c9a26;
+    }
+    .quiz-section-title {
+      font-family: inherit;
       color: #323268;
-      margin-top: 24px;
-      margin-bottom: 10px;
-      letter-spacing: 0.5px;
+      font-weight: 800;
+      font-size: 2rem;
+      text-align: center;
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      gap: 13px;
+      margin-bottom: 1.7rem;
+      margin-top: 0;
+      letter-spacing: .2px;
     }
-    .quiz-item {
-      background: #fafdff;
-      padding: 18px 18px 13px 22px;
-      margin-bottom: 18px;
-      border-radius: 13px;
-      box-shadow: 0 2px 10px rgba(78,84,200,0.06);
-      transition: transform 0.17s, box-shadow 0.17s;
+    .quizzes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      width: 100%;
+    }
+    .quiz-link-block {
+      text-decoration: none;
+      width: 100%;
+      display: block;
+    }
+    .quiz-card {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 12px 40px rgba(120, 109, 173, 0.13);
+      padding: 1.45rem 1.6rem 1.2rem 1.6rem;
+      border: 1.5px solid #e2e8f0;
       border-left: 4px solid #ffd600;
       position: relative;
+      transition: box-shadow 0.18s, transform 0.18s;
+      overflow: hidden;
+      cursor: pointer;
+      margin-bottom: 0;
     }
-    .quiz-item:hover {
-      transform: scale(1.02) translateY(-2px);
-      box-shadow: 0 8px 24px rgba(78,84,200,0.16);
-      background: #f3f6ff;
-      z-index: 1;
+    .quiz-card:hover {
+      box-shadow: 0 12px 36px rgba(110, 85, 220, 0.20);
+      transform: translateY(-2px) scale(1.013);
+      background: #f6f8ff;
     }
     .quiz-title-link {
-      color: #5837fa;
-      font-size: 1.08rem;
+      color: #593ef8;
+      font-size: 1.14rem;
       font-weight: bold;
-      text-decoration: none;
-      transition: color 0.17s;
-    }
-    .quiz-title-link:hover {
-      color: #ff9100;
       text-decoration: underline;
+      pointer-events: none;
+      font-family: inherit;
+    }
+    .quiz-link-block:hover .quiz-title-link {
+      color: #ff9100;
+    }
+    .creator-link {
+      color: #26222d;
+      font-weight: bold;
+      margin-left: 3px;
+      font-family: inherit;
+      pointer-events: none;
     }
     .quiz-meta {
       color: #55597a;
-      font-size: .97em;
+      font-size: .98em;
+      margin-top: 1px;
     }
     .quiz-desc {
-      color: #37456a;
-      font-size: 0.98rem;
-      letter-spacing: 0.2px;
+      color: #6d669a;
+      font-size: 1.04rem;
       font-style: italic;
+      margin-top: 13px;
+      margin-left: 8px;
+      padding: 13px 20px;
+      border-left: 3px solid #ece8ff;
+      background: rgba(127, 96, 244, 0.045);
+      border-radius: 9px;
+      transition: background 0.2s;
+      font-family: 'Inter', sans-serif;
+      display: block;
+      max-width: 98%;
+    }
+    .quiz-card:hover .quiz-desc {
+      background: #f2f1fc;
     }
     .popular-badge {
       background: linear-gradient(90deg, #ffe072 0%, #ffca3a 100%);
       color: #3d2c00;
-      font-size: 0.86em;
+      font-size: 0.85em;
       font-weight: 600;
-      border-radius: 9px;
+      border-radius: 8px;
       padding: 2px 10px;
       margin-left: 8px;
     }
-    @media (max-width: 900px) {
-      .main-content { padding: 28px 7vw 18px 7vw; }
-      .header-bar { padding: 22px 10vw 0 7vw;}
+
+    .announcement-sidebar {
+      width: 390px;
+      min-width: 290px;
+      max-width: 420px;
+      background: rgba(255,255,255,0.17);
+      border-radius: 24px;
+      box-shadow: 0 12px 50px rgba(70, 66, 124, 0.10);
+      padding: 32px 30px 22px 30px;
+      margin-top: 90px;
+      margin-left: 18px;
+      position: sticky;
+      top: 92px;
+      height: fit-content;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .announcement-titlebar {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #37316b;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      font-family: inherit;
+      line-height: 1.2;
+    }
+    .announcements-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .announcement-card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(120, 109, 173, 0.11);
+      padding: 1.15rem 1.2rem 0.8rem 1.2rem;
+      border: 1.5px solid #e2e8f0;
+      border-left: 4px solid #76a4fa;
+      margin-bottom: 0;
+    }
+    .announcement-title {
+      font-weight: 700;
+      color: #4952c9;
+      font-size: 1.08em;
+      margin-bottom: 1px;
+    }
+    .announcement-date {
+      color: #e0b508;
+      font-size: 0.92em;
+      margin-left: 8px;
+      font-weight: 500;
+    }
+    .announcement-msg {
+      color: #43486c;
+      font-size: 1.01em;
+      margin-top: 3px;
+      line-height: 1.55;
+    }
+    @media (max-width: 1200px) {
+      .page-content { flex-direction: column; align-items: center; }
+      .announcement-sidebar { margin-left: 0; margin-top: 24px; width: 98vw; max-width: 600px;}
+      .main-center { max-width: 97vw; }
     }
     @media (max-width: 700px) {
-      .main-content { padding: 14px 2vw 8px 2vw; }
-      .header-bar { padding: 10px 3vw 0 2vw;}
-      .page-title { font-size: 1.4rem;}
+      .main-center, .announcement-sidebar { padding: 4vw 3vw; }
+      .header-bar { top: 12px; right: 6vw;}
+      .logo-link { left: 10px !important; top: 12px !important;}
+      .announcement-titlebar, .quiz-section-title { font-size: 1.14rem;}
     }
   </style>
 </head>
 <body>
 <a href="<%= request.getContextPath() %>/" class="logo-link">
-  <img src="<%= request.getContextPath() %>/images/quiz_icon.png"
+  <img src="images/quiz_icon.png"
        alt="Quiz App Home"
        class="logo-img">
 </a>
-
-
 <div class="header-bar">
   <a href="login.jsp" class="nav-btn outline">Login</a>
   <a href="signup.jsp" class="nav-btn">Sign Up</a>
 </div>
-
-<div class="page-title-outer">
-  <h1 class="page-title">Welcome to QuizApp!</h1>
-</div>
-
-<div class="main-content">
-  <div class="section-title">Administration Announcements</div>
-  <p style="margin-bottom:20px;">No announcements yet. Stay tuned!</p>
-
-  <div class="section-title">Top 10 Popular Quizzes</div>
-  <% if (quizError != null) { %>
-  <p style="color:red;">Error loading popular quizzes: <%= quizError %></p>
-  <% } else if (popularQuizzes != null && !popularQuizzes.isEmpty()) {
-    for (Quiz quiz : popularQuizzes) { %>
-  <div class="quiz-item">
-    <a href="quiz-summary.jsp?quizId=<%= quiz.getQuizId() %>" class="quiz-title-link"><%= quiz.getQuizTitle() %></a>
-    <span class="popular-badge">Popular</span><br>
-    <span class="quiz-meta">
-       By <a href="friends?action=profile&userId=<%= quiz.getCreatedBy() %>"><%= quizDao.getCreatorUsernameByQuizId(quiz.getQuizId()) != null ? quizDao.getCreatorUsernameByQuizId(quiz.getQuizId()) : "Unknown" %></a>
-          &bull; Taken <%= quiz.getSubmissionsNumber() %> times
-        </span><br>
-    <span class="quiz-desc"><%= quiz.getDescription() == null ? "No description available." : quiz.getDescription() %></span>
+<div class="page-content">
+  <!-- Center Main Content -->
+  <div class="main-center">
+    <div class="header">
+      <h1><i class="fas fa-graduation-cap"></i> Welcome to QuizApp!</h1>
+      <div class="subtitle">
+        Compete, learn, and have fun! Check the latest announcements or try a popular quiz below.
+      </div>
+    </div>
+    <div class="quiz-section-title">
+      <i class="fas fa-fire"></i> Popular Quizzes
+    </div>
+    <div class="quizzes-list">
+      <% if (quizError != null) { %>
+      <p style="color:red;">Error loading popular quizzes: <%= quizError %></p>
+      <% } else if (popularQuizzes != null && !popularQuizzes.isEmpty()) {
+        for (Quiz quiz : popularQuizzes) {
+          String creatorUsername = quizDao.getCreatorUsernameByQuizId(quiz.getQuizId());
+      %>
+      <a href="quiz-summary.jsp?quizId=<%= quiz.getQuizId() %>" class="quiz-link-block">
+        <div class="quiz-card">
+          <span class="quiz-title-link"><%= quiz.getQuizTitle() %></span>
+          <span class="popular-badge">Popular</span><br><br>
+          <span class="quiz-meta">
+            By <span class="creator-link"><%= creatorUsername != null ? creatorUsername : "Unknown" %></span>
+            &bull; Attempts: <%= quiz.getSubmissionsNumber() %>
+          </span><br>
+          <span class="quiz-desc"><%= quiz.getDescription() == null ? "No description available." : quiz.getDescription() %></span>
+        </div>
+      </a>
+      <%   }
+      } else { %>
+      <div class="quiz-card">
+        <span class="quiz-title-link">No quizzes yet</span>
+        <div class="quiz-desc">Be the first to create a quiz and become popular!</div>
+      </div>
+      <% } %>
+    </div>
   </div>
-  <%   }
-  } else { %>
-  <p>No popular quizzes found.</p>
-  <% } %>
+  <!-- Announcements Sidebar -->
+  <aside class="announcement-sidebar">
+    <div class="announcement-titlebar">
+      <i class="fas fa-bullhorn"></i> Administration Announcements
+    </div>
+    <div class="announcements-list">
+      <% if (announcementError != null) { %>
+      <p style="color: red;">Error loading announcements: <%= announcementError %></p>
+      <% } else if (announcements != null && !announcements.isEmpty()) { %>
+      <% for (Announcement ann : announcements) { %>
+      <div class="announcement-card">
+        <span class="announcement-title"><%= ann.getTitle() %></span>
+        <span class="announcement-date"><%= new SimpleDateFormat("yyyy-MM-dd HH:mm").format(ann.getCreatedAt()) %></span>
+        <div class="announcement-msg"><%= ann.getMessage() %></div>
+      </div>
+      <% } %>
+      <% } else { %>
+      <div class="announcement-card">
+        <span class="announcement-title">No announcements yet</span>
+        <div class="announcement-msg">Stay tuned for updates from the admins!</div>
+      </div>
+      <% } %>
+    </div>
+  </aside>
 </div>
-
 </body>
 </html>

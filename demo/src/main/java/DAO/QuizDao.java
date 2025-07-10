@@ -5,7 +5,9 @@ import Models.Quiz;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class QuizDao {
 
@@ -252,5 +254,32 @@ public class QuizDao {
             return affected > 0;
         }
     }
+
+
+    public List<Map<String, Object>> getAllQuizzesWithDetails() throws SQLException {
+        String sql = "SELECT " +
+                "q.quiz_id, q.quiz_title, q.description, q.created_at, q.submissions_number, " +
+                "COALESCE(u.username, 'Unknown') AS creator_name, " +
+                "COALESCE(c.category_name, 'Uncategorized') AS category_name " +
+                "FROM quizzes q " +
+                "LEFT JOIN users u ON q.created_by = u.user_id " +
+                "LEFT JOIN categories c ON q.quiz_category = c.category_id";
+        List<Map<String, Object>> quizzes = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            ResultSetMetaData meta = rs.getMetaData();
+            int columnCount = meta.getColumnCount();
+            while (rs.next()) {
+                Map<String, Object> quiz = new HashMap<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    quiz.put(meta.getColumnLabel(i), rs.getObject(i));
+                }
+                quizzes.add(quiz);
+            }
+        }
+        return quizzes;
+    }
+
 
 }
