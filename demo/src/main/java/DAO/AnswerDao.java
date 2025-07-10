@@ -1,10 +1,14 @@
 package DAO;
 
 import DB.DBConnection;
+import Models.Answer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnswerDao {
     private final Connection conn;
@@ -43,5 +47,28 @@ public class AnswerDao {
             stmt.setString(2, optionText);
             stmt.executeUpdate();
         }
+    }
+
+    // Get correct answers for a specific question
+    public List<Answer> getCorrectAnswersByQuestionId(long questionId) throws SQLException {
+        List<Answer> answers = new ArrayList<>();
+        String query = "SELECT * FROM correct_answers WHERE question_id = ? ORDER BY match_order ASC";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setLong(1, questionId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Answer answer = new Answer();
+                answer.setAnswerId(rs.getLong("answer_id"));
+                answer.setQuestionId(rs.getLong("question_id"));
+                answer.setAnswerText(rs.getString("answer_text"));
+                answer.setMatchOrder(rs.getLong("match_order"));
+                answers.add(answer);
+            }
+        }
+
+        return answers;
     }
 }

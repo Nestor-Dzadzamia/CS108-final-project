@@ -46,7 +46,7 @@ CREATE TABLE quizzes (
 CREATE TABLE questions (
                            question_id BIGINT AUTO_INCREMENT PRIMARY KEY,
                            quiz_id BIGINT,
-                           question_type VARCHAR(50) NOT NULL,
+                           question_type VARCHAR(50) NOT NULL CHECK(question_type IN('fill-blank', 'question-response', 'picture-response', 'multi-answer', 'multiple-choice', 'multiple-multiple-choice', 'matching')),
                            question_text TEXT,
                            image_url TEXT,
                            time_limit BIGINT,

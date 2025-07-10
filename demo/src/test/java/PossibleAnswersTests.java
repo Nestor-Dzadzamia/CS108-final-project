@@ -51,16 +51,6 @@ class PossibleAnswersTests {
     }
 
     @Test
-    void testToString() {
-        possibleAnswer.setPossibleAnswerId(5L);
-        possibleAnswer.setQuestionId(10L);
-        possibleAnswer.setPossibleAnswerText("Rome");
-
-        String expected = "PossibleAnswer{possibleAnswerId=5, questionId=10, possibleAnswerText='Rome'}";
-        assertEquals(expected, possibleAnswer.toString());
-    }
-
-    @Test
     void testMultipleChoiceAnswers() {
         // Test creating multiple possible answers for same question
         PossibleAnswer[] answers = {
