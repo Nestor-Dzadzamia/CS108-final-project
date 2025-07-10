@@ -1,3 +1,4 @@
+/*
 package Servlets;
 
 import DAO.*;
@@ -364,4 +365,4 @@ public class TakeQuizServlet extends HttpServlet {
             return 0.0;
         }
     }
-}
+}*/

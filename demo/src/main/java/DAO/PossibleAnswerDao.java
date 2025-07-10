@@ -9,52 +9,25 @@ import java.util.List;
 
 public class PossibleAnswerDao {
 
-    public List<PossibleAnswer> getPossibleAnswersByQuestion(long questionId) throws SQLException {
-        String sql = "SELECT * FROM possible_answers WHERE question_id = ?";
+    // Get possible answers (e.g. for multiple choice questions)
+    public List<PossibleAnswer> getPossibleAnswersByQuestionId(long questionId) throws SQLException {
         List<PossibleAnswer> answers = new ArrayList<>();
+        String query = "SELECT * FROM possible_answers WHERE question_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setLong(1, questionId);
+            ResultSet rs = stmt.executeQuery();
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    PossibleAnswer pa = new PossibleAnswer(
-                            rs.getLong("possible_answer_id"),
-                            rs.getLong("question_id"),
-                            rs.getString("possible_answer_text")
-                    );
-                    answers.add(pa);
-                }
+            while (rs.next()) {
+                PossibleAnswer answer = new PossibleAnswer();
+                answer.setPossibleAnswerId(rs.getLong("possible_answer_id"));
+                answer.setQuestionId(rs.getLong("question_id"));
+                answer.setPossibleAnswerText(rs.getString("possible_answer_text"));
+                answers.add(answer);
             }
         }
+
         return answers;
-    }
-
-    public void createPossibleAnswer(PossibleAnswer answer) throws SQLException {
-        String sql = "INSERT INTO possible_answers (question_id, possible_answer_text) VALUES (?, ?)";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setLong(1, answer.getQuestionId());
-            stmt.setString(2, answer.getPossibleAnswerText());
-            stmt.executeUpdate();
-
-            try (ResultSet keys = stmt.getGeneratedKeys()) {
-                if (keys.next()) {
-                    answer.setPossibleAnswerId(keys.getLong(1));
-                }
-            }
-        }
-    }
-
-    public void deletePossibleAnswer(long possibleAnswerId) throws SQLException {
-        String sql = "DELETE FROM possible_answers WHERE possible_answer_id = ?";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setLong(1, possibleAnswerId);
-            stmt.executeUpdate();
-        }
     }
 }

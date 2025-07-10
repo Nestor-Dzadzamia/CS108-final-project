@@ -35,7 +35,7 @@ public class SignUpServlet extends HttpServlet {
 
             if (success) {
                 // request.getSession().setAttribute("user", user);
-                response.sendRedirect("homepage.jsp");
+                response.sendRedirect("login.jsp");
             } else {
                 // fallback error message
                 request.setAttribute("error", "We couldn't complete your registration. Please try again.");

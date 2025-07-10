@@ -3,6 +3,7 @@ package Servlets;
 import DAO.AnswerDao;
 import DAO.QuestionDao;
 import DAO.QuizDao;
+import DAO.UserDao;
 import Models.Questions.Question;
 import Models.Questions.QuestionSaver;
 import Models.Quiz;
@@ -151,6 +152,10 @@ public class SaveQuizServlet extends HttpServlet {
                     }
                 }
             }
+            //update user stats
+            UserDao userDao = new UserDao();
+            userDao.incrementQuizzesCreatedAndCheckAchievements(user.getId());
+
             // Cleaning up all quiz-related session attributes after saving
             session.removeAttribute("quiz_title");
             session.removeAttribute("description");
