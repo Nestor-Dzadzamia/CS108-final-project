@@ -76,6 +76,16 @@
             color: white;
         }
 
+        .btn-success {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
         .btn-outline-primary:hover,
         .btn-outline-danger:hover,
         .btn-outline-success:hover {
@@ -93,6 +103,23 @@
             font-size: 3rem;
             margin-bottom: 1rem;
             color: #d1d5db;
+        }
+
+        .pending-request {
+            background: #fef3cd;
+            border: 1px solid #fde047;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .pending-request h6 {
+            color: #a16207;
+            margin-bottom: 0.5rem;
+        }
+
+        .pending-request .btn-group {
+            gap: 0.5rem;
         }
     </style>
 </head>
@@ -170,6 +197,35 @@
 
         <!-- MAIN INTERFACE -->
         <c:if test="${empty profileUser}">
+            <!-- PENDING FRIEND REQUESTS SECTION -->
+            <c:if test="${not empty pendingRequests}">
+                <div class="section">
+                    <h4><i class="fas fa-user-clock"></i> Pending Friend Requests</h4>
+                    <c:forEach var="request" items="${pendingRequests}">
+                        <div class="pending-request">
+                            <h6><i class="fas fa-user-plus"></i> Friend Request from User ID: ${request.senderId}</h6>
+                            <small class="text-muted">Sent on: ${request.sentAt.toString().substring(0,19)}</small>
+                            <div class="btn-group mt-2">
+                                <form method="post" action="friends" style="display:inline;">
+                                    <input type="hidden" name="action" value="accept">
+                                    <input type="hidden" name="requestId" value="${request.requestId}">
+                                    <button type="submit" class="btn btn-success btn-sm">
+                                        <i class="fas fa-check"></i> Accept
+                                    </button>
+                                </form>
+                                <form method="post" action="friends" style="display:inline;">
+                                    <input type="hidden" name="action" value="reject">
+                                    <input type="hidden" name="requestId" value="${request.requestId}">
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-times"></i> Reject
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </c:if>
+
             <div class="section">
                 <h4><i class="fas fa-search"></i> Find Users</h4>
                 <form method="get" action="friends">
