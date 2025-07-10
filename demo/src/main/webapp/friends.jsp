@@ -203,7 +203,16 @@
                     <h4><i class="fas fa-user-clock"></i> Pending Friend Requests</h4>
                     <c:forEach var="request" items="${pendingRequests}">
                         <div class="pending-request">
-                            <h6><i class="fas fa-user-plus"></i> Friend Request from User ID: ${request.senderId}</h6>
+                            <h6><i class="fas fa-user-plus"></i> Friend Request from
+                                <c:choose>
+                                    <c:when test="${not empty request.senderName}">
+                                        <strong>${request.senderName}</strong>
+                                    </c:when>
+                                    <c:otherwise>
+                                        User ID: ${request.senderId}
+                                    </c:otherwise>
+                                </c:choose>
+                            </h6>
                             <small class="text-muted">Sent on: ${request.sentAt.toString().substring(0,19)}</small>
                             <div class="btn-group mt-2">
                                 <form method="post" action="friends" style="display:inline;">

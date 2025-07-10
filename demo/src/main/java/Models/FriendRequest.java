@@ -8,6 +8,7 @@ public class FriendRequest {
     private long receiverId;
     private String status; // "pending", "accepted", "rejected"
     private Timestamp sentAt;
+    private String senderName; // Added field for sender's username
 
     public FriendRequest() {}
 
@@ -60,5 +61,14 @@ public class FriendRequest {
 
     public void setSentAt(Timestamp sentAt) {
         this.sentAt = sentAt;
+    }
+
+    // New getter and setter for senderName
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 }

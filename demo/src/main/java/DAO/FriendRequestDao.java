@@ -38,7 +38,10 @@ public class FriendRequestDao {
     }
 
     public FriendRequest getFriendRequestById(long requestId) throws SQLException {
-        String sql = "SELECT * FROM friend_requests WHERE request_id = ?";
+        String sql = "SELECT fr.*, u.username as sender_name " +
+                "FROM friend_requests fr " +
+                "JOIN users u ON fr.sender_id = u.user_id " +
+                "WHERE fr.request_id = ?";
         FriendRequest request = null;
 
         try (Connection conn = DBConnection.getConnection();
@@ -57,7 +60,11 @@ public class FriendRequestDao {
     }
 
     public List<FriendRequest> getPendingRequestsForUser(long receiverId) throws SQLException {
-        String sql = "SELECT * FROM friend_requests WHERE receiver_id = ? AND status = 'pending' ORDER BY sent_at DESC";
+        String sql = "SELECT fr.*, u.username as sender_name " +
+                "FROM friend_requests fr " +
+                "JOIN users u ON fr.sender_id = u.user_id " +
+                "WHERE fr.receiver_id = ? AND fr.status = 'pending' " +
+                "ORDER BY fr.sent_at DESC";
         List<FriendRequest> list = new ArrayList<>();
 
         try (Connection conn = DBConnection.getConnection();
@@ -111,6 +118,15 @@ public class FriendRequestDao {
         request.setReceiverId(rs.getLong("receiver_id"));
         request.setStatus(rs.getString("status"));
         request.setSentAt(rs.getTimestamp("sent_at"));
+
+        // Set the sender's username if available
+        try {
+            request.setSenderName(rs.getString("sender_name"));
+        } catch (SQLException e) {
+            // Column might not exist in some queries, set to null
+            request.setSenderName(null);
+        }
+
         return request;
     }
 }
