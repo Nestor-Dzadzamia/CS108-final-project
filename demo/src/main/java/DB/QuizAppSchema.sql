@@ -38,7 +38,7 @@ CREATE TABLE quizzes (
                          quiz_category BIGINT,
                          total_time_limit BIGINT,
                          submissions_number BIGINT DEFAULT 0,
-                         FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE SET NULL,
+                         FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE CASCADE ,
                          FOREIGN KEY (quiz_category) REFERENCES categories(category_id) ON DELETE SET NULL
 );
 
@@ -157,8 +157,8 @@ CREATE TABLE messages (
                           is_read BOOLEAN DEFAULT FALSE,
                           FOREIGN KEY (sender_id) REFERENCES users(user_id) ON DELETE CASCADE,
                           FOREIGN KEY (receiver_id) REFERENCES users(user_id) ON DELETE CASCADE,
-                          FOREIGN KEY (quiz_id) REFERENCES quizzes(quiz_id) ON DELETE SET NULL,
-                          FOREIGN KEY (friend_request_id) REFERENCES friend_requests(request_id) ON DELETE SET NULL
+                          FOREIGN KEY (quiz_id) REFERENCES quizzes(quiz_id) ON DELETE CASCADE,
+                          FOREIGN KEY (friend_request_id) REFERENCES friend_requests(request_id) ON DELETE CASCADE
 );
 
 CREATE TABLE possible_answers (
@@ -175,7 +175,7 @@ CREATE TABLE announcements (
                                created_by BIGINT,
                                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                is_active BOOLEAN DEFAULT TRUE,
-                               FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE SET NULL
+                               FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 -- VIEWS --
