@@ -99,9 +99,39 @@
             50% { opacity: 0.5; }
             100% { opacity: 1; }
         }
+
+        .practice-mode-banner {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #ffeb3b;
+            color: #000;
+            font-weight: bold;
+            padding: 6px 14px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .practice-mode-banner small {
+            font-weight: normal;
+            font-size: 13px;
+            display: block;
+            margin-top: 4px;
+        }
     </style>
 </head>
 <body>
+<%
+    Boolean isPracticeMode = (Boolean) session.getAttribute("isPracticeMode");
+    if (Boolean.TRUE.equals(isPracticeMode)) {
+%>
+<div class="practice-mode-banner">
+    Practice Mode
+    <small>Submission data won't be saved</small>
+</div>
+<%
+    }
+%>
 
 <div id="timer">
     Time Remaining: <span id="timeDisplay">Loading...</span>
@@ -115,7 +145,14 @@
     <input type="hidden" name="index" value="${index + 1}" />
 
     <div class="question-block">
-        <h3>Question ${index + 1}: ${currentQuestion.questionText}</h3>
+        <c:choose>
+            <c:when test="${fn:trim(currentQuestion.questionType) == 'fill-blank'}">
+                <h3>Question ${index + 1}:</h3>
+            </c:when>
+            <c:otherwise>
+                <h3>Question ${index + 1}: ${currentQuestion.questionText}</h3>
+            </c:otherwise>
+        </c:choose>
 
         <c:if test="${not empty currentQuestion.imageUrl}">
             <img src="${currentQuestion.imageUrl}" alt="Question image" style="max-width: 400px; margin: 10px 0;" />
