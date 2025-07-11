@@ -1,0 +1,274 @@
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #222;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+.header {
+    background: rgba(255,255,255,0.10);
+    backdrop-filter: blur(24px);
+    border-radius: 24px;
+    padding: 2.2rem 2rem 1.5rem 2rem;
+    margin-bottom: 2.5rem;
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow: 0 12px 40px rgba(102,126,234,0.13);
+}
+.header h1 {
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.7rem;
+    letter-spacing: 1px;
+}
+.header p {
+    color: #e0e7ff;
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+}
+.profile-info {
+    display: flex;
+    gap: 3rem;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+}
+.profile-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #a5b4fc, #c4b5fd);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: #fff;
+    box-shadow: 0 2px 12px #a5b4fc88;
+}
+.profile-details {
+    flex: 1;
+}
+.profile-details h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    color: #4f46e5;
+    letter-spacing: 1px;
+}
+.profile-details p {
+    color: #fff;
+    margin-bottom: 0.2rem;
+    font-size: 1.06rem;
+    text-shadow: 0 1px 8px #2226;
+}
+.stats-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+    gap: 1.3rem;
+    margin-bottom: 2.3rem;
+}
+.stat-box {
+    background: rgba(255,255,255,0.82);
+    border-radius: 18px;
+    padding: 1.5rem 0.5rem 1.2rem 0.5rem;
+    text-align: center;
+    box-shadow: 0 2px 18px rgba(76,81,237,0.09);
+    border: 1.5px solid rgba(153,149,246,0.09);
+}
+.stat-box h3 {
+    margin: 0;
+    font-size: 2.35rem;
+    color: #7c3aed;
+    font-weight: 800;
+}
+.stat-box p {
+    margin: 0.5rem 0 0 0;
+    font-size: 1.03rem;
+    color: #5557b5;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr minmax(320px, 370px);
+    gap: 2.2rem;
+}
+.panel {
+    background: rgba(255,255,255,0.93);
+    border-radius: 22px;
+    box-shadow: 0 8px 36px rgba(76,81,237,0.10);
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+    border: 1.5px solid rgba(76,81,237,0.08);
+}
+.panel h3 {
+    color: #6366f1;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.1rem;
+}
+.quizzes-list ul {
+    list-style: none;
+    padding-left: 0;
+}
+.quizzes-list li {
+    background: #f3f5fa;
+    margin: 0.3rem 0;
+    padding: 0.75rem 1rem;
+    border-radius: 9px;
+    font-weight: 600;
+    color: #46468a;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+.quizzes-list li:hover {
+    background: #e0e7ff;
+}
+.side-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.05rem;
+    background: rgba(255,255,255,0.92);
+    border-radius: 22px;
+    box-shadow: 0 8px 32px rgba(102,126,234,0.10);
+    padding: 2rem 1.3rem;
+    border: 1.5px solid rgba(102,126,234,0.07);
+    min-width: 0;
+    max-width: 370px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.side-actions form,
+.side-actions a {
+    width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+}
+.side-actions .button, .side-actions button.button {
+    width: 100% !important;
+    box-sizing: border-box;
+    min-width: 0;
+    margin: 0 !important;
+    padding: 0.8rem 1rem !important;
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6em;
+}
+.button, .button:visited {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6em;
+    text-decoration: none !important;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    width: 100%;
+    margin: 0;
+    padding: 0.8rem 1.7rem;
+    border-radius: 22px;
+    box-shadow: 0 3px 13px rgba(76,81,237,0.12);
+    background: linear-gradient(135deg, #667eea, #7c3aed);
+    color: #fff !important;
+    transition: background 0.23s, transform 0.15s;
+    cursor: pointer;
+}
+.button:hover, .button:focus {
+    background: linear-gradient(135deg, #5b6def, #5f43c6);
+    transform: translateY(-2px) scale(1.025);
+    color: #fff !important;
+    text-decoration: none;
+}
+.button i {
+    margin-right: 0.55em;
+    font-size: 1.15em;
+}
+form { margin: 0; }
+.achievements-section {
+    background: rgba(255,255,255,0.93);
+    border-radius: 22px;
+    box-shadow: 0 8px 36px rgba(76,81,237,0.08);
+    padding: 2rem 1.3rem;
+    border: 1.5px solid rgba(76,81,237,0.08);
+}
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 1.1rem;
+}
+.achievement-card {
+    background: #f8fafc;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px #a5b4fc22;
+    padding: 1.1rem 0.7rem;
+    min-height: 195px;
+    text-align: center;
+    border: 2px solid #f3f5fa;
+    position: relative;
+    transition: 0.2s;
+}
+.achievement-card.locked {
+    opacity: 0.56;
+    filter: grayscale(100%);
+    border: 2px solid #e5e7eb;
+}
+.achievement-card.earned {
+    border: 2px solid #34d399;
+    box-shadow: 0 0 18px #d1fae5aa;
+    opacity: 1;
+    filter: none;
+}
+.achievement-card img {
+    width: 68px;
+    height: 68px;
+    margin-bottom: 0.4rem;
+    object-fit: contain;
+}
+.achievement-name {
+    font-weight: 700;
+    color: #4f46e5;
+    margin-bottom: 0.17rem;
+    font-size: 1.07rem;
+}
+.achievement-desc {
+    font-size: 0.95rem;
+    color: #555;
+    margin-top: 0.15rem;
+    min-height: 2.1em;
+}
+.badge-label {
+    font-size: 0.95em;
+    margin-top: 0.7em;
+    font-weight: bold;
+    padding: 0.27em 0.7em;
+    border-radius: 7px;
+    display: inline-block;
+}
+.badge-earned {
+    color: #26a866;
+    background: #eafcf0;
+    border: 1px solid #c2f7d2;
+}
+.badge-locked {
+    color: #aaa;
+    background: #f6f6f6;
+    border: 1px solid #ddd;
+}
+@media (max-width: 1000px) {
+    .main-content { grid-template-columns: 1fr; }
+    .side-actions { max-width: 100%; }
+}
+@media (max-width: 600px) {
+    .container { padding: 1rem 0.2rem; }
+    .header { padding: 1.2rem 0.7rem; }
+    .main-content { grid-template-columns: 1fr; gap: 1.2rem; }
+    .panel, .side-actions, .achievements-section { padding: 1.1rem 0.5rem; }
+}

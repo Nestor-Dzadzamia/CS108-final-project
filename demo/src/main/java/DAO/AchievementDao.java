@@ -36,28 +36,33 @@ public class AchievementDao {
         return achievement;
     }
 
-    // Get achievement by ID (without awardedAt)
-    public Achievement getAchievementById(long achievementId) throws SQLException {
-        String sql = "SELECT * FROM achievements WHERE achievement_id = ?";
-        Achievement achievement = null;
+    public List<Achievement> getAchievementsByUserId(long userId) throws SQLException {
+        String sql = """
+        SELECT a.achievement_id, a.achievement_name, a.achievement_description, a.icon_url, ua.awarded_at
+        FROM user_achievements ua
+        JOIN achievements a ON ua.achievement_id = a.achievement_id
+        WHERE ua.user_id = ?
+        ORDER BY ua.awarded_at DESC
+    """;
+
+        List<Achievement> achievements = new ArrayList<>();
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setLong(1, achievementId);
-
+            stmt.setLong(1, userId);
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    achievement = new Achievement(
+                while (rs.next()) {
+                    achievements.add(new Achievement(
                             rs.getLong("achievement_id"),
                             rs.getString("achievement_name"),
                             rs.getString("achievement_description"),
-                            rs.getString("icon_url")
-                    );
+                            rs.getString("icon_url"),
+                            rs.getTimestamp("awarded_at")
+                    ));
                 }
             }
         }
-        return achievement;
+        return achievements;
     }
 
     // Get all achievements (without awardedAt)
