@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Sign Up - QuizApp</title>
+    <title>Sign Up - QuizRizz</title>
     <link rel="stylesheet" href="Styles/signup.css">
 </head>
 <body>

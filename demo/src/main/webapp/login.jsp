@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Login - QuizApp</title>
+    <title>Login - QuizRizz</title>
     <link rel="stylesheet" href="Styles/login.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
          class="logo-home">
 </a>
 <div class="form-container">
-    <h2>Login to QuizApp</h2>
+    <h2>Login to QuizRizz</h2>
     <% if (request.getAttribute("error") != null) { %>
     <p class="error"><%= request.getAttribute("error") %></p>
     <% } %>

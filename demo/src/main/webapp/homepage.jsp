@@ -49,7 +49,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Quiz App - Home</title>
+    <title>Quiz Rizz - Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="Styles/homepage.css">
@@ -62,7 +62,7 @@
 </div>
 <div class="container py-4">
     <div class="hero mb-4">
-        <h1>Welcome to the Quiz App</h1>
+        <h1>Welcome to the Quiz Rizz</h1>
         <p class="lead">Challenge yourself, test your knowledge, and create amazing quizzes!</p>
         <div class="btn-flashy-group">
             <form action="create-quiz-setup" method="get" class="d-inline">

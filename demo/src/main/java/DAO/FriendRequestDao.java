@@ -99,18 +99,6 @@ public class FriendRequestDao {
         }
     }
 
-    public boolean deleteFriendRequest(long requestId) throws SQLException {
-        String sql = "DELETE FROM friend_requests WHERE request_id = ?";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setLong(1, requestId);
-
-            return stmt.executeUpdate() > 0;
-        }
-    }
-
     private FriendRequest mapResultSetToFriendRequest(ResultSet rs) throws SQLException {
         FriendRequest request = new FriendRequest();
         request.setRequestId(rs.getLong("request_id"));
