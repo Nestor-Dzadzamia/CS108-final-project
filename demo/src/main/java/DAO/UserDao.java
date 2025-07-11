@@ -337,5 +337,19 @@ public class UserDao {
         }
     }
 
+    public List<User> getAdminUsers() throws SQLException {
+        String sql = "SELECT * FROM users WHERE role = 'admin' ORDER BY username";
+        List<User> admins = new ArrayList<>();
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                admins.add(mapUser(rs));
+            }
+        }
+        return admins;
+    }
+
 
 }

@@ -15,6 +15,7 @@
   List<Announcement> announcements = (List<Announcement>) request.getAttribute("announcements");
   List<Quiz> quizzes = (List<Quiz>) request.getAttribute("quizzes");
   List<User> foundUsers = (List<User>) request.getAttribute("foundUsers");
+  List<User> adminUsers = (List<User>) request.getAttribute("adminUsers");
 
   String error = (String) request.getAttribute("error");
   String success = (String) request.getAttribute("success");
@@ -207,6 +208,49 @@
         <span style="color:#667eea"><%= request.getAttribute("totalQuizzesTaken") %></span>
       </div>
     </div>
+  </div>
+
+  <!-- Admin Users Section -->
+  <div class="section">
+    <div class="section-title"><i class="fas fa-user-shield"></i> Current Admins</div>
+    <% if (adminUsers != null && !adminUsers.isEmpty()) { %>
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Quizzes Created</th>
+        <th>Registration Date</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% for (User admin : adminUsers) { %>
+      <tr>
+        <td><%= admin.getId() %></td>
+        <td>
+          <%= admin.getUsername() %>
+          <% if (sessionUser.getId() == admin.getId()) { %>
+          <span style="color: #667eea; font-weight: bold;">(You)</span>
+          <% } %>
+        </td>
+        <td><%= admin.getEmail() %></td>
+        <td><%= admin.getNumQuizzesCreated() %></td>
+        <td><%= admin.getTimeCreated() != null ?
+                new java.text.SimpleDateFormat("yyyy-MM-dd").format(admin.getTimeCreated()) : "N/A" %></td>
+      </tr>
+      <% } %>
+      </tbody>
+    </table>
+    <div style="margin-top: 0.5em; color: #667eea; font-size: 0.9em;">
+      <i class="fas fa-info-circle"></i> Total Admins: <%= adminUsers.size() %>
+    </div>
+    <% } else { %>
+    <div style="text-align: center; padding: 2em; color: #999;">
+      <i class="fas fa-user-shield" style="font-size: 2em; margin-bottom: 0.5em;"></i>
+      <div>No admin users found</div>
+    </div>
+    <% } %>
   </div>
 
 
