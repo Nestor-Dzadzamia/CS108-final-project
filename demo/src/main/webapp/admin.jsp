@@ -195,6 +195,20 @@
 </div>
 <div class="container">
   <div class="admin-title"><i class="fas fa-screwdriver-wrench"></i> Admin Dashboard</div>
+  <div class="section" style="margin-bottom:2rem;">
+    <div class="section-title"><i class="fas fa-chart-bar"></i> Site Statistics</div>
+    <div style="display:flex; gap:3em; flex-wrap:wrap; font-size:1.22em; font-weight:600;">
+      <div>
+        <span style="color:#667eea"><i class="fas fa-users"></i> Total Users:</span>
+        <span style="color:#667eea"><%= request.getAttribute("totalUsers") %></span>
+      </div>
+      <div>
+        <span style="color:#667eea"><i class="fas fa-trophy"></i> Total Quizzes Taken:</span>
+        <span style="color:#667eea"><%= request.getAttribute("totalQuizzesTaken") %></span>
+      </div>
+    </div>
+  </div>
+
 
   <% if (error != null) { %>
   <div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> <%= error %></div>

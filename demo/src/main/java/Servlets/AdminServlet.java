@@ -38,6 +38,10 @@ public class AdminServlet extends HttpServlet {
             List<Quiz> quizzes = quizDao.getAllQuizzes();
             request.setAttribute("announcements", announcements);
             request.setAttribute("quizzes", quizzes);
+            long totalUsers = userDao.countUsers();
+            long totalQuizzesTaken = userDao.countQuizzesTaken();
+            request.setAttribute("totalUsers", totalUsers);
+            request.setAttribute("totalQuizzesTaken", totalQuizzesTaken);
         } catch (SQLException e) {
             request.setAttribute("error", "Error loading announcements or quizzes.");
         }

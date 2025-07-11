@@ -308,6 +308,23 @@ public class UserDao {
             if (conn != null) conn.close();
         }
     }
+    public long countUsers() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM users";
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return rs.next() ? rs.getLong(1) : 0;
+        }
+    }
+
+    public long countQuizzesTaken() throws SQLException {
+        String sql = "SELECT SUM(num_quizzes_taken) FROM users";
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return rs.next() ? rs.getLong(1) : 0;
+        }
+    }
 
 
 }
