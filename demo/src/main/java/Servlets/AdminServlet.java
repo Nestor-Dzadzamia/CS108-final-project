@@ -110,6 +110,12 @@ public class AdminServlet extends HttpServlet {
                     session.setAttribute("success", "Announcement removed.");
                     break;
                 }
+                case "promote-user": {
+                    long id = Long.parseLong(request.getParameter("id"));
+                    userDao.updateUserRole(id, "admin");
+                    session.setAttribute("success", "User promoted to admin.");
+                    break;
+                }
                 case "remove-quiz": {
                     long id = Long.parseLong(request.getParameter("id"));
                     quizDao.deleteQuiz(id);

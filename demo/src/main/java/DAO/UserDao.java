@@ -326,5 +326,16 @@ public class UserDao {
         }
     }
 
+    public boolean updateUserRole(long userId, String newRole) throws SQLException {
+        String sql = "UPDATE users SET role = ? WHERE user_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, newRole);
+            stmt.setLong(2, userId);
+            int affected = stmt.executeUpdate();
+            return affected > 0;
+        }
+    }
+
 
 }

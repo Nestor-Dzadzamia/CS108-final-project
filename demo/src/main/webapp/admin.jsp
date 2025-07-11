@@ -313,7 +313,7 @@
         <th>Username</th>
         <th>Email</th>
         <th>Role</th>
-        <th>Remove</th>
+        <th>Actions</th> <!-- Changed from "Remove" to "Actions" -->
       </tr>
       </thead>
       <tbody>
@@ -325,10 +325,24 @@
         <td><%= u.getRole() %></td>
         <td>
           <% if (sessionUser.getId() != u.getId()) { %>
+          <!-- Promote button (only for non-admin users) -->
+          <% if (!"admin".equals(u.getRole())) { %>
+          <form method="post" action="admin" style="display:inline; margin-right:5px;">
+            <input type="hidden" name="action" value="promote-user">
+            <input type="hidden" name="id" value="<%= u.getId() %>">
+            <button class="add-btn" type="submit" onclick="return confirm('Promote <%= u.getUsername() %> to admin?')"
+                    style="padding:6px 12px; font-size:0.9em;">
+              <i class="fas fa-user-shield"></i> Promote
+            </button>
+          </form>
+          <% } %>
+          <!-- Remove button -->
           <form method="post" action="admin" style="display:inline;">
             <input type="hidden" name="action" value="remove-user">
             <input type="hidden" name="id" value="<%= u.getId() %>">
-            <button class="remove-btn" type="submit" onclick="return confirm('Remove user?')"><i class="fas fa-user-times"></i> Remove</button>
+            <button class="remove-btn" type="submit" onclick="return confirm('Remove user?')">
+              <i class="fas fa-user-times"></i> Remove
+            </button>
           </form>
           <% } else { %>
           <span class="text">You</span>
