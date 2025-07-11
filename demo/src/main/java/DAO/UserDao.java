@@ -264,5 +264,92 @@ public class UserDao {
         return true;
     }
 
+    public void handlePracticeAchievement(long userId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement checkAchievement = null;
+        PreparedStatement giveAchievement = null;
+        PreparedStatement updateUser = null;
+
+        try {
+            conn = DBConnection.getConnection();
+            conn.setAutoCommit(false);
+
+            // 1. Set taken_practice = TRUE (even if it's already true, doesn't hurt)
+            updateUser = conn.prepareStatement(
+                    "UPDATE users SET taken_practice = TRUE WHERE user_id = ?"
+            );
+            updateUser.setLong(1, userId);
+            updateUser.executeUpdate();
+
+            // 2. Check if achievement already awarded
+            checkAchievement = conn.prepareStatement(
+                    "SELECT 1 FROM user_achievements WHERE user_id = ? AND achievement_id = 4"
+            );
+            checkAchievement.setLong(1, userId);
+            ResultSet rs = checkAchievement.executeQuery();
+
+            if (!rs.next()) {
+                // 3. Award the achievement if not yet awarded
+                giveAchievement = conn.prepareStatement(
+                        "INSERT INTO user_achievements (user_id, achievement_id) VALUES (?, 4)"
+                );
+                giveAchievement.setLong(1, userId);
+                giveAchievement.executeUpdate();
+            }
+
+            conn.commit();
+        } catch (SQLException e) {
+            if (conn != null) conn.rollback();
+            throw e;
+        } finally {
+            if (checkAchievement != null) checkAchievement.close();
+            if (giveAchievement != null) giveAchievement.close();
+            if (updateUser != null) updateUser.close();
+            if (conn != null) conn.close();
+        }
+    }
+    public long countUsers() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM users";
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return rs.next() ? rs.getLong(1) : 0;
+        }
+    }
+
+    public long countQuizzesTaken() throws SQLException {
+        String sql = "SELECT SUM(num_quizzes_taken) FROM users";
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return rs.next() ? rs.getLong(1) : 0;
+        }
+    }
+
+    public boolean updateUserRole(long userId, String newRole) throws SQLException {
+        String sql = "UPDATE users SET role = ? WHERE user_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, newRole);
+            stmt.setLong(2, userId);
+            int affected = stmt.executeUpdate();
+            return affected > 0;
+        }
+    }
+
+    public List<User> getAdminUsers() throws SQLException {
+        String sql = "SELECT * FROM users WHERE role = 'admin' ORDER BY username";
+        List<User> admins = new ArrayList<>();
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                admins.add(mapUser(rs));
+            }
+        }
+        return admins;
+    }
+
 
 }

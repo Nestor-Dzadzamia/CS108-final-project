@@ -1,21 +1,24 @@
 package Models;
 
+import com.google.gson.annotations.Expose;
+
 import java.sql.Timestamp;
 
 public class Message {
-    private Long messageId;
-    private Long senderId;
-    private Long receiverId;
-    private String messageType;
-    private String content;
-    private Long quizId;
-    private Long friendRequestId;
-    private Timestamp sentAt;
-    private boolean isRead;
+
+    @Expose private Long messageId;
+    @Expose private Long senderId;
+    @Expose private Long receiverId;
+    @Expose private String messageType;
+    @Expose private String content;
+    @Expose private Long quizId;
+    @Expose private Long friendRequestId;
+    @Expose private Timestamp sentAt;
+    @Expose private boolean isRead;
 
     // Additional fields for display
-    private String senderName;
-    private String quizTitle;
+    @Expose private String senderName;
+    @Expose private String quizTitle;
 
     // Constructors
     public Message() {}

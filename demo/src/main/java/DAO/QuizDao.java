@@ -11,7 +11,6 @@ import java.util.Map;
 
 public class QuizDao {
 
-    // Your teammate's method (preserved)
     public long insertQuiz(Quiz quiz) throws SQLException {
         String sql = "INSERT INTO quizzes (quiz_title, description, created_by, randomized, is_multiple_page, " +
                 "immediate_correction, allow_practice, quiz_category, total_time_limit) " +
@@ -55,7 +54,6 @@ public class QuizDao {
         throw new SQLException("Quiz insertion failed — no ID returned.");
     }
 
-    // The robust, merged mapRow
     private Quiz mapRow(ResultSet rs) throws SQLException {
         Quiz quiz = new Quiz();
 
@@ -153,6 +151,7 @@ public class QuizDao {
         }
         return null;
     }
+
     public List<Quiz> getQuizzesByUser(long userId) throws SQLException {
         List<Quiz> quizzes = new ArrayList<>();
         String sql = "SELECT * FROM quizzes WHERE created_by = ?";
@@ -207,6 +206,7 @@ public class QuizDao {
         }
         return 0;
     }
+
     public List<Quiz> getAllQuizzes() throws SQLException {
         String sql = "SELECT quiz_id, quiz_title FROM quizzes ORDER BY quiz_title";
         List<Quiz> quizzes = new ArrayList<>();
@@ -255,7 +255,6 @@ public class QuizDao {
         }
     }
 
-
     public List<Map<String, Object>> getAllQuizzesWithDetails() throws SQLException {
         String sql = "SELECT " +
                 "q.quiz_id, q.quiz_title, q.description, q.created_at, q.submissions_number, " +
@@ -281,6 +280,9 @@ public class QuizDao {
         return quizzes;
     }
 
+    // -- METHODS FROM BOTH BRANCHES BELOW --
+
+    // 1. Your method: Quiz summary stats
     public Map<String, Object> getQuizSummaryStats(long quizId) throws SQLException {
         String sql = "SELECT * FROM view_quiz_summary WHERE quiz_id = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -299,6 +301,7 @@ public class QuizDao {
         return null; // If quiz not found
     }
 
+    // 2. Your method: Top scorers for a quiz
     public List<Map<String, Object>> getTopScorers(long quizId, int limit) throws SQLException {
         String sql = """
         SELECT
@@ -332,5 +335,35 @@ public class QuizDao {
         return list;
     }
 
+    // 3. Teammate's method: Recent quizzes taken by user
+    public List<Map<String, Object>> getRecentQuizzesTakenByUser(long userId, int limit) throws SQLException {
+        String sql = """
+        SELECT s.submission_id, s.quiz_id, s.score, s.time_spent, s.num_correct_answers, s.num_total_answers, s.submitted_at, 
+               q.quiz_title
+        FROM submissions s
+        JOIN quizzes q ON s.quiz_id = q.quiz_id
+        WHERE s.user_id = ?
+        ORDER BY s.submitted_at DESC
+        LIMIT ?
+        """;
+        List<Map<String, Object>> list = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, userId);
+            stmt.setInt(2, limit);
+            try (ResultSet rs = stmt.executeQuery()) {
+                ResultSetMetaData meta = rs.getMetaData();
+                int colCount = meta.getColumnCount();
+                while (rs.next()) {
+                    Map<String, Object> row = new HashMap<>();
+                    for (int i = 1; i <= colCount; i++) {
+                        row.put(meta.getColumnLabel(i), rs.getObject(i));
+                    }
+                    list.add(row);
+                }
+            }
+        }
+        return list;
+    }
 
 }

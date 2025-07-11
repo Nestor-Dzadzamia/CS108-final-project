@@ -22,6 +22,18 @@
     double finalScore = stats.get(3);
 %>
 
+<%
+    Boolean isPracticeMode = (Boolean) session.getAttribute("isPracticeMode");
+    if (Boolean.TRUE.equals(isPracticeMode)) {
+%>
+<div class="practice-mode-banner">
+    Practice Mode
+    <small>Submission data won't be saved</small>
+</div>
+<%
+    }
+%>
+
 <h1>Quiz Summary</h1>
 <h2><%= quiz.getQuizTitle() %></h2>
 <p><%= quiz.getDescription() %></p>

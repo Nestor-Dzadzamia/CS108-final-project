@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,7 +81,6 @@
                 </c:choose>
             </div>
         </div>
-
         <div class="compose-panel">
             <h3 class="section-title">
                 <i class="fas fa-paper-plane"></i> Send New Message
@@ -105,7 +104,14 @@
                             <select name="receiverId" id="receiverId" class="form-select" required>
                                 <option value="">Select a friend...</option>
                                 <c:forEach var="friend" items="${friends}">
-                                    <option value="${friend.id}">${friend.username}</option>
+                                    <c:choose>
+                                        <c:when test="${selectedFriendId != null && friend.id == selectedFriendId}">
+                                            <option value="${friend.id}" selected>${friend.username}</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value="${friend.id}">${friend.username}</option>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:forEach>
                             </select>
                         </div>
@@ -151,7 +157,67 @@
 <a href="homepage.jsp" class="back-btn">
     <i class="fas fa-arrow-left"></i>
 </a>
+
+<!-- If you want the connection status bar at the bottom, keep this (optional) -->
+<!--
+<div id="connectionStatus" class="connection-status disconnected">
+    <i class="fas fa-wifi"></i> Disconnected
+</div>
+-->
+
 <script>
+    let socket;
+    let currentUser = ${sessionScope.user.id};
+    let reconnectAttempts = 0;
+    const maxReconnectAttempts = 5;
+
+    function connectWebSocket() {
+        const wsUrl = window.location.protocol === 'https:' ?
+            'wss://' + window.location.host + '/demo_war_exploded/messageSocket' :
+            'ws://' + window.location.host + '/demo_war_exploded/messageSocket';
+
+        socket = new WebSocket(wsUrl);
+
+        socket.onopen = function() {
+            updateConnectionStatus(true);
+            reconnectAttempts = 0;
+            socket.send(JSON.stringify({
+                type: 'connect',
+                userId: currentUser
+            }));
+        };
+
+        // Auto reload page on every new message (real-time bug-proof)
+        socket.onmessage = function() {
+            location.reload();
+        };
+
+        socket.onclose = function() {
+            updateConnectionStatus(false);
+            if (reconnectAttempts < maxReconnectAttempts) {
+                reconnectAttempts++;
+                setTimeout(connectWebSocket, 3000 * reconnectAttempts);
+            }
+        };
+
+        socket.onerror = function(error) {
+            console.error('WebSocket error:', error);
+        };
+    }
+
+    function updateConnectionStatus(connected) {
+        const statusElement = document.getElementById('connectionStatus');
+        if (statusElement) {
+            if (connected) {
+                statusElement.className = 'connection-status connected';
+                statusElement.innerHTML = '<i class="fas fa-wifi"></i> Connected';
+            } else {
+                statusElement.className = 'connection-status disconnected';
+                statusElement.innerHTML = '<i class="fas fa-wifi"></i> Disconnected';
+            }
+        }
+    }
+
     function toggleMessageForm() {
         const messageType = document.getElementById('messageType').value;
         const noteForm = document.getElementById('noteForm');
@@ -168,12 +234,14 @@
             document.getElementById('quizId').required = true;
         }
     }
+
     document.getElementById('messageType').addEventListener('change', toggleMessageForm);
     document.getElementById('messageType').addEventListener('change', function() {
         document.getElementById('content').value = '';
         document.getElementById('quizId').value = '';
     });
     document.addEventListener('DOMContentLoaded', function() {
+        connectWebSocket();
         const cards = document.querySelectorAll('.message-card');
         cards.forEach((card, index) => {
             card.style.opacity = '0';
@@ -184,6 +252,12 @@
                 card.style.transform = 'translateY(0)';
             }, index * 100);
         });
+    });
+
+    window.addEventListener('beforeunload', function() {
+        if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.close();
+        }
     });
 </script>
 </body>

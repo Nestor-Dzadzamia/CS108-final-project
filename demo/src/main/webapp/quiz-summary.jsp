@@ -18,6 +18,9 @@
     String errorMsg = null;
     String categoryName = null;
 
+    Long quizStartTime = (Long) session.getAttribute("quizStartTime");
+    if(quizStartTime != null) session.removeAttribute("quizStartTime");
+
     if (quizIdStr == null) {
         errorMsg = "No quiz id provided.";
     } else {
@@ -92,13 +95,20 @@
         <div class="pill-field"><b>Questions:</b> <%= numQuestions %></div>
         <div class="pill-field"><b>Category:</b> <%= categoryName %></div>
         <% if (loggedIn) { %>
-        <form action="take-quiz-starter" method="get" style="width: 100%; margin: 0; padding: 0;">
-            <input type="hidden" name="id" value="<%= quiz.getQuizId() %>">
-            <button class="pill-btn" type="submit">Take this Quiz</button>
-        </form>
+            <form action="take-quiz-starter" method="get" style="width: 100%; margin: 0; padding: 0;">
+                <input type="hidden" name="id" value="<%= quiz.getQuizId() %>">
+                <button class="pill-btn" type="submit">Take this Quiz</button>
+            </form>
+            <% if (quiz.isAllowPractice()) { %>
+            <form action="take-quiz-starter" method="get" class="mt-2">
+                <input type="hidden" name="id" value="<%= quiz.getQuizId() %>">
+                <input type="hidden" name="mode" value="practice">
+                <button class="pill-btn pill-btn-secondary" type="submit">Practice Mode</button>
+            </form>
+            <% } %>
         <% } else { %>
-        <button class="pill-btn" disabled title="Login to take quizzes!">Take this Quiz</button>
-        <div class="text-muted" style="margin:7px 0 0 0;">Please <a href="login.jsp">login</a> to take quizzes.</div>
+            <button class="pill-btn" disabled title="Login to take quizzes!">Take this Quiz</button>
+            <div class="text-muted" style="margin:7px 0 0 0;">Please <a href="login.jsp">login</a> to take quizzes.</div>
         <% } %>
         <a href="<%= loggedIn ? "homepage.jsp" : "index.jsp" %>" class="back-btn">← Back to Home</a>
     </div>

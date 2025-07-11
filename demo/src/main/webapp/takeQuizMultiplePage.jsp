@@ -6,14 +6,12 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="Models.Quiz" %>
 
-
 <%-- @elvariable id="quiz" type="Models.Quiz" --%>
 <%-- @elvariable id="questions" type="java.util.List<Models.Questions.Question>" --%>
 <%-- @elvariable id="correctAnswers" type="java.util.Map<java.lang.Long, java.util.List<Models.Answer>>" --%>
 <%-- @elvariable id="possibleAnswers" type="java.util.Map<java.lang.Long, java.util.List<Models.PossibleAnswer>>" --%>
 
 <%
-
     int index = 0;
     try {
         index = (Integer) session.getAttribute("index");
@@ -40,6 +38,17 @@
     <link rel="stylesheet" href="Styles/take-quiz-multiple-page.css">
 </head>
 <body>
+<%
+    Boolean isPracticeMode = (Boolean) session.getAttribute("isPracticeMode");
+    if (Boolean.TRUE.equals(isPracticeMode)) {
+%>
+<div class="practice-mode-banner">
+    Practice Mode
+    <small>Submission data won't be saved</small>
+</div>
+<%
+    }
+%>
 
 <div id="timer">
     Time Remaining: <span id="timeDisplay">Loading...</span>
@@ -53,7 +62,14 @@
     <input type="hidden" name="index" value="${index + 1}" />
 
     <div class="question-block">
-        <h3>Question ${index + 1}: ${currentQuestion.questionText}</h3>
+        <c:choose>
+            <c:when test="${fn:trim(currentQuestion.questionType) == 'fill-blank'}">
+                <h3>Question ${index + 1}:</h3>
+            </c:when>
+            <c:otherwise>
+                <h3>Question ${index + 1}: ${currentQuestion.questionText}</h3>
+            </c:otherwise>
+        </c:choose>
 
         <c:if test="${not empty currentQuestion.imageUrl}">
             <img src="${currentQuestion.imageUrl}" alt="Question image" style="max-width: 400px; margin: 10px 0;" />
@@ -111,7 +127,6 @@
                 <c:if test="${empty count or count <= 0}">
                     <c:set var="count" value="1" />
                 </c:if>
-
                 <c:forEach begin="1" end="${count}" var="i">
                     <c:set var="pairText" value="${correctAnswers[currentQuestion.questionId][i-1].getAnswerText()}" />
                     <c:set var="left" value="${fn:substringBefore(pairText, '-')}" />

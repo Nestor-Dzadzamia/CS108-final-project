@@ -24,6 +24,18 @@
     Time Remaining: <span id="timeDisplay">Loading...</span>
 </div>
 
+<%
+    Boolean isPracticeMode = (Boolean) session.getAttribute("isPracticeMode");
+    if (Boolean.TRUE.equals(isPracticeMode)) {
+%>
+<div class="practice-mode-banner">
+    Practice Mode
+    <small>Submission data won't be saved</small>
+</div>
+<%
+    }
+%>
+
 <h1>${quiz.quizTitle}</h1>
 <p>${quiz.description}</p>
 
@@ -32,7 +44,14 @@
 
     <c:forEach var="q" items="${questions}" varStatus="status">
         <div class="question-block">
-            <h3>Question ${status.index + 1}: ${q.questionText}</h3>
+            <c:choose>
+                <c:when test="${fn:trim(q.questionType) == 'fill-blank'}">
+                    <h3>Question ${status.index + 1}:</h3>
+                </c:when>
+                <c:otherwise>
+                    <h3>Question ${status.index + 1}: ${q.questionText}</h3>
+                </c:otherwise>
+            </c:choose>
 
             <c:if test="${not empty q.imageUrl}">
                 <img src="${q.imageUrl}" alt="Question image" class="question-image" />

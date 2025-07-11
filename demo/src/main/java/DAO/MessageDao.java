@@ -87,5 +87,37 @@ public class MessageDao {
             return rs.next() ? rs.getInt(1) : 0;
         }
     }
+    public Message getLatestMessageBySenderReceiver(long senderId, long receiverId) throws SQLException {
+        String sql = "SELECT m.*, u.username AS sender_name, q.quiz_title " +
+                "FROM messages m " +
+                "JOIN users u ON m.sender_id = u.user_id " +
+                "LEFT JOIN quizzes q ON m.quiz_id = q.quiz_id " +
+                "WHERE m.sender_id = ? AND m.receiver_id = ? " +
+                "ORDER BY m.sent_at DESC LIMIT 1";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, senderId);
+            stmt.setLong(2, receiverId);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Message msg = new Message();
+                msg.setMessageId(rs.getLong("message_id"));
+                msg.setSenderId(rs.getLong("sender_id"));
+                msg.setReceiverId(rs.getLong("receiver_id"));
+                msg.setMessageType(rs.getString("message_type"));
+                msg.setContent(rs.getString("content"));
+                msg.setQuizId(rs.getObject("quiz_id") != null ? rs.getLong("quiz_id") : null);
+                msg.setSentAt(rs.getTimestamp("sent_at"));
+                msg.setRead(rs.getBoolean("is_read"));
+                msg.setSenderName(rs.getString("sender_name"));
+                msg.setQuizTitle(rs.getString("quiz_title"));
+                return msg;
+            }
+        }
+        return null;
+    }
+
 
 }
