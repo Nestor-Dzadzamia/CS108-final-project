@@ -435,7 +435,14 @@
                             <select name="receiverId" id="receiverId" class="form-select" required>
                                 <option value="">Select a friend...</option>
                                 <c:forEach var="friend" items="${friends}">
-                                    <option value="${friend.id}">${friend.username}</option>
+                                    <c:choose>
+                                        <c:when test="${selectedFriendId != null && friend.id == selectedFriendId}">
+                                            <option value="${friend.id}" selected>${friend.username}</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value="${friend.id}">${friend.username}</option>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:forEach>
                             </select>
                         </div>

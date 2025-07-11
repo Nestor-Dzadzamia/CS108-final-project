@@ -91,6 +91,9 @@ public class FriendsServlet extends HttpServlet {
         String targetUserId = request.getParameter("targetUserId");
         String requestId = request.getParameter("requestId");
 
+        // Use session to store flash messages for feedback
+        HttpSession session = request.getSession();
+
         try {
             if ("send".equals(action) && targetUserId != null) {
                 long targetId = Long.parseLong(targetUserId);
@@ -101,7 +104,7 @@ public class FriendsServlet extends HttpServlet {
                     friendRequest.setReceiverId(targetId);
                     friendRequest.setStatus("pending");
                     friendRequestDao.createFriendRequest(friendRequest);
-                    request.setAttribute("success", "Friend request sent!");
+                    session.setAttribute("success", "Friend request sent!");
                 }
             } else if ("accept".equals(action) && requestId != null) {
                 long reqId = Long.parseLong(requestId);
@@ -115,19 +118,19 @@ public class FriendsServlet extends HttpServlet {
                     // Add friendship
                     friendshipDao.addFriendship(friendRequest.getSenderId(), friendRequest.getReceiverId());
 
-                    request.setAttribute("success", "Friend request accepted!");
+                    session.setAttribute("success", "Friend request accepted!");
                 }
             } else if ("reject".equals(action) && requestId != null) {
                 long reqId = Long.parseLong(requestId);
                 friendRequestDao.updateFriendRequestStatus(reqId, "rejected");
-                request.setAttribute("success", "Friend request rejected.");
+                session.setAttribute("success", "Friend request rejected.");
             } else if ("remove".equals(action) && targetUserId != null) {
                 long targetId = Long.parseLong(targetUserId);
                 friendshipDao.removeFriendship(currentUser.getId(), targetId);
-                request.setAttribute("success", "Friend removed.");
+                session.setAttribute("success", "Friend removed.");
             }
         } catch (SQLException e) {
-            request.setAttribute("error", "Database error: " + e.getMessage());
+            session.setAttribute("error", "Database error: " + e.getMessage());
         }
 
         response.sendRedirect("friends");

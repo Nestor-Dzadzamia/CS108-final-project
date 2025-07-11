@@ -17,13 +17,11 @@
             min-height: 100vh;
             color: #333;
         }
-
         .friends-container {
             max-width: 1000px;
             margin: 2rem auto;
             padding: 1rem;
         }
-
         .section, .card {
             background: white;
             border-radius: 20px;
@@ -32,12 +30,10 @@
             transition: all 0.3s ease;
             margin-bottom: 2rem;
         }
-
         .card:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
         }
-
         .profile-header {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
@@ -47,7 +43,6 @@
             text-align: center;
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
         }
-
         .stat-box {
             text-align: center;
             padding: 1.5rem;
@@ -57,7 +52,6 @@
             font-weight: 600;
             color: #111827;
         }
-
         .btn {
             border: none;
             border-radius: 25px;
@@ -65,46 +59,38 @@
             transition: all 0.3s ease;
             padding: 0.75rem 1.5rem;
         }
-
         .btn-primary {
             background: linear-gradient(135deg, #3b82f6, #1d4ed8);
             color: white;
         }
-
         .btn-secondary {
             background: linear-gradient(135deg, #6b7280, #4b5563);
             color: white;
         }
-
         .btn-success {
             background: linear-gradient(135deg, #10b981, #059669);
             color: white;
         }
-
         .btn-danger {
             background: linear-gradient(135deg, #ef4444, #dc2626);
             color: white;
         }
-
         .btn-outline-primary:hover,
         .btn-outline-danger:hover,
         .btn-outline-success:hover {
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
             transform: translateY(-2px);
         }
-
         .empty-state {
             text-align: center;
             padding: 3rem;
             color: #6b7280;
         }
-
         .empty-state i {
             font-size: 3rem;
             margin-bottom: 1rem;
             color: #d1d5db;
         }
-
         .pending-request {
             background: #fef3cd;
             border: 1px solid #fde047;
@@ -112,12 +98,10 @@
             padding: 1.5rem;
             margin-bottom: 1rem;
         }
-
         .pending-request h6 {
             color: #a16207;
             margin-bottom: 0.5rem;
         }
-
         .pending-request .btn-group {
             gap: 0.5rem;
         }
@@ -287,7 +271,10 @@
                                         <small class="text-muted">${friend.numQuizzesCreated} created, ${friend.numQuizzesTaken} taken</small>
                                         <div class="mt-2">
                                             <a href="friends?action=profile&userId=${friend.id}" class="btn btn-sm btn-outline-primary">View Profile</a>
-                                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeFriend(${friend.id}, '${friend.username}')">Remove</button>
+                                            <a href="message?to=${friend.id}" class="btn btn-success btn-sm ms-1">
+                                                <i class="fas fa-paper-plane"></i> Message
+                                            </a>
+                                            <button type="button" class="btn btn-outline-danger btn-sm ms-1" onclick="removeFriend(${friend.id}, '${friend.username}')">Remove</button>
                                         </div>
                                     </div>
                                 </div>
@@ -339,7 +326,6 @@
         document.getElementById('friendIdToRemove').value = friendId;
         new bootstrap.Modal(document.getElementById('removeFriendModal')).show();
     }
-
     document.addEventListener('DOMContentLoaded', function() {
         const cards = document.querySelectorAll('.card');
         cards.forEach((card, index) => {

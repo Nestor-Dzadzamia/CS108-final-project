@@ -47,13 +47,21 @@ public class MessagesServlet extends HttpServlet {
 
         User currentUser = (User) session.getAttribute("user");
 
+        // --- Get selected friend for pre-selecting in form ---
+        String selectedFriendIdParam = request.getParameter("to");
+        Long selectedFriendId = null;
+        if (selectedFriendIdParam != null && !selectedFriendIdParam.isEmpty()) {
+            try {
+                selectedFriendId = Long.parseLong(selectedFriendIdParam);
+            } catch (NumberFormatException ignore) {}
+        }
+
         try {
             List<Message> messages = messageDao.getMessagesForUser(currentUser.getId());
             List<User> friends = userDao.getFriends(currentUser.getId());
             List<Quiz> quizzes = quizDao.getAllQuizzes();
 
             int unreadCount = messageDao.getUnreadMessageCount(currentUser.getId());
-
             messageDao.markMessagesAsRead(currentUser.getId());
 
             request.setAttribute("messages", messages);
@@ -61,6 +69,9 @@ public class MessagesServlet extends HttpServlet {
             request.setAttribute("quizzes", quizzes);
             request.setAttribute("unreadCount", unreadCount);
 
+            if (selectedFriendId != null) {
+                request.setAttribute("selectedFriendId", selectedFriendId);
+            }
         } catch (SQLException e) {
             request.setAttribute("error", "Database error: " + e.getMessage());
         }
