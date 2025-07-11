@@ -4,342 +4,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Messages</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            color: white;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
-            margin-bottom: 100px;
-        }
-
-        @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .section-title {
-            color: #333;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-title i {
-            color: #667eea;
-        }
-
-        .messages-section {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .compose-panel {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            height: fit-content;
-        }
-
-        .alert {
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .messages-list {
-            max-height: 600px;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
-        .message-card {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .message-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .message-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .message-meta {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .message-type {
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .message-type.challenge {
-            background: #ffc107;
-            color: #856404;
-        }
-
-        .message-type.note {
-            background: #17a2b8;
-            color: white;
-        }
-
-        .sender-name {
-            font-weight: bold;
-            color: #495057;
-        }
-
-        .message-date {
-            color: #6c757d;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .message-content {
-            line-height: 1.6;
-        }
-
-        .challenge-info {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 10px;
-        }
-
-        .quiz-link {
-            display: inline-block;
-            background: #28a745;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-top: 10px;
-            transition: background 0.3s ease;
-        }
-
-        .quiz-link:hover {
-            background: #218838;
-            color: white;
-            text-decoration: none;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 50px 20px;
-            color: #6c757d;
-        }
-
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: #dee2e6;
-        }
-
-        .empty-state h3 {
-            margin-bottom: 10px;
-            color: #495057;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #495057;
-        }
-
-        .form-select, .form-textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-select:focus, .form-textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .form-textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .form-section {
-            display: none;
-            margin-top: 20px;
-        }
-
-        .form-section.active {
-            display: block;
-        }
-
-        .btn {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn:hover {
-            background: #5a6fd8;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-        }
-
-        .back-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            color: #333;
-            padding: 12px;
-            border-radius: 50%;
-            text-decoration: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        .back-btn:hover {
-            background: white;
-            color: #667eea;
-            transform: translateY(-2px);
-        }
-
-        .connection-status {
-            position: fixed;
-            bottom: 24px;
-            right: 32px;
-            background: rgba(255,255,255,0.85);
-            color: #333;
-            padding: 12px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.09);
-            font-size: 1.1rem;
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: background 0.3s;
-        }
-        .connection-status.connected { background: #d4edda; color: #155724; }
-        .connection-status.disconnected { background: #f8d7da; color: #721c24; }
-
-        .notification {
-            position: fixed;
-            top: 16px;
-            right: 36px;
-            background: #fff;
-            color: #333;
-            border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.13);
-            padding: 16px 24px;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 3000;
-            font-size: 1.15rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: opacity 0.4s;
-        }
-        .notification.show { opacity: 1; pointer-events: auto; }
-        .new-message { animation: newmsg-pop 0.5s; }
-        @keyframes newmsg-pop {
-            0% { transform: scale(0.98) translateY(-10px); background: #f0e6ff; }
-            100% { transform: scale(1) translateY(0); }
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - Quiz App</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Styles/message.css">
 </head>
 <body>
 <div class="container">
@@ -488,9 +157,14 @@
 <a href="homepage.jsp" class="back-btn">
     <i class="fas fa-arrow-left"></i>
 </a>
+
+<!-- If you want the connection status bar at the bottom, keep this (optional) -->
+<!--
 <div id="connectionStatus" class="connection-status disconnected">
     <i class="fas fa-wifi"></i> Disconnected
 </div>
+-->
+
 <script>
     let socket;
     let currentUser = ${sessionScope.user.id};
@@ -561,16 +235,11 @@
         }
     }
 
-    if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-        Notification.requestPermission();
-    }
-
     document.getElementById('messageType').addEventListener('change', toggleMessageForm);
     document.getElementById('messageType').addEventListener('change', function() {
         document.getElementById('content').value = '';
         document.getElementById('quizId').value = '';
     });
-
     document.addEventListener('DOMContentLoaded', function() {
         connectWebSocket();
         const cards = document.querySelectorAll('.message-card');

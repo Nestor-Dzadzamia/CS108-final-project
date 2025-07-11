@@ -6,14 +6,12 @@
 <%@ page import="java.lang.*" %>
 <%@ page import="Models.Quiz" %>
 
-
 <%-- @elvariable id="quiz" type="Models.Quiz" --%>
 <%-- @elvariable id="questions" type="java.util.List<Models.Questions.Question>" --%>
 <%-- @elvariable id="correctAnswers" type="java.util.Map<java.lang.Long, java.util.List<Models.Answer>>" --%>
 <%-- @elvariable id="possibleAnswers" type="java.util.Map<java.lang.Long, java.util.List<Models.PossibleAnswer>>" --%>
 
 <%
-
     int index = 0;
     try {
         index = (Integer) session.getAttribute("index");
@@ -37,88 +35,7 @@
 <head>
     <meta charset="UTF-8">
     <title>${quiz.quizTitle} - Question ${index + 1}</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 700px;
-            margin: auto;
-            padding: 20px;
-        }
-
-        .question-block {
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 10px;
-            background: #f9f9f9;
-        }
-
-        .option-container {
-            margin: 10px 0;
-        }
-
-        input[type="text"], input[type="checkbox"], input[type="radio"] {
-            margin-right: 8px;
-        }
-
-        .submit-btn {
-            margin-top: 20px;
-            padding: 10px 25px;
-            font-size: 16px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .submit-btn:hover {
-            background-color: #0056b3;
-        }
-
-        #timer {
-            font-size: 20px;
-            font-weight: bold;
-            color: #d9534f;
-            text-align: right;
-            margin-bottom: 10px;
-            position: sticky;
-            top: 0;
-            background-color: white;
-            padding: 10px;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .timer-warning {
-            color: #ff6b6b !important;
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        .practice-mode-banner {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            background-color: #ffeb3b;
-            color: #000;
-            font-weight: bold;
-            padding: 6px 14px;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-            z-index: 1000;
-        }
-        .practice-mode-banner small {
-            font-weight: normal;
-            font-size: 13px;
-            display: block;
-            margin-top: 4px;
-        }
-    </style>
+    <link rel="stylesheet" href="Styles/take-quiz-multiple-page.css">
 </head>
 <body>
 <%
@@ -210,7 +127,6 @@
                 <c:if test="${empty count or count <= 0}">
                     <c:set var="count" value="1" />
                 </c:if>
-
                 <c:forEach begin="1" end="${count}" var="i">
                     <c:set var="pairText" value="${correctAnswers[currentQuestion.questionId][i-1].getAnswerText()}" />
                     <c:set var="left" value="${fn:substringBefore(pairText, '-')}" />

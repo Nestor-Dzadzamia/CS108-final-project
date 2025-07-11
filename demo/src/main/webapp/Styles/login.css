@@ -1,0 +1,59 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f6f9;
+    padding: 50px;
+}
+
+.logo-home-link {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    z-index: 1000;
+    text-decoration: none;
+}
+.logo-home {
+    height: 70px;
+    width: auto;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(78,84,200,0.13);
+    transition: 0.18s;
+}
+.logo-home:hover {
+    box-shadow: 0 8px 32px rgba(78,84,200,0.25);
+    transform: scale(1.10) rotate(-2deg);
+    cursor: pointer;
+    transition: 0.18s;
+}
+
+.form-container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: auto;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+button:hover {
+    background: #1e7e34;
+}
+.error {
+    color: red;
+    margin-bottom: 15px;
+}
