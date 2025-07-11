@@ -42,6 +42,8 @@ public class AdminServlet extends HttpServlet {
             long totalQuizzesTaken = userDao.countQuizzesTaken();
             request.setAttribute("totalUsers", totalUsers);
             request.setAttribute("totalQuizzesTaken", totalQuizzesTaken);
+            List<User> adminUsers = userDao.getAdminUsers();
+            request.setAttribute("adminUsers", adminUsers);
         } catch (SQLException e) {
             request.setAttribute("error", "Error loading announcements or quizzes.");
         }
@@ -108,6 +110,12 @@ public class AdminServlet extends HttpServlet {
                     long id = Long.parseLong(request.getParameter("id"));
                     announcementDao.removeAnnouncement(id);
                     session.setAttribute("success", "Announcement removed.");
+                    break;
+                }
+                case "promote-user": {
+                    long id = Long.parseLong(request.getParameter("id"));
+                    userDao.updateUserRole(id, "admin");
+                    session.setAttribute("success", "User promoted to admin.");
                     break;
                 }
                 case "remove-quiz": {
