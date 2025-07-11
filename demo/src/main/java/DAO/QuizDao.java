@@ -335,35 +335,4 @@ public class QuizDao {
         return list;
     }
 
-    // 3. Teammate's method: Recent quizzes taken by user
-    public List<Map<String, Object>> getRecentQuizzesTakenByUser(long userId, int limit) throws SQLException {
-        String sql = """
-        SELECT s.submission_id, s.quiz_id, s.score, s.time_spent, s.num_correct_answers, s.num_total_answers, s.submitted_at, 
-               q.quiz_title
-        FROM submissions s
-        JOIN quizzes q ON s.quiz_id = q.quiz_id
-        WHERE s.user_id = ?
-        ORDER BY s.submitted_at DESC
-        LIMIT ?
-        """;
-        List<Map<String, Object>> list = new ArrayList<>();
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setLong(1, userId);
-            stmt.setInt(2, limit);
-            try (ResultSet rs = stmt.executeQuery()) {
-                ResultSetMetaData meta = rs.getMetaData();
-                int colCount = meta.getColumnCount();
-                while (rs.next()) {
-                    Map<String, Object> row = new HashMap<>();
-                    for (int i = 1; i <= colCount; i++) {
-                        row.put(meta.getColumnLabel(i), rs.getObject(i));
-                    }
-                    list.add(row);
-                }
-            }
-        }
-        return list;
-    }
-
 }

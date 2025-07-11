@@ -28,7 +28,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>QuizApp - Welcome</title>
+  <title>QuizRizz - Welcome</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <link rel="icon" type="image/png" href="images/quiz_icon_no_background.png">
@@ -48,7 +48,7 @@
   <!-- Center Main Content -->
   <div class="main-center">
     <div class="header">
-      <h1><i class="fas fa-graduation-cap"></i> Welcome to QuizApp!</h1>
+      <h1><i class="fas fa-graduation-cap"></i> Welcome to QuizRizz!</h1>
       <div class="subtitle">
         Compete, learn, and have fun! Check the latest announcements or try a popular quiz below.
       </div>
