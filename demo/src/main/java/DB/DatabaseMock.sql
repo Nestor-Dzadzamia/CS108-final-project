@@ -19,17 +19,21 @@ TRUNCATE TABLE categories;
 TRUNCATE TABLE users;
 SET FOREIGN_KEY_CHECKS = 1;
 
--- USERS
+-- USERS  passwords are first names in lowercase like sandro's password: sandro TechGuru_Alex: alex ...
 INSERT INTO users (username, email, hashed_password, salt_password, num_quizzes_created) VALUES
-                                                                                             ('Nestor_Dzadzamia', 'Nestor@gmail.com', '452928968d7f7fdc3ccadcb7219bf4c8ccfbd12c', '', 2),
-                                                                                             ('Sandro_Mamamtavrishvili', 'Sandro@gmail.com', '64bc56ddc1b256138a1e36319a3da09ebbb31f70', '', 2),
-                                                                                             ('Saba_Delibashvili', 'Saba@gmail.com', '3402f1109751882581c2b3a68a0af205e0d49e46', '', 1),
-                                                                                             ('Giorgi_Urtmelidze', 'Giorgi@gmail.com', '1d65c13a970a22a4cceb4ffc82fac7abb8e73194', '', 1),
-                                                                                             ('TechGuru_Alex', 'alex.tech@gmail.com', 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0', 'salt123', 3),
-                                                                                             ('BookWorm_Maria', 'maria.books@gmail.com', 'b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0a1', 'salt456', 2),
-                                                                                             ('SpaceExplorer_John', 'john.space@gmail.com', 'c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0a1b2', 'salt789', 2),
-                                                                                             ('ChefMaster_Emma', 'emma.chef@gmail.com', 'd4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0a1b2c3', 'salt101', 1),
-                                                                                             ('admin', 'admin@gmail.com', 'e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0a1b2c3d4', 'adminsalt', 0);
+                                                                                             ('nestor', 'nestor@gmail.com', 'FLoni14MbizW4pPyfvKHzwoFjMc=', 'xtGe0jkVyHR/YLdTZzkN6A==', 2),
+                                                                                             ('sandro', 'sandro@gmail.com', 'yF2CGvjVI7Ugzxl6yMa3G7uZTf8=', 'l0tBzlC3TGIhSlFHUXlA2Q==', 2),
+                                                                                             ('saba', 'saba@gmail.com', 'qdYwWf67RNzg0tIjdaAZ09DLA10=', 'Lynika+tIIU5ungsPxvVXg==', 1),
+                                                                                             ('giorgi', 'giorgi@gmail.com', '757Li67YHy/Acm3rdESTjmJuDMc=', 'hQ7JIwDaBn35ibG36Yd7qg==', 1),
+                                                                                             ('TechGuru_Alex', 'alex.tech@gmail.com', 't6YyMd7xtKfcatd6tUGqMXIOiL4=', 'Dlbj5K0VvHfz7yMQp4L3YA==', 3),
+                                                                                             ('BookWorm_Maria', 'maria.books@gmail.com', 'wWXR1NjN+8j3xKSabV1HwK0hZOo=', 'xW99jyd9uFMjEyRgdAGOdw==', 2),
+                                                                                             ('SpaceExplorer_John', 'john.space@gmail.com', 'UTezYFH4MnRtfdoESzo/QOgSgmM=', 'Uy8Exh+dzF5Iyx+3ukY70Q==', 2),
+                                                                                             ('ChefMaster_Emma', 'emma.chef@gmail.com', 'kCTiX3FihMpUj+f/qgdG0hPQMAU=', '/EDv50jnm2nWxZlpspe+Ig==', 1),
+                                                                                             ('user', 'user@gmail.com', 'S4bCpXIH4yO2RZpE/r3IAdO7mdY=', 'KLQtZzEbJUwlKAi1vRE9aw==', 0);
+
+/* adding admin password: admin */
+INSERT INTO users (username, email, hashed_password, salt_password, num_quizzes_created, role) VALUES
+    ('admin', 'admin@gmail.com', 'R4nadRnyGDyJW2S2FLE6m0z0GWM=', 'LDCB8o4b/d9PXxvu7eMvdg==', 0, 'admin');
 
 -- CATEGORIES
 INSERT INTO categories (category_name) VALUES
