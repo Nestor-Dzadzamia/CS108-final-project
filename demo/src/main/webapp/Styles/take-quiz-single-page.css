@@ -1,0 +1,127 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.question-block {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.question-block h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.match-pair {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    min-width: 200px;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+label {
+    cursor: pointer;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.option-container {
+    margin-bottom: 8px;
+}
+
+.submit-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.debug {
+    color: red;
+    font-size: 12px;
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #ffebee;
+    border-radius: 3px;
+}
+
+.multi-answer-input {
+    margin-bottom: 10px;
+    display: block;
+}
+
+.question-image {
+    max-width: 400px;
+    height: auto;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.fill-blank-container {
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.fill-blank-input {
+    display: inline-block;
+    width: 150px;
+    margin: 0 5px;
+}
+
+.instructions {
+    font-style: italic;
+    color: #666;
+    margin-top: 5px;
+}
+
+#timer {
+    font-size: 20px;
+    font-weight: bold;
+    color: #d9534f;
+    text-align: right;
+    margin-bottom: 10px;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.timer-warning {
+    color: #ff6b6b !important;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}

@@ -1,0 +1,69 @@
+.question-block {
+    margin-bottom: 2rem;
+    padding: 1.2rem 1.1rem 1.1rem 1.1rem;
+    border: 1.5px solid #c5c5e6;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(90,110,210,0.07);
+    transition: box-shadow 0.12s;
+}
+.question-block h5 {
+    font-weight: 700;
+    color: #4a3a7e;
+    margin-bottom: 1.1rem;
+}
+#instructions {
+    display: none;
+    border: 1px solid #d0d2e7;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 1.02rem;
+}
+.toggle-icon {
+    cursor: pointer;
+    font-weight: bold;
+    color: #6553c4;
+    margin-bottom: 0.7rem;
+    display: inline-block;
+    transition: color 0.12s;
+}
+.toggle-icon:hover {
+    color: #43326e;
+    text-decoration: underline;
+}
+.form-label {
+    font-weight: 600;
+    color: #6553c4;
+}
+input[type="number"].form-control,
+select.form-select {
+    background: #f6f7fa;
+    border: 1.2px solid #d1d5ee;
+    border-radius: 8px;
+    transition: border 0.15s;
+}
+input[type="number"].form-control:focus,
+select.form-select:focus {
+    border: 1.5px solid #6553c4;
+    background: #f9f6ff;
+}
+.btn-primary {
+    background: linear-gradient(90deg, #6553c4 0%, #685dc3 100%);
+    border: none;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-radius: 11px;
+    padding: 0.6rem 2.2rem;
+    box-shadow: 0 2px 14px #887fff2a;
+    transition: background 0.18s;
+}
+.btn-primary:hover {
+    background: linear-gradient(90deg, #5b48a9 0%, #4137a3 100%);
+}
+@media (max-width: 768px) {
+    .question-block {
+        padding: 1rem 0.4rem;
+    }
+}

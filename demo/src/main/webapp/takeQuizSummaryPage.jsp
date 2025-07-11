@@ -4,13 +4,7 @@
 <html>
 <head>
     <title>Quiz Summary</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .question-summary { margin-bottom: 30px; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
-        .question-summary h4 { margin-bottom: 10px; }
-        .label { font-weight: bold; color: #333; }
-        .answer-block { margin-left: 20px; margin-top: 5px; white-space: pre-line; }
-    </style>
+    <link rel="stylesheet" href="Styles/take-quiz-summary-page.css">
 </head>
 <body>
 
@@ -102,7 +96,7 @@
 
 <div style="text-align: center; margin-top: 40px;">
     <form action="homepage.jsp" method="get">
-        <button type="submit" style="padding: 10px 20px; font-size: 16px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        <button type="submit" class="home-btn">
             Return to Homepage
         </button>
     </form>

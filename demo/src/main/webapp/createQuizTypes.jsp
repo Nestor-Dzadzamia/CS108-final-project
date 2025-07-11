@@ -12,32 +12,7 @@
     <title>Choose Question Types</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <style>
-        .question-block {
-            margin-bottom: 2rem;
-            padding: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
-
-        #instructions {
-            display: none;
-            border: 1px solid #ccc;
-            background-color: #f8f9fa;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-        }
-
-        .toggle-icon {
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .total-answers-section, .ordered-checkbox {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="Styles/quiz-types.css">
     <script>
         function toggleInstructions() {
             const block = document.getElementById('instructions');

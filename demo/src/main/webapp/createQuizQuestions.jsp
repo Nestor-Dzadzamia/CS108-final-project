@@ -13,21 +13,12 @@
     }
 %>
 
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Enter Quiz Questions</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .question-block {
-            margin-bottom: 2rem;
-            padding: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            background-color: #fff;
-        }
-    </style>
+    <link rel="stylesheet" href="Styles/quiz-questions.css">
 </head>
 <body class="bg-light">
 <div class="container mt-5">
@@ -86,7 +77,6 @@
             </div>
             <%  } } %>
 
-
             <%-- MATCHING TYPE --%>
             <% if ("matching".equals(type)) {
                 int numPairs = correctCounts.getOrDefault(index, 1);
@@ -107,8 +97,6 @@
                 <% } %>
             </div>
             <% } %>
-
-
         </div>
         <% } %>
 

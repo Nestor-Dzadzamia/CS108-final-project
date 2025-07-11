@@ -1,0 +1,236 @@
+body {
+    font-family: 'Montserrat', 'Inter', 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.quiz-summary-logo-link {
+    position: absolute;
+    top: 12px;
+    left: 24px;
+    z-index: 1000;
+    text-decoration: none;
+}
+.logo-home {
+    height: 90px;
+    width: auto;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.15);
+    transition: 0.2s;
+}
+.main-flex-row {
+    display: flex;
+    gap: 3.5rem;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 50px;
+    flex-wrap: wrap;
+}
+.summary-card, .leaderboard-card {
+    background: #ede9fe;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 24px rgba(120,70,255,0.10);
+    box-sizing: border-box;
+}
+.summary-card {
+    min-width: 410px;
+    max-width: 520px;
+    width: 480px;
+    margin-bottom: 24px;
+    padding: 2.7rem 2.4rem 2.3rem 2.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.summary-card h1 {
+    font-size: 2.6rem;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: #221247;
+}
+.summary-card .subtitle {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    color: #443366;
+}
+.summary-card hr {
+    margin: 18px 0 18px 0;
+    border: 0;
+    border-top: 2px solid #d1c4f7;
+    width: 100%;
+}
+.summary-card .pill-field {
+    display: block;
+    background: #f3e8ff;
+    color: #5b21b6;
+    font-weight: 600;
+    border-radius: 1.6em;
+    font-size: 1.13rem;
+    padding: 0.57em 1.3em 0.57em 1.3em;
+    margin-bottom: 13px;
+    margin-top: 0;
+    box-shadow: none;
+    width: auto;
+    line-height: 1.6;
+}
+.summary-card .pill-link {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-style: solid;
+    color: #6c23c2;
+    font-weight: 600;
+}
+.summary-card .pill-btn {
+    background: linear-gradient(92deg,#9b5cff 0%, #a47fff 100%);
+    color: #fff;
+    border: none;
+    border-radius: 1.6em;
+    font-weight: 700;
+    font-size: 1.19rem;
+    padding: 0.55em 2.3em;
+    margin-top: 24px;
+    margin-bottom: 11px;
+    cursor: pointer;
+    transition: background 0.14s;
+    display: block;
+    width: auto;
+    box-shadow: 0 2px 12px rgba(160,115,255,0.09);
+}
+.summary-card .pill-btn:hover {
+    background: linear-gradient(92deg, #a47fff 0%, #9b5cff 100%);
+}
+.summary-card .back-btn {
+    background: none;
+    border: 1.7px solid #a47fff;
+    border-radius: 1.4em;
+    color: #8b5cf6;
+    padding: 0.43em 1.5em;
+    font-size: 1.04rem;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 0;
+    cursor: pointer;
+    display: block;
+}
+.summary-card .back-btn:hover {
+    background: #eee4fc;
+}
+.summary-card .text-muted {
+    margin: 7px 0 0 0;
+}
+.summary-card .text-muted a {
+    color: #6b21a8;
+    text-decoration: underline;
+}
+/* Leaderboard Table -- DO NOT TOUCH */
+.leaderboard-card {
+    min-width: 600px;
+    max-width: 100vw;
+    width: 900px;
+    margin-bottom: 24px;
+    margin-left: 0;
+    padding: 2.7rem 2.4rem 2.4rem 2.4rem;
+}
+.leaderboard-stats th {
+    text-align: left;
+    padding-left: 0.5rem;
+    font-size: 1.08rem;
+    font-weight: 700;
+    border: none;
+}
+.leaderboard-stats td {
+    padding: 0.45rem 0.5rem;
+    border-bottom: 1px solid #e9e9e9;
+}
+.leaderboard-stats tr:last-child td { border-bottom: none; }
+.leaderboard-table {
+    width: 100%;
+    background: transparent;
+    border-radius: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 14px;
+    margin-bottom: 0;
+}
+.leaderboard-table th {
+    font-weight: 700;
+    background: #e9d6fa !important;
+    color: #432886;
+    border-top: none;
+}
+.leaderboard-table th, .leaderboard-table td {
+    padding: 0.9rem 1.05rem;
+    text-align: center;
+    border-bottom: 1px solid #ddd6fe;
+    font-size: 1.13rem;
+}
+.leaderboard-table tr:last-child td { border-bottom: none; }
+.leaderboard-table th {
+    border-bottom: 3px solid #e9d6fa;
+}
+/* pill for fields */
+.pill-table, .username-pill, .score-pill, .correct-pill, .time-pill {
+    border-radius: 1.2em;
+    display: inline-block;
+    font-weight: 500;
+    padding: 0.22em 1.3em;
+    margin: 0 1px;
+    font-size: 1.08rem;
+    min-width: 36px;
+}
+.username-pill {
+    background: #e0e7ff;
+    color: #3730a3;
+    max-width: 230px;
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    display: inline-block;
+    text-align: center;
+}
+.score-pill {
+    background: #f5d0fe;
+    color: #c026d3;
+}
+.correct-pill {
+    background: #fef9c3;
+    color: #a16207;
+}
+.time-pill {
+    background: #dbeafe;
+    color: #2563eb;
+}
+.pill-rank {
+    background: #ede9fe;
+    color: #7c3aed;
+    font-weight: 600;
+}
+/* Responsive */
+@media (max-width: 1400px) {
+    .main-flex-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 2.5rem;
+    }
+    .summary-card, .leaderboard-card {
+        min-width: 310px;
+        max-width: 98vw;
+        width: 98vw;
+    }
+}
+@media (max-width: 950px) {
+    .leaderboard-card {
+        min-width: 310px;
+        width: 99vw;
+    }
+}
+@media (max-width: 750px) {
+    .main-flex-row {
+        gap: 1.2rem;
+    }
+    .summary-card, .leaderboard-card {
+        padding: 1.1rem 0.3rem 1.4rem 0.3rem;
+        min-width: unset;
+    }
+    .summary-card h1 { font-size: 1.3rem; }
+}

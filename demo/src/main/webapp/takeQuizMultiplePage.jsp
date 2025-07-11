@@ -37,69 +37,7 @@
 <head>
     <meta charset="UTF-8">
     <title>${quiz.quizTitle} - Question ${index + 1}</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 700px;
-            margin: auto;
-            padding: 20px;
-        }
-
-        .question-block {
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 10px;
-            background: #f9f9f9;
-        }
-
-        .option-container {
-            margin: 10px 0;
-        }
-
-        input[type="text"], input[type="checkbox"], input[type="radio"] {
-            margin-right: 8px;
-        }
-
-        .submit-btn {
-            margin-top: 20px;
-            padding: 10px 25px;
-            font-size: 16px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .submit-btn:hover {
-            background-color: #0056b3;
-        }
-
-        #timer {
-            font-size: 20px;
-            font-weight: bold;
-            color: #d9534f;
-            text-align: right;
-            margin-bottom: 10px;
-            position: sticky;
-            top: 0;
-            background-color: white;
-            padding: 10px;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .timer-warning {
-            color: #ff6b6b !important;
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-    </style>
+    <link rel="stylesheet" href="Styles/take-quiz-multiple-page.css">
 </head>
 <body>
 

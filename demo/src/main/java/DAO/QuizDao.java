@@ -281,5 +281,56 @@ public class QuizDao {
         return quizzes;
     }
 
+    public Map<String, Object> getQuizSummaryStats(long quizId) throws SQLException {
+        String sql = "SELECT * FROM view_quiz_summary WHERE quiz_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, quizId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Map<String, Object> stats = new HashMap<>();
+                    stats.put("times_taken", rs.getLong("times_taken"));
+                    stats.put("avg_score", rs.getObject("avg_score")); // Can be Double or null
+                    stats.put("avg_time", rs.getObject("avg_time"));   // Can be Double or null
+                    return stats;
+                }
+            }
+        }
+        return null; // If quiz not found
+    }
+
+    public List<Map<String, Object>> getTopScorers(long quizId, int limit) throws SQLException {
+        String sql = """
+        SELECT
+            u.username,
+            s.score,
+            s.num_correct_answers,
+            s.num_total_answers,
+            s.time_spent
+        FROM submissions s
+        JOIN users u ON s.user_id = u.user_id
+        WHERE s.quiz_id = ?
+        ORDER BY s.num_correct_answers DESC, s.time_spent ASC
+        LIMIT ?
+        """;
+        List<Map<String, Object>> list = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, quizId);
+            stmt.setInt(2, limit);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                row.put("username", rs.getString("username"));
+                row.put("score", rs.getLong("score"));
+                row.put("num_correct_answers", rs.getLong("num_correct_answers"));
+                row.put("num_total_answers", rs.getLong("num_total_answers"));
+                row.put("time_spent", rs.getLong("time_spent"));
+                list.add(row);
+            }
+        }
+        return list;
+    }
+
 
 }

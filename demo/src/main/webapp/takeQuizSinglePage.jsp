@@ -2,12 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<%--
-  @elvariable id="quiz" type="Models.Quiz"
-  @elvariable id="questions" type="java.util.List<Models.Questions.Question>"
-  @elvariable id="correctAnswers" type="java.util.Map<java.lang.Long, java.util.List<Models.Answer>"
-  @elvariable id="possibleAnswers" type="java.util.Map<java.lang.Long, java.util.List<Models.PossibleAnswer>>"
---%>
+<%-- @elvariable id="quiz" type="Models.Quiz" --%>
+<%-- @elvariable id="questions" type="java.util.List<Models.Questions.Question>" --%>
+<%-- @elvariable id="correctAnswers" type="java.util.Map<java.lang.Long, java.util.List<Models.Answer>" --%>
+<%-- @elvariable id="possibleAnswers" type="java.util.Map<java.lang.Long, java.util.List<Models.PossibleAnswer>>" --%>
 
 <%
     Long remaining = (Long) session.getAttribute("remainingTime");
@@ -19,135 +17,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${quiz.quizTitle}</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            line-height: 1.6;
-        }
-
-        .question-block {
-            margin-bottom: 30px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-        }
-
-        .question-block h3 {
-            margin-top: 0;
-            color: #333;
-        }
-
-        .match-pair {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-            align-items: center;
-        }
-
-        input[type="text"] {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-            min-width: 200px;
-        }
-
-        input[type="radio"], input[type="checkbox"] {
-            margin-right: 8px;
-        }
-
-        label {
-            cursor: pointer;
-            margin-bottom: 5px;
-            display: inline-block;
-        }
-
-        .option-container {
-            margin-bottom: 8px;
-        }
-
-        .submit-btn {
-            background-color: #007bff;
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        .submit-btn:hover {
-            background-color: #0056b3;
-        }
-
-        .debug {
-            color: red;
-            font-size: 12px;
-            margin-bottom: 10px;
-            padding: 5px;
-            background-color: #ffebee;
-            border-radius: 3px;
-        }
-
-        .multi-answer-input {
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .question-image {
-            max-width: 400px;
-            height: auto;
-            margin: 10px 0;
-            border-radius: 4px;
-        }
-
-        .fill-blank-container {
-            font-size: 16px;
-            line-height: 1.8;
-        }
-
-        .fill-blank-input {
-            display: inline-block;
-            width: 150px;
-            margin: 0 5px;
-        }
-
-        .instructions {
-            font-style: italic;
-            color: #666;
-            margin-top: 5px;
-        }
-
-        #timer {
-            font-size: 20px;
-            font-weight: bold;
-            color: #d9534f;
-            text-align: right;
-            margin-bottom: 10px;
-            position: sticky;
-            top: 0;
-            background-color: white;
-            padding: 10px;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .timer-warning {
-            color: #ff6b6b !important;
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-    </style>
+    <link rel="stylesheet" href="Styles/take-quiz-single-page.css">
 </head>
 <body>
 <div id="timer">
@@ -261,39 +131,29 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         let remainingSeconds = <%= remaining %>;
-        //remainingSeconds = 5;
         let isFormSubmitting = false;
-
-        console.log("Starting timer with", remainingSeconds, "seconds");
 
         const timeDisplay = document.getElementById("timeDisplay");
         const timerElement = document.getElementById("timer");
         const form = document.getElementById("quizForm");
 
-        // Simple timer display function
         function showTime(seconds) {
             const mins = Math.floor(seconds / 60);
             const secs = seconds % 60;
             const timeString = mins + ":" + (secs < 10 ? "0" + secs : secs);
             timeDisplay.textContent = timeString;
-            console.log("Timer showing:", timeString);
         }
 
-        // Show initial time
         showTime(remainingSeconds);
 
-        // Start countdown
         const timer = setInterval(function() {
             remainingSeconds--;
             showTime(remainingSeconds);
 
-            // Add warning when under 2 minutes
             if (remainingSeconds <= 120) {
                 timerElement.style.color = "#ff0000";
                 timerElement.style.animation = "pulse 1s infinite";
             }
-
-            // Time's up
             if (remainingSeconds <= 0) {
                 clearInterval(timer);
                 alert("Time's up! Submitting quiz...");
@@ -302,20 +162,10 @@
             }
         }, 1000);
 
-        // Stop timer when form is submitted
         form.addEventListener('submit', function() {
             clearInterval(timer);
             isFormSubmitting = true;
         });
-
-        // // Warn before leaving page
-        // window.addEventListener('beforeunload', function(e) {
-        //     if (!isFormSubmitting && remainingSeconds > 0) {
-        //         e.preventDefault();
-        //         e.returnValue = 'Are you sure you want to leave? Your quiz progress will be lost.';
-        //     }
-        // });
-
     });
 </script>
 </body>
