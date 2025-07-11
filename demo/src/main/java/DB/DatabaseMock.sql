@@ -264,7 +264,7 @@ INSERT INTO correct_answers (question_id, answer_text, match_order) VALUES
                                                                         (28, 'Mozart', -1),
                                                                         (28, 'Wolfgang Amadeus Mozart', -1),
                                                                         -- Q29: Multi-select
-                                                                        (29, 'Guitar', -1),
+                                                                        (29, 'Electric guitar', -1),
                                                                         (29, 'Bass', -1),
                                                                         (29, 'Drums', -1),
                                                                         (29, 'Microphone', -1),
@@ -432,12 +432,12 @@ INSERT INTO correct_answers (question_id, answer_text, match_order) VALUES
 
                                                                         -- Q65: 12 types of cuisine (order doesn't matter)
                                                                         (65, 'Italian', -1),
-                                                                        (65, 'Chinese', -1),
                                                                         (65, 'Mexican', -1),
+                                                                        (65, 'Chinese', -1),
                                                                         (65, 'Indian', -1),
+                                                                        (65, 'Thai', -1),
                                                                         (65, 'French', -1),
                                                                         (65, 'Japanese', -1),
-                                                                        (65, 'Thai', -1),
                                                                         (65, 'Greek', -1),
                                                                         (65, 'Spanish', -1),
                                                                         (65, 'Korean', -1),
@@ -446,9 +446,97 @@ INSERT INTO correct_answers (question_id, answer_text, match_order) VALUES
 
                                                                         -- Q66: Simple question-response
                                                                         (66, 'Paris', -1);
+-- INSERT statements for possible_answers table
+-- ONLY for multiple-multiple-choice questions
 
--- POSSIBLE ANSWERS for multiple choice questions
+-- Q5: Multiple-multiple-choice - "Select all Georgian sports where the country has won Olympic medals."
+INSERT INTO possible_answers (question_id, possible_answer_text) VALUES
+                                                                     (5, 'Swimming'),        -- Incorrect
+                                                                     (5, 'Wrestling'),       -- Correct
+                                                                     (5, 'Basketball'),      -- Incorrect
+                                                                     (5, 'Shooting'),        -- Correct
+                                                                     (5, 'Football'),        -- Incorrect
+                                                                     (5, 'Weightlifting'),   -- Correct
+                                                                     (5, 'Tennis'),          -- Incorrect
+                                                                     (5, 'Boxing'),          -- Correct
+                                                                     (5, 'Gymnastics');      -- Incorrect
 
+-- Q6: Multiple-multiple-choice - "Select all sports that are played with a ball."
+INSERT INTO possible_answers (question_id, possible_answer_text) VALUES
+                                                                     (6, 'Swimming'),    -- Incorrect
+                                                                     (6, 'Basketball'),  -- Correct
+                                                                     (6, 'Track and Field'), -- Incorrect
+                                                                     (6, 'Soccer'),      -- Correct
+                                                                     (6, 'Tennis'),      -- Correct
+                                                                     (6, 'Volleyball');  -- Correct
+
+-- Q12: Multiple-multiple-choice - "Select all ancient civilizations that built pyramids."
+INSERT INTO possible_answers (question_id, possible_answer_text) VALUES
+                                                                     (12, 'Romans'),     -- Incorrect
+                                                                     (12, 'Egyptians'),  -- Correct
+                                                                     (12, 'Greeks'),     -- Incorrect
+                                                                     (12, 'Mayans'),     -- Correct
+                                                                     (12, 'Vikings'),    -- Incorrect
+                                                                     (12, 'Nubians');    -- Correct
+
+-- Q22: Multiple-multiple-choice - "Select all parts of a plant cell."
+INSERT INTO possible_answers (question_id, possible_answer_text) VALUES
+                                                                     (22, 'Centrioles'),     -- Incorrect (animal cells)
+                                                                     (22, 'Cell wall'),      -- Correct
+                                                                     (22, 'Lysosomes'),      -- Incorrect (rare in plant cells)
+                                                                     (22, 'Chloroplasts'),   -- Correct
+                                                                     (22, 'Nucleus'),        -- Correct
+                                                                     (22, 'Vacuole'),        -- Correct
+                                                                     (22, 'Mitochondria');   -- Correct
+
+-- Q29: Multiple-multiple-choice - "Select all instruments that are part of a standard rock band."
+INSERT INTO possible_answers (question_id, possible_answer_text) VALUES
+                                                                     (29, 'Violin'),             -- Incorrect
+                                                                     (29, 'Electric guitar'),    -- Correct
+                                                                     (29, 'Flute'),              -- Incorrect
+                                                                     (29, 'Bass guitar'),        -- Correct
+                                                                     (29, 'Trumpet'),            -- Incorrect
+                                                                     (29, 'Drums'),              -- Correct
+                                                                     (29, 'Piano'),              -- Sometimes included
+                                                                     (29, 'Microphone');         -- Correct
+
+-- Q36: Multiple-multiple-choice - "Select all movies that won the Academy Award for Best Picture in the 1990s."
+INSERT INTO possible_answers (question_id, possible_answer_text) VALUES
+                                                                     (36, 'The Matrix'),             -- Incorrect (not winner)
+                                                                     (36, 'Forrest Gump'),           -- Correct (1994)
+                                                                     (36, 'Jurassic Park'),          -- Incorrect (not winner)
+                                                                     (36, 'The Silence of the Lambs'), -- Correct (1991)
+                                                                     (36, 'Pulp Fiction'),           -- Incorrect (not winner)
+                                                                     (36, 'Unforgiven'),             -- Correct (1992)
+                                                                     (36, 'Schindler\'s List'),      -- Correct (1993)
+                                                                     (36, 'Braveheart'),             -- Correct (1995)
+                                                                     (36, 'The English Patient'),    -- Correct (1996)
+                                                                     (36, 'Titanic'),                -- Correct (1997)
+                                                                     (36, 'Shakespeare in Love'),    -- Correct (1998)
+                                                                     (36, 'American Beauty');        -- Correct (1999)
+
+-- Q42: Multiple-multiple-choice - "Select all object-oriented programming languages."
+INSERT INTO possible_answers (question_id, possible_answer_text) VALUES
+                                                                     (42, 'Assembly'),       -- Incorrect (low-level)
+                                                                     (42, 'Java'),           -- Correct
+                                                                     (42, 'HTML'),           -- Incorrect (markup language)
+                                                                     (42, 'Python'),         -- Correct
+                                                                     (42, 'SQL'),            -- Incorrect (query language)
+                                                                     (42, 'C++'),            -- Correct
+                                                                     (42, 'C#');             -- Correct
+
+-- Q54: Multiple-multiple-choice - "Select all novels written by Jane Austen."
+INSERT INTO possible_answers (question_id, possible_answer_text) VALUES
+                                                                     (54, 'Jane Eyre'),               -- Incorrect (Charlotte Brontë)
+                                                                     (54, 'Pride and Prejudice'),     -- Correct
+                                                                     (54, 'Wuthering Heights'),       -- Incorrect (Emily Brontë)
+                                                                     (54, 'Emma'),                    -- Correct
+                                                                     (54, 'Middlemarch'),             -- Incorrect (George Eliot)
+                                                                     (54, 'Sense and Sensibility'),   -- Correct
+                                                                     (54, 'Tess of the d\'Urbervilles'), -- Incorrect (Thomas Hardy)
+                                                                     (54, 'Mansfield Park'),          -- Correct
+                                                                     (54, 'Northanger Abbey'),        -- Correct
+                                                                     (54, 'Persuasion');              -- Correct
 -- Guess Georgian athletes Q1
 INSERT INTO possible_answers (question_id, possible_answer_text) VALUES
                                                                      (1, 'Vladimer Khinchegashvili'),
