@@ -91,7 +91,7 @@ INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_li
                                                                                                          (3, 'fill-blank', 'The value of π is approximately _.', NULL, 60, 3),
                                                                                                          (3, 'question-response', 'Solve: 2x + 5 = 15. What is x?', NULL, 60, 4),
                                                                                                          (3, 'multiple-choice', 'What is the area of a circle with radius 3?', NULL, 60, 5),
-                                                                                                         (3, 'multi-answer', 'List three prime numbers between 10 and 20.', NULL, 60, 6);
+                                                                                                         (3, 'multi-answer', 'List four prime numbers between 10 and 20.', NULL, 60, 6);
 
 -- Biology Facts (quiz_id = 4)
 INSERT INTO questions (quiz_id, question_type, question_text, image_url, time_limit, question_order) VALUES
