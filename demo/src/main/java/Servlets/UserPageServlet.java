@@ -2,6 +2,7 @@ package Servlets;
 
 import DAO.AchievementDao;
 import DAO.QuizDao;
+import DAO.UserDao;
 import Models.Achievement;
 import Models.Quiz;
 import Models.User;
@@ -11,65 +12,48 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.*;
 
 @WebServlet("/user")
 public class UserPageServlet extends HttpServlet {
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        User user = (User) request.getSession().getAttribute("user");
-
-        if (user == null) {
+        User sessionUser = (User) request.getSession().getAttribute("user");
+        if (sessionUser == null) {
             response.sendRedirect("login.jsp");
             return;
         }
 
-        QuizDao quizDao = new QuizDao();
-        AchievementDao achievementDao = new AchievementDao();
-
+        UserDao userDao = new UserDao();
+        User user;
         try {
+            // Always fetch latest user data from DB for fresh stats!
+            user = userDao.getUserById(sessionUser.getId());
+            request.getSession().setAttribute("user", user); // keep session in sync
+            request.setAttribute("user", user);
+
+            QuizDao quizDao = new QuizDao();
             List<Quiz> myQuizzes = quizDao.getQuizzesByUser(user.getId());
             request.setAttribute("myQuizzes", myQuizzes);
 
+            AchievementDao achievementDao = new AchievementDao();
+            List<Achievement> allAchievements = achievementDao.getAllAchievements();
+            request.setAttribute("allAchievements", allAchievements);
 
-            List<Achievement> userAchievements = getUserAchievements(user.getId());
+            List<Achievement> userAchievements = achievementDao.getAchievementsByUserId(user.getId());
             request.setAttribute("userAchievements", userAchievements);
+
+            Set<Long> earnedIds = new HashSet<>();
+            for (Achievement a : userAchievements) {
+                earnedIds.add(a.getAchievementId());
+            }
+            request.setAttribute("earnedIds", earnedIds);
 
         } catch (SQLException e) {
             throw new ServletException(e);
         }
 
         request.getRequestDispatcher("user.jsp").forward(request, response);
-    }
-
-    private List<Achievement> getUserAchievements(long userId) throws SQLException {
-
-        List<Achievement> achievements = new java.util.ArrayList<>();
-
-        String sql = "SELECT a.achievement_id, a.achievement_name, a.achievement_description, a.icon_url, ua.awarded_at " +
-                "FROM user_achievements ua " +
-                "JOIN achievements a ON ua.achievement_id = a.achievement_id " +
-                "WHERE ua.user_id = ?";
-
-        try (java.sql.Connection conn = DB.DBConnection.getConnection();
-             java.sql.PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setLong(1, userId);
-            try (java.sql.ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    achievements.add(new Achievement(
-                            rs.getLong("achievement_id"),
-                            rs.getString("achievement_name"),
-                            rs.getString("achievement_description"),
-                            rs.getString("icon_url"),
-                            rs.getTimestamp("awarded_at")
-                    ));
-                }
-            }
-        }
-
-        return achievements;
     }
 }
