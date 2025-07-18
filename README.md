@@ -1,2 +1,20 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/DNph1jNe)
-სამაგალითო პროექტის აღწერა ნახეთ Example-Quiz-Website.pdf ფაილში.
+Welcome to Quiz Rizz!
+
+Full Build and Run Instruction:
+
+Configure Maven Web Project and Tomcat Server in some editor(Intellij Idea recommended)
+
+Open mysql from cmd or other terminal
+copy sql script from: demo/src/main/java/DB/QuizAppSchema.sql
+run
+copy sql script: from demo/src/main/java/DB/DatabaseMock.sql
+run
+
+open demo/src/main/java/DB/DBConnection
+insert your password and username for sql
+
+Build and Run Project.
+
+Note: Some users and admins are already provided in mock data, you
+can directly log in with their usernames and passwords to get full
+experience from both user's and admin's perspective.
