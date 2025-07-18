@@ -1,4 +1,4 @@
-Welcome to Quiz Rizz!
+# OOP course final project - QuizApp
 
 Full Build and Run Instruction:
 
