@@ -1,20 +1,21 @@
-# OOP course final project - QuizApp
+# QuizApp
 
-Full Build and Run Instruction:
+A dynamic web-based quiz platform built with Java Servlets, JSP, and MySQL.  
+Users can create, take, and manage quizzes with multiple question types, view scores and achievements, and interact through messaging and friend systems.
 
-Configure Maven Web Project and Tomcat Server in some editor(Intellij Idea recommended)
+### Tech Stack
+- Java 17, Maven, JSP/Servlets, HTML/CSS  
+- MySQL, JDBC  
+- Deployed with Apache Tomcat 9.0.107
 
-Open mysql from cmd or other terminal
-copy sql script from: demo/src/main/java/DB/QuizAppSchema.sql
-run
-copy sql script: from demo/src/main/java/DB/DatabaseMock.sql
-run
+### How to run the app
+- Compile SQL scripts first
+- Change database creditentials [file](https://github.com/Nestor-Dzadzamia/CS108-final-project/blob/master/demo/src/main/java/DB/DBConnection.java)
+- add pom.xml dependencies in your project.
 
-open demo/src/main/java/DB/DBConnection
-insert your password and username for sql
-
-Build and Run Project.
-
-Note: Some users and admins are already provided in mock data, you
-can directly log in with their usernames and passwords to get full
-experience from both user's and admin's perspective.
+### Features
+- Multiple question types: Multiple Choice, Multi-Select, Matching, Text, and more  
+- Quiz creation & submission with flexible scoring  
+- User accounts, achievements, stats & history  
+- Friend system and private messaging  
+- Admin panel for managing quizzes and users
